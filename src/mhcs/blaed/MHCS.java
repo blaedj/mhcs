@@ -7,6 +7,10 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
+
+import mhcs.dan.Logging;
+
+
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -19,28 +23,29 @@ public class MHCS implements EntryPoint {
 	public void onModuleLoad() {
 		RootLayoutPanel.get().add(getMainPanel());
 	}
-		
+
 	/*
 	 * creates the bare skeleton for a main panel
-	 * @return baseTabPanel the main tabbed panel  
+	 * @return baseTabPanel the main tabbed panel
 	 */
 	private TabPanel getMainPanel() {
 		baseTabPanel = new TabPanel();
 		baseTabBar     = baseTabPanel.getTabBar();
-		
+
 		FlowPanel flowPanel1 = new FlowPanel();
 		FlowPanel flowPanel2 = new FlowPanel();
-		
+		Logging logPage = new Logging();
+
 		TextBox textbox= new TextBox();
 		textbox.setText("test Text");
-		
+
 		flowPanel1.add(textbox);
 		flowPanel1.add(new HTML("<div><img src='http://lorempixel.com/output/nature-q-g-640-480-5.jpg' /></div>"));
 
 		//flowPanel2.add(new HTML("<div><img src='http://lorempixel.com/output/nature-q-g-640-480-5.jpg' /></div>"));
-		
-		//flowPanel2.add() // add the logging modules page
-		
+
+		flowPanel2.add(logPage.getLoggingPage());
+
 		baseTabPanel.add(flowPanel1, "One");
 		baseTabPanel.add(flowPanel2, "Two");
 		baseTabPanel.selectTab(0);
@@ -73,10 +78,5 @@ public class MHCS implements EntryPoint {
 		baseTabBar.insertTab(contents, tabIndex - 1);
 		baseTabBar.removeTab(tabIndex);
 	}
-	
+
 } // end MHCS
-
-
-
-
-
