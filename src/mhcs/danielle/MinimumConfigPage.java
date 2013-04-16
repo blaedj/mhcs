@@ -3,6 +3,7 @@ package mhcs.danielle;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -10,14 +11,17 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.user.client.ui.Widget;
 
 public class MinimumConfigPage implements EntryPoint {
 	//private ArrayList<Module> modules;
 	//private int length;
 
 	 public void onModuleLoad() {
+	 }
 
-		 // Create horizontal Panel, Grids, Buttons, etc.
+	public Widget createMinConfig(){	
+	 // Create horizontal Panel, Grids, Buttons, etc.
 	      HorizontalPanel horiz = new HorizontalPanel();
 	      Grid grid = new Grid(3,1);
 	      Grid buttonGrid = new Grid(1,2);
@@ -79,7 +83,9 @@ public class MinimumConfigPage implements EntryPoint {
 	      horiz.add(grid);
 
 	      // Add the widgets to the root panel.
-	      RootPanel.get().add(horiz);
-
+	      //RootPanel.get().add(horiz);
+	      FlowPanel wrapper = new FlowPanel();
+	      wrapper.add(horiz);
+	      return horiz;
 	   }
 }
