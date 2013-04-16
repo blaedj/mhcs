@@ -24,8 +24,8 @@
 
   <!-- Specify the paths for translatable code                    -->
   <source path='blaed'/>
-  <!-- <source path='dan'/> -->
-  <!-- <source path='danielle'/> -->
+  <source path='dan'/>
+  <source path='danielle'/>
   <!-- <source path='dalton'/> -->
 
   <source path='shared'/>
