@@ -28,6 +28,7 @@ public class MHCS implements EntryPoint {
 	 * creates the bare skeleton for a main panel
 	 * @return baseTabPanel the main tabbed panel
 	 */
+	
 	private TabPanel getMainPanel() {
 		baseTabPanel = new TabPanel();
 		baseTabBar     = baseTabPanel.getTabBar();
