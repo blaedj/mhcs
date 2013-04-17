@@ -2,11 +2,14 @@
 
 # Package Files #
 *.jar
-*.war
+.war
 
 # gwt caches and compiled units #
 war/gwt_bree/
 gwt-unitCache/
+
+# individual settings
+.settings/
 
 # boilerplate generated classes #
 .apt_generated/
@@ -14,4 +17,3 @@ gwt-unitCache/
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
-
