@@ -10,7 +10,11 @@ gwt-unitCache/
 
 # individual settings
 .settings/
+.settings1/
 
+#doc?
+doc/
+.checkstyle
 # boilerplate generated classes #
 .apt_generated/
 
