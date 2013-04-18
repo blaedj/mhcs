@@ -20,7 +20,7 @@ public class MinimumConfigPage implements EntryPoint {
 	 public void onModuleLoad() {
 	 }
 
-	public Widget createMinConfig(){	
+	public Widget createMinConfig(){
 	 // Create horizontal Panel, Grids, Buttons, etc.
 	      HorizontalPanel horiz = new HorizontalPanel();
 	      Grid grid = new Grid(3,1);
@@ -53,8 +53,7 @@ public class MinimumConfigPage implements EntryPoint {
 	      lb.addItem("module 001 ");
 	      lb.addItem("module 112 ");
 	      lb.addItem("module 103 ");
-	      lb.addItem("module 354 ");
-	      lb.addItem("module 75  ");
+	      lb.addItem("module 075  ");
 	      lb.addItem("module 116 ");
 	      lb.addItem("module 117 ");
 
@@ -86,6 +85,7 @@ public class MinimumConfigPage implements EntryPoint {
 	      //RootPanel.get().add(horiz);
 	      FlowPanel wrapper = new FlowPanel();
 	      wrapper.add(horiz);
-	      return horiz;
+	      //return horiz;
+	      return wrapper;
 	   }
 }

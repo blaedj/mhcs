@@ -1,6 +1,7 @@
 package mhcs.blaed;
 
 import mhcs.dan.Logging;
+import mhcs.danielle.MinimumConfigPage;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -18,10 +19,6 @@ public class MHCS implements EntryPoint {
 
 
 	private TabPanel baseTabPanel;
-
-	/*
-	 * @
-	 */
 	private TabBar baseTabBar;
 
 	/*
@@ -43,12 +40,14 @@ public class MHCS implements EntryPoint {
 		FlowPanel flowPanel1 = new FlowPanel();
 		FlowPanel flowPanel2 = new FlowPanel();
 		Logging logPage = new Logging();
-
+		MinimumConfigPage minConfig = new MinimumConfigPage();
+		
 		TextBox textbox = new TextBox();
 		textbox.setText("test Text");
 
-		flowPanel1.add(textbox);
-		flowPanel1.add(new Image("images/MarsModuleLandingArea.jpg"));
+		//flowPanel1.add(textbox);
+		//flowPanel1.add(new Image("images/MarsModuleLandingArea.jpg"));
+		flowPanel1.add(minConfig.createMinConfig());
 		flowPanel2.add(logPage.getLoggingPage());
 
 		baseTabPanel.add(flowPanel1, "One");
