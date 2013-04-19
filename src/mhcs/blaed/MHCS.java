@@ -39,19 +39,21 @@ public class MHCS implements EntryPoint {
 
 		FlowPanel flowPanel1 = new FlowPanel();
 		FlowPanel flowPanel2 = new FlowPanel();
+		FlowPanel flowPanel3 = new FlowPanel();
 		Logging logPage = new Logging();
 		MinimumConfigPage minConfig = new MinimumConfigPage();
+		ModuleLocations locations = new ModuleLocations();
 		
 		TextBox textbox = new TextBox();
 		textbox.setText("test Text");
 
-		//flowPanel1.add(textbox);
-		//flowPanel1.add(new Image("images/MarsModuleLandingArea.jpg"));
 		flowPanel1.add(minConfig.createMinConfig());
 		flowPanel2.add(logPage.getLoggingPage());
-
+		flowPanel3.add(locations.createMainPanel());
+		
 		baseTabPanel.add(flowPanel1, "One");
 		baseTabPanel.add(flowPanel2, "Two");
+		baseTabPanel.add(flowPanel3, "Three");
 		baseTabPanel.selectTab(0);
 
 		baseTabPanel.setVisible(true);

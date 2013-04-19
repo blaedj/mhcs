@@ -71,11 +71,6 @@ public class ModuleLocations {
 	modList.add(scrollList);
 	modDetails.add(moduleDetailsBox);
 
-	//buttonGrid.setWidth("255px");
-
-	decImage.add(new Image("images/MarsModuleLandingArea.jpg"));
-	//decButton.setWidth("255px");
-	//decButton.add(buttonGrid);
 
 	grid.setWidget(0, 0, modList);
 	grid.setWidget(1, 0, modDetails);
@@ -87,7 +82,7 @@ public class ModuleLocations {
 
 	containerPanel.add(decImage);
 	containerPanel.add(grid);
-
+	containerPanel.add(landingAreaGrid);
 	mainPanel = new FlowPanel();
 	mainPanel.add(containerPanel);
 	return mainPanel;
@@ -110,12 +105,13 @@ public class ModuleLocations {
 	// set the button's image according to the type of the module? or just a dot w/a number
 	// add a clickEventHandler to each button that calls a popup w/ details by module number.
 	// add each button to the grid based on coordinates.
-
-	for (HabitatModule module : moduleList) {
+    HabitatModule module;  
+	for (int i = 0; i < moduleList.length; i++) {
 	    // make a new button
-	    mapGrid.setWidget(module.getX(), module.getY(), createButton(module));
+		module = moduleList[i];
+		assert module != null;
+		mapGrid.setWidget(module.getX(), module.getY(), createButton(module));
 	}
-
     }
 
     private Button createButton(final HabitatModule module) {
@@ -127,19 +123,20 @@ public class ModuleLocations {
 	moduleButton.addClickHandler(new ClickHandler() {
 		@Override
 		public void onClick(ClickEvent event) {
-		    // TODO Auto-generated method stub
 		    PopupPanel alertPanel = new PopupPanel();
-		    //FlowPanel infoPanel = new FlowPanel();
+		    FlowPanel infoPanel = new FlowPanel();
 		    Label idLabel = new Label("Module ID:" + ((Integer)module.getCode()).toString());
 		    Label typeLabel = new Label("Module Type:" + module.getType());
 		    Label coordLabelX = new Label("X coordinate:" + ((Integer)module.getX()).toString());
 		    Label coordLabelY = new Label("Y coordinate:" + ((Integer)module.getY()).toString());
-		    alertPanel.add(idLabel);
-		    alertPanel.add(typeLabel);
-		    alertPanel.add(coordLabelX);
-		    alertPanel.add(coordLabelY);
+		    infoPanel.add(idLabel);
+		    infoPanel.add(typeLabel);
+		    infoPanel.add(coordLabelX);
+		    infoPanel.add(coordLabelY);
+		    alertPanel.add(infoPanel);
+		    alertPanel.setModal(false);
+		    alertPanel.setAutoHideEnabled(true);
 		    alertPanel.center();
-		    //alertPanel.add(infoPanel);
 		}
 	    });
 
@@ -147,11 +144,19 @@ public class ModuleLocations {
     }
 
     private HabitatModule[] getModuleList(){
-    	JsArray<HabitatModule> listOfMods;
-    	HabitatModule list[]; 
-    	list.
-    	
-    	return null;
+    	HabitatModule list[] = new HabitatModule[10];
+    	list[0] = new HabitatModule(9, 3, 20);
+    	assert list[0] != null;
+    	list[1] = new HabitatModule(8, 20, 21);
+    	list[2] = new HabitatModule(34, 3, 22);
+    	list[3] = new HabitatModule(16, 13, 23);
+    	list[4] = new HabitatModule(19, 19, 24);
+    	list[5] = new HabitatModule(5, 44, 34);
+    	list[6] = new HabitatModule(5, 4, 4);
+    	list[7] = new HabitatModule(39, 14, 36);
+    	list[8] = new HabitatModule(40, 30, 9);
+    	list[9] = new HabitatModule(17, 29, 18);
+    	return list;
     }
 
 
