@@ -8,13 +8,11 @@
 war/gwt_bree/
 gwt-unitCache/
 
-# individual settings
+# settings
 .settings/
-.settings1/
-
-#doc?
-doc/
 .checkstyle
+doc/
+
 # boilerplate generated classes #
 .apt_generated/
 
