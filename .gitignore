@@ -8,10 +8,14 @@
 war/gwt_bree/
 gwt-unitCache/
 
+# settings
+.settings/
+.checkstyle
+doc/
+
 # boilerplate generated classes #
 .apt_generated/
 
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
-
