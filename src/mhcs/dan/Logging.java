@@ -134,6 +134,7 @@ public class Logging { // !implements EntryPoint
 	}
     }
 
+    
     private void checkCode(int code) throws Exception {
 	boolean isValid = true;
 	if (code < 1) {
