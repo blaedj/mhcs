@@ -5,8 +5,7 @@ import mhcs.danielle.MinimumConfigPage;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -26,7 +25,8 @@ public class MHCS implements EntryPoint {
 	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
 	 */
 	public final void onModuleLoad() {
-		RootLayoutPanel.get().add(getMainPanel());
+		RootPanel.get().add(getMainPanel());
+		
 	}
 
 	/*
@@ -34,7 +34,9 @@ public class MHCS implements EntryPoint {
 	 * @return baseTabPanel the main tabbed panel
 	 */
 	private TabPanel getMainPanel() {
-		baseTabPanel   = new TabPanel();
+		
+		baseTabPanel   =  new TabPanel();
+		//baseTabPanel.addStyleName("scroll");
 		baseTabBar     = baseTabPanel.getTabBar();
 
 		FlowPanel flowPanel1 = new FlowPanel();
@@ -51,12 +53,15 @@ public class MHCS implements EntryPoint {
 		flowPanel2.add(logPage.getLoggingPage());
 		flowPanel3.add(locations.createMainPanel());
 		
-		baseTabPanel.add(flowPanel1, "One");
-		baseTabPanel.add(flowPanel2, "Two");
-		baseTabPanel.add(flowPanel3, "Three");
+		baseTabPanel.add(flowPanel2, "Module Logging Page");
+		baseTabPanel.add(flowPanel3, "View Module locations");
+		baseTabPanel.add(flowPanel1, "Minimum Configuration");
+		
 		baseTabPanel.selectTab(0);
 
 		baseTabPanel.setVisible(true);
+		baseTabPanel.setWidth("90%");
+		baseTabPanel.setHeight("90%");
 		baseTabPanel.addStyleName("baseTabber");
 		return baseTabPanel;
 	}

@@ -2,6 +2,7 @@
 
 
 /** Example rules used by the template application (remove for your app) */
+
 h1 {
   font-size: 2em;
   font-weight: bold;
@@ -9,21 +10,54 @@ h1 {
   margin: 40px 0px 70px;
   text-align: center;
 }
-.baseTabber {
-	width: 60%;
-	margin: 0 15% 0 15% ;
-	border: 4px red outset;
+.scroll {
+	overflow: scroll;
+}
+.moduleButton {
+  padding: 0;
+  margin: 0;
+}
+.landingMap {
+    background: url(images/MarsMap.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    min-width: 98%;
+    width: 100%;
+    max-width:100%;
+}
+.tableCell {
+/*  	  border: 1px solid #222; */
+    min-height: 10px;
+    height: 10px;
+    max-height: 10px;
+    min-width: 10px;
+    width: 10px;
+    max-width:10px;
 }
 .sendButton {
   display: block;
   font-size: 16pt;
 }
-
+.moduleSelected {
+    /* border: 2px #d70 solid; */
+    box-shadow: 3px 3px 3px #d70;
+}
+.largerFont {
+	font-size: 1.5em;
+}
 /** Most GWT widgets already have a style name defined */
+
 .gwt-DialogBox {
   width: 400px;
 }
-
+.baseTabber {
+	/*width: 90%;*/
+	margin: 1em;
+	border: 3px #9f0 solid;
+}
 .dialogVPanel {
   margin: 5px;
 }

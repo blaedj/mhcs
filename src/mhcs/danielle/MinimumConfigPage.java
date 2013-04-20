@@ -70,7 +70,7 @@ public class MinimumConfigPage implements EntryPoint {
 	      buttonGrid.setWidget(0, 0, recalc);
 	      buttonGrid.setWidget(0,1, enterSave);
 
-	      decImage.add(new Image("images/MarsModuleLandingArea.jpg"));
+	      decImage.add(new Image("images/MarsMap.jpg"));
 	      decButton.setWidth("255px");
 	      decButton.add(buttonGrid);
 
