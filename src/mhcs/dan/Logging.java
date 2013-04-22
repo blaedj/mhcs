@@ -4,18 +4,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PopupPanel;
+
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -57,11 +46,6 @@ public class Logging { // !implements EntryPoint
     private Button confirmDeleteButton;
     private Button closeDeleteButton;
     private Histogram histogram;
-    private PopupPanel minConfig;
-    private FlowPanel minConfigAlert;
-    private Label alertLabel;
-    private Button alertB1;
-    private Button alertB2;
 
     public Logging() {
 
@@ -211,6 +195,7 @@ public class Logging { // !implements EntryPoint
         alertB1 = new Button("OK");
         alertB2 = new Button("See Min Configuration");
         alertLabel = new Label("Minimum Configuration is Available");
+
     }
 
     /**

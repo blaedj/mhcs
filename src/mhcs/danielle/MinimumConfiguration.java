@@ -8,7 +8,6 @@ import mhcs.dan.Module;
 import mhcs.dan.ModuleList;
 
 
-
 /**
  *  MinimumConfiguration objects returns the 
  *  grid indices of the appropriate locations
@@ -28,6 +27,7 @@ public class MinimumConfiguration{
 	private boolean allGood;
 	private Module temp;
 	int count;
+
 	ModuleList theList;
 	
 	/**
