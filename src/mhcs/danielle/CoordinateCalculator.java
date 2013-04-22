@@ -28,9 +28,9 @@ public class CoordinateCalculator {
 	private void calculate(int xcoor, int ycoor){
 		// x coordinate calculation 
 		// for grid position
-		xcoorGrid = xcoorMap;
+		xcoorGrid = xcoorMap-1;
 		
-		// y coordinate calculation second
+		// y coordinate calculation 
 		ycoorGrid = 50-ycoor;
 	}
 	

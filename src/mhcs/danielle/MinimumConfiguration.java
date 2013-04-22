@@ -59,7 +59,7 @@ public class MinimumConfiguration{
 	 * Tests to see if min config is possible
 	 * @return bool showing if min config is possible
 	 */
-	private boolean testMinConfig(){
+	public boolean testMinConfig(){
 		// Code code;
 		int i = 0;
 		boolean allGood = true;
