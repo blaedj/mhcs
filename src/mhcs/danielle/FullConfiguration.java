@@ -1,7 +1,11 @@
 package mhcs.danielle;
 
 import mhcs.dan.ModuleList;
-
+/**
+ * 
+ * @author Danielle Stewart
+ *
+ */
 public class FullConfiguration {
 	private int listSize;
 	

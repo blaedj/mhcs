@@ -1,8 +1,12 @@
 package mhcs.danielle;
 
+import mhcs.dan.Module;
+import mhcs.dan.Module.ModuleType;
 import mhcs.dan.ModuleList;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -14,7 +18,11 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * 
+ * @author Danielle Stewart
+ *
+ */
 public class MinimumConfigPage implements EntryPoint {
 	private ModuleList moduleList;
 	//private int length;
@@ -40,7 +48,7 @@ public class MinimumConfigPage implements EntryPoint {
 	      DecoratorPanel modList = new DecoratorPanel();
 	      DecoratorPanel modDetails = new DecoratorPanel();
 	      DecoratorPanel decButton = new DecoratorPanel();
-	      TextArea ta = new TextArea();
+	      final TextArea ta = new TextArea();
 	      ListBox lb = new ListBox();
 
 	      // Set up text area for module detail display
@@ -48,12 +56,21 @@ public class MinimumConfigPage implements EntryPoint {
 	      ta.setVisibleLines(7);
 
 	      for(int i = 0; i < moduleList.size(); i++) {
-	          String item = moduleList(i).toString();
-	    	  lb.addItem(item);
-	    	  item.addChangeListener(new ChangeListener() {
-	    	  	public void onChange() {
-	    	  		// code to access details of module for textarea
-	    	  	}
+	          final Module item = moduleList.get(i);
+	          ModuleType enumType = item.getType();
+	          String type = enumType.toString();
+	    	  lb.addItem(type);
+	    	  lb.addChangeHandler(new ChangeHandler() {
+
+				@Override
+				public void onChange(ChangeEvent event) {
+					
+					ta.setText("Code: "+item.getCode()+"\n"+"X coordinate: "+item.getXCoor()
+							+"\nY coordinate: "+item.getYCoor()+"\n"
+							+"\nDamage: "+item.getDamage()
+							+"\nTurns to upright: "+item.getTurns());
+					
+				}
 	    	  });
 	      }
 

@@ -12,7 +12,7 @@ import mhcs.dan.ModuleList;
  *  MinimumConfiguration objects returns the 
  *  grid indices of the appropriate locations
  *  of each module in the configuration. 
- *    
+ *   @author Danielle Stewart 
  */
 public class MinimumConfiguration{
 	/**
