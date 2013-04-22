@@ -28,10 +28,10 @@ public class CoordinateCalculator {
 	private void calculate(int xcoor, int ycoor){
 		// x coordinate calculation 
 		// for grid position
-		xcoorGrid = 5*xcoorMap;
+		xcoorGrid = xcoorMap;
 		
 		// y coordinate calculation second
-		ycoorGrid = -5*ycoor + 250;
+		ycoorGrid = 50-ycoor;
 	}
 	
 	/**
