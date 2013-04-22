@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.touch.client.Point;
 
 import mhcs.dan.Module;
-
+import mhcs.dan.ModuleList;
 
 
 /**
@@ -27,7 +27,8 @@ public class MinimumConfiguration{
 	private boolean allGood;
 	private Module temp;
 	int count;
-	ArrayList<Module> theList;
+
+	ModuleList theList;
 	
 	/**
 	 * MinimumConfiguration constructor creates
@@ -39,7 +40,7 @@ public class MinimumConfiguration{
 	 * 
 	 * @param theList is the list of modules
 	 */
-	public MinimumConfiguration(ArrayList<Module> theList){
+	public MinimumConfiguration(ModuleList theList){
 		
 		this.theList = theList;
 		count = theList.size();
@@ -58,7 +59,7 @@ public class MinimumConfiguration{
 	 * Tests to see if min config is possible
 	 * @return bool showing if min config is possible
 	 */
-	private boolean testMinConfig(){
+	public boolean testMinConfig(){
 		// Code code;
 		int i = 0;
 		boolean allGood = true;
