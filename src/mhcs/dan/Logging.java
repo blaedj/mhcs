@@ -8,7 +8,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
-
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
@@ -86,7 +85,7 @@ public class Logging { // !implements EntryPoint
                                     xCoorBox.getText(), yCoorBox.getText(),
                                     turnsListBox.getItemText(
                                             turnsListBox.getSelectedIndex()));
-                    ModuleList.moduleList.add(newModule);
+                    ModuleList.addModule(newModule);
                     histogram.update(newModule.getType(), Histogram.Type.ADD);
                 } catch (NumberFormatException e) {
                     Window.alert("Input Not A Number");
@@ -148,7 +147,7 @@ public class Logging { // !implements EntryPoint
             public void onChange(final ChangeEvent event) {
                 if (!ModuleList.moduleList.isEmpty()) {
                     Module mod =  ModuleList.moduleList.get(
-                            ModuleList.moduleList.getIndexByCode(
+                            ModuleList.getIndexByCode(
                             moduleListBox.getItemText(
                                     moduleListBox.getSelectedIndex())));
                     locationInfoLabel.setText(
@@ -306,7 +305,7 @@ public class Logging { // !implements EntryPoint
      * @throws Exception thrown if module code already entered
      */
     private void checkDuplicate(final String code) throws Exception {
-        if (ModuleList.moduleList.getIndexByCode(code) != -1) {
+        if (ModuleList.getIndexByCode(code) != -1) {
             throw new Exception("Module code already entered");
         }
     }
