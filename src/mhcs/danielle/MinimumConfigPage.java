@@ -1,5 +1,7 @@
 package mhcs.danielle;
 
+import mhcs.dan.ModuleList;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
@@ -14,7 +16,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MinimumConfigPage implements EntryPoint {
-	//private ArrayList<Module> modules;
+	private ModuleList moduleList;
 	//private int length;
 
 	 public void onModuleLoad() {
@@ -27,7 +29,13 @@ public class MinimumConfigPage implements EntryPoint {
 	      Grid buttonGrid = new Grid(1,2);
 	      Button recalc = new Button("Recalculate");
 	      Button enterSave = new Button("Enter & Save");
-	      DecoratorPanel decImage = new DecoratorPanel();
+	      
+	      
+	      FlowPanel decImage = new FlowPanel();
+	      Grid imageGrid = new Grid(50,100);
+	      
+	      decImage.add(imageGrid);
+		  decImage.addStyleName("landingMap");
 	      ScrollPanel scrollList = new ScrollPanel();
 	      DecoratorPanel modList = new DecoratorPanel();
 	      DecoratorPanel modDetails = new DecoratorPanel();
@@ -39,23 +47,16 @@ public class MinimumConfigPage implements EntryPoint {
 	      ta.setCharacterWidth(37);
 	      ta.setVisibleLines(7);
 
-	      /*for(int i = 0; i < length; i++) {
-	          String item = modules(i).toString();
+	      for(int i = 0; i < moduleList.size(); i++) {
+	          String item = moduleList(i).toString();
 	    	  lb.addItem(item);
 	    	  item.addChangeListener(new ChangeListener() {
 	    	  	public void onChange() {
 	    	  		// code to access details of module for textarea
 	    	  	}
 	    	  });
-	      }*/
+	      }
 
-	      // For testing purposes
-	      lb.addItem("module 001 ");
-	      lb.addItem("module 112 ");
-	      lb.addItem("module 103 ");
-	      lb.addItem("module 075  ");
-	      lb.addItem("module 116 ");
-	      lb.addItem("module 117 ");
 
 	      // Make enough room for 19 items, then use scrollbar
 	      // Can select item and 'display' will show details
@@ -70,7 +71,6 @@ public class MinimumConfigPage implements EntryPoint {
 	      buttonGrid.setWidget(0, 0, recalc);
 	      buttonGrid.setWidget(0,1, enterSave);
 
-	      decImage.add(new Image("images/MarsMap.jpg"));
 	      decButton.setWidth("255px");
 	      decButton.add(buttonGrid);
 
