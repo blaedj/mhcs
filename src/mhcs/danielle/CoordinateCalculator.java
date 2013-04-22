@@ -14,9 +14,9 @@ public class CoordinateCalculator {
 	 * @param xcoor string of module x coord.
 	 * @param ycoor string of module y coor.
 	 */
-	public CoordinateCalculator(String xcoor, String ycoor){
-		this.xcoorMap = Integer.parseInt(xcoor);
-		this.ycoorMap = Integer.parseInt(ycoor);
+	public CoordinateCalculator(int xcoor, int ycoor){
+		this.xcoorMap = xcoor;
+		this.ycoorMap = ycoor;
 		calculate(this.xcoorMap, this.ycoorMap);
 	}
 	

@@ -1,5 +1,7 @@
 package mhcs.danielle;
 
+import java.util.ArrayList;
+
 import mhcs.dan.Module;
 import mhcs.dan.Module.ModuleType;
 import mhcs.dan.ModuleList;
@@ -7,6 +9,7 @@ import mhcs.dan.ModuleList;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.touch.client.Point;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -24,13 +27,15 @@ import com.google.gwt.user.client.ui.Widget;
  *
  */
 public class MinimumConfigPage implements EntryPoint {
-	private ModuleList moduleList;
+	
+	ArrayList<Minimum> minList;
 	//private int length;
 
 	 public void onModuleLoad() {
 	 }
 
 	public Widget createMinConfig(){
+		
 	 // Create horizontal Panel, Grids, Buttons, etc.
 	      HorizontalPanel horiz = new HorizontalPanel();
 	      Grid grid = new Grid(3,1);
@@ -42,8 +47,12 @@ public class MinimumConfigPage implements EntryPoint {
 	      FlowPanel decImage = new FlowPanel();
 	      Grid imageGrid = new Grid(50,100);
 	      
+	      
+	      
 	      decImage.add(imageGrid);
 		  decImage.addStyleName("landingMap");
+		  
+		  
 	      ScrollPanel scrollList = new ScrollPanel();
 	      DecoratorPanel modList = new DecoratorPanel();
 	      DecoratorPanel modDetails = new DecoratorPanel();
@@ -55,8 +64,8 @@ public class MinimumConfigPage implements EntryPoint {
 	      ta.setCharacterWidth(37);
 	      ta.setVisibleLines(7);
 
-	      for(int i = 0; i < moduleList.size(); i++) {
-	          final Module item = moduleList.get(i);
+	      for(int i = 0; i < ModuleList.moduleList.size(); i++) {
+	          final Module item = ModuleList.moduleList.get(i);
 	          ModuleType enumType = item.getType();
 	          String type = enumType.toString();
 	    	  lb.addItem(type);
@@ -73,7 +82,38 @@ public class MinimumConfigPage implements EntryPoint {
 				}
 	    	  });
 	      }
-
+	      MinimumConfiguration minConfig = new MinimumConfiguration(ModuleList.moduleList);
+	      ArrayList<Minimum> minList = minConfig.getMinArray();
+	      
+	      for(int i = 0; i < minList.size(); i++){
+	    	  
+	    	  Minimum pt = minList.get(i);
+	    	  Point coor = pt.getPoint();
+	    	  Image im;
+	    	  CoordinateCalculator coorcalc = new CoordinateCalculator((int)coor.getX(), (int)coor.getY());
+	    	  if(pt.getCode().equalsIgnoreCase("air")){
+	    		  im = new Image("images/airlock.jpg");
+	    	  }else if(pt.getCode().equalsIgnoreCase("med")){
+	    		  im = new Image("images/medical.png");
+	    	  }else if(pt.getCode().equalsIgnoreCase("dorm")){
+	    		  im = new Image("images/dorm.jpg");
+	    	  }else if(pt.getCode().equalsIgnoreCase("plain")){
+	    		  im = new Image("images/plain.png");
+	    	  }else if(pt.getCode().equalsIgnoreCase("power")){
+	    		  im = new Image("images/power.jpg");
+	    	  }else if(pt.getCode().equalsIgnoreCase("canteen")){
+	    		  im = new Image("images/canteen.png");
+	    	  }else if(pt.getCode().equalsIgnoreCase("sanitation")){
+	    		  im = new Image("images/sanitation.jpg");
+	    	  }else if(pt.getCode().equalsIgnoreCase("gym")){
+	    		  im = new Image("images/gym.png");
+	    	  }else if(pt.getCode().equalsIgnoreCase("control")) {
+	    		  im = new Image("images/control.jpg");
+	    	  }else{
+	    		  im = new Image("images/storage.jpg");
+	    	  }
+	    	  imageGrid.setWidget(coorcalc.xCoorGrid()+20, coorcalc.yCoorGrid()+20, im);
+	      }
 
 	      // Make enough room for 19 items, then use scrollbar
 	      // Can select item and 'display' will show details
