@@ -2,6 +2,8 @@ package mhcs.dan;
 
 import java.util.ArrayList;
 
+import com.google.gwt.storage.client.Storage;
+
 /**
  *
  * @author Daniel Hammond
@@ -9,10 +11,32 @@ import java.util.ArrayList;
  */
 public class ModuleList extends ArrayList<Module> {
 
-    /**
+    public static ModuleList moduleList;
+	
+	/**
      *
      */
-    public static ModuleList moduleList = new ModuleList();
+    public ModuleList() {
+    	moduleList = null;
+    }
+	
+    public int length() {
+    	return this.length();
+    }
+    
+    public void addModule(Module module) {
+    	moduleList.add(module);
+    	Storage modListLocal = Storage.getLocalStorageIfSupported();
+    	modListLocal.setItem(module.getCode(), "{" +
+    	"moduleType: " + module.getType().toString() + ",\n" +
+    	"xCoord: " + module.getXCoor() + ",\n" +
+    	"yCoord: " + module.getYCoor() + ",\n" +
+    	"damage: " + module.getDamage() + ",\n" + 
+    	"turns: " + module.getDamage() + ",\n" + 
+    	
+    			
+    			"}");
+    }
     
     /**
      *
