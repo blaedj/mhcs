@@ -50,6 +50,12 @@ h1 {
 }
 /** Most GWT widgets already have a style name defined */
 
+.documentClass-delete {
+    background-color: white;
+    border-width: 2px;
+    border-style: solid;
+}
+
 .gwt-DialogBox {
   width: 400px;
 }
