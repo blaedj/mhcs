@@ -112,7 +112,9 @@ public class MinimumConfigPage implements EntryPoint {
 	    	  }else{
 	    		  im = new Image("images/storage.jpg");
 	    	  }
-	    	  im.setPixelSize(5, 5);
+
+	    	  im.setSize("5px", "5px");
+
 
 	    	  assert coorcalc.xCoorGrid() >= 0;
 	    	  assert coorcalc.yCoorGrid() >= 0;
