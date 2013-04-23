@@ -10,6 +10,11 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 //@author Dalton Johnson
+     
+
+
+
+
 
 // This class implements the log in page. It implements the entry point class.
 public class LogIn implements EntryPoint {
