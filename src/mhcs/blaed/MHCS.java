@@ -28,7 +28,6 @@ public class MHCS implements EntryPoint {
      */
     public final void onModuleLoad() {
 	
-    ModuleList moduleList = new ModuleList();
 	RootPanel.get().add(getMainPanel());
 
     }

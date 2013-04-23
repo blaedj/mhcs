@@ -207,9 +207,8 @@ public class ModuleLocations {
     	//ModuleList.addModule(new Module("23", "fine", "10", "13", "0"));
 
     	//ModuleList.addModule(new Module("24", "fine", "8", "2", "0"));
-    	ModuleList.addModule(new Module("25", "fine", "42", "17", "0"));
+    	//ModuleList.addModule(new Module("25", "fine", "42", "17", "0"));
     	/// for testing only
-
     	return ModuleList.moduleList;
     }
 }
