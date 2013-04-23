@@ -25,7 +25,7 @@ public class ModuleList extends ArrayList<Module> {
     }
 
     public static void addModule(Module module) {
-    	
+
     	moduleList.add(module);
     	Storage modListLocal = Storage.getLocalStorageIfSupported();
     	modListLocal.setItem(module.getCode(), "{" +

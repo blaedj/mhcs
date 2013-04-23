@@ -38,9 +38,11 @@ public class MinimumConfiguration{
 	 * This coordinate point is returned as Java 
 	 * coordinates and *not* map coordinates.
 	 * 
-	 * @param theList is the list of modules
+	 * @param moduleList is the list of modules
 	 */
+
 	public MinimumConfiguration(ArrayList<Module> theList){
+
 		
 		this.theList = theList;
 		count = theList.size();
@@ -238,10 +240,9 @@ public class MinimumConfiguration{
 				valuex = 2;
 				valuey = 3;
 			}
-			assert(str.compareTo("") < 0);
 			Minimum min = new Minimum(str,pt);
 			minArray.add(min);
-			
+
 		}
 	}
 	
