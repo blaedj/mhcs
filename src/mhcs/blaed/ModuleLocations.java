@@ -31,7 +31,7 @@ public class ModuleLocations {
     public Panel createMainPanel(){
 	intitializeMembers();
 
-	ArrayList moduleList = getModuleList();
+	ArrayList<Module> moduleList = getModuleList();
 
 	for (int i = 0; i < landingAreaGrid.getRowCount(); i++) {
 	    for (int j = 0; j < landingAreaGrid.getColumnCount(); j++) {
