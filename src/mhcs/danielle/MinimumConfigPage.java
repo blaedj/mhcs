@@ -112,7 +112,8 @@ public class MinimumConfigPage implements EntryPoint {
 	    	  }else{
 	    		  im = new Image("images/storage.jpg");
 	    	  }
-	    	  imageGrid.setWidget(coorcalc.xCoorGrid()+20, coorcalc.yCoorGrid()+20, im);
+	    	  im.setPixelSize(5, 5);
+	    	  imageGrid.setWidget(coorcalc.xCoorGrid(), coorcalc.yCoorGrid(), im);
 	      }
 
 	      // Make enough room for 19 items, then use scrollbar
@@ -145,4 +146,5 @@ public class MinimumConfigPage implements EntryPoint {
 	      //return horiz;
 	      return wrapper;
 	   }
+	
 }

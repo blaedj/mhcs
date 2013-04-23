@@ -28,7 +28,7 @@ public class MinimumConfiguration{
 	private Module temp;
 	int count;
 
-	ModuleList theList;
+	ArrayList<Module> theList;
 	
 	/**
 	 * MinimumConfiguration constructor creates
@@ -40,7 +40,7 @@ public class MinimumConfiguration{
 	 * 
 	 * @param theList is the list of modules
 	 */
-	public MinimumConfiguration(ModuleList theList){
+	public MinimumConfiguration(ArrayList<Module> theList){
 		
 		this.theList = theList;
 		count = theList.size();
@@ -146,49 +146,103 @@ public class MinimumConfiguration{
 					valuex = 1;
 					valuey = 1;
 				}else if(i == 1){
+					valuex = 3;
+					valuey = 1;
+				}else if(i == 2){
 					valuex = 2;
 					valuey = 2;
-				}else if(i == 2){
-					valuex = 1;
-					valuey = 3;
 				}
 			}else if(i == 3){
 				str = "sanitation";
-				valuex = 0;
-				valuey = 1;
+				valuex = 3;
+				valuey = 0;
 			}else if(i == 4){
 				str = "control";
-				valuex = 1;
-				valuey = 2;
+				valuex = 2;
+				valuey = 3;
 			}else if(i == 5){
 				str = "air";
 				valuex = 1;
-				valuey = 4;
+				valuey = 0;
 			}else if(i ==6){
 				str = "canteen";
-				valuex = 3;
-				valuey = 2;
+				valuex = 2;
+				valuey = 1;
 			}else if(i == 7){
 				str = "power";
 				valuex = 0;
-				valuey = 2;
+				valuey = 1;
 			}else if(i == 8){
 				str = "storage";
-				valuex = 2;
-				valuey = 3;
+				valuex = 1;
+				valuey = 2;
 			}else if(i == 9){
 				str = "dorm";
+				valuex = 3;
+				valuey = 2;
+			}
+			Minimum min = new Minimum(str,pt);
+			minArray.add(min);
+			
+		}
+		
+		
+	}
+	public void setSecondConfig(){
+		int total = 10;
+		int valuex = 0;
+		int valuey = 0;
+		String str = "";
+		
+		for(int i = 0; i < total; i++){
+			
+			Point pt = new Point(valuex, valuey);
+			if((i >=0)&&(i < 3)){
+				str = "plain";
+				if(i == 0){
+					valuex = 1;
+					valuey = 1;
+				}else if(i == 1){
+					valuex = 1;
+					valuey = 2;
+				}else if(i == 2){
+					valuex = 2;
+					valuey = 2;
+				}
+			}else if(i == 3){
+				str = "sanitation";
+				valuex = 3;
+				valuey = 2;
+			}else if(i == 4){
+				str = "control";
+				valuex = 0;
+				valuey = 1;
+			}else if(i == 5){
+				str = "air";
 				valuex = 1;
 				valuey = 0;
+			}else if(i ==6){
+				str = "canteen";
+				valuex = 1;
+				valuey = 3;
+			}else if(i == 7){
+				str = "power";
+				valuex = 2;
+				valuey = 1;
+			}else if(i == 8){
+				str = "storage";
+				valuex = 0;
+				valuey = 2;
+			}else if(i == 9){
+				str = "dorm";
+				valuex = 2;
+				valuey = 3;
 			}
 			assert(str.compareTo("") < 0);
 			Minimum min = new Minimum(str,pt);
 			minArray.add(min);
 			
-			assert(minArray.size() == 10);
 		}
-		
-		
 	}
 	
 	/**
