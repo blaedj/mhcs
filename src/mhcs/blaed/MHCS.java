@@ -42,7 +42,7 @@ public class MHCS implements EntryPoint {
 	baseTabPanel   =  new TabPanel();
 	baseTabBar     = baseTabPanel.getTabBar();
 
-	FlowPanel minConfigWrapper = new FlowPanel();
+	
 	FlowPanel loggingPageWrapper = new FlowPanel();
 	FlowPanel moduleLocationsWrapper = new FlowPanel();
 
@@ -50,13 +50,10 @@ public class MHCS implements EntryPoint {
 
 	ModuleLocations locations = new ModuleLocations();
 
-	TextBox textbox = new TextBox();
-	textbox.setText("test Text");
-
-	MinimumConfigPage minConfig = new MinimumConfigPage();
-	minConfigWrapper.add(minConfig.createMinConfig());
-
-	
+//	FlowPanel minConfigWrapper = new FlowPanel();
+//	MinimumConfigPage minConfig = new MinimumConfigPage();
+//	minConfigWrapper.add(minConfig.createMinConfig());
+//	baseTabPanel.add(minConfigWrapper, "Minimum Configuration");	
 	
 	loggingPageWrapper.add(logPage.getLoggingPage());
 	moduleLocationsWrapper.add(locations.createMainPanel());
@@ -64,7 +61,7 @@ public class MHCS implements EntryPoint {
 
 	baseTabPanel.add(loggingPageWrapper, "Module Logging Page");
 	baseTabPanel.add(moduleLocationsWrapper, "View Module locations");
-	baseTabPanel.add(minConfigWrapper, "Minimum Configuration");
+
 
 
 	baseTabPanel.selectTab(0);

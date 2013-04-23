@@ -89,13 +89,13 @@ public class Logging { // !implements EntryPoint
                                             turnsListBox.getSelectedIndex()));
                     ModuleList.addModule(newModule);
                     histogram.update(newModule.getType(), Histogram.Type.ADD);
-                    // need to add an event so that we know when a module is recorded.
-                    ModuleDataChecker monitor = new ModuleDataChecker();
-                    DataRecordedEvent newModuleEvent = new DataRecordedEvent(newModule);
-                    monitor.fireEvent(newModuleEvent);
+
+//                    ModuleDataChecker monitor = new ModuleDataChecker();
+//                    DataRecordedEvent newModuleEvent = new DataRecordedEvent(newModule);
+//                    monitor.fireEvent(newModuleEvent);
                     
                 } catch (NumberFormatException e) {
-                    Window.alert("Input Not A Number");
+                	Window.alert("Input Not A Number");
                 } catch (Exception e) {
                     Window.alert(e.getMessage());
                 }
@@ -129,6 +129,11 @@ public class Logging { // !implements EntryPoint
                         ModuleList.moduleList.get(Integer.valueOf(
                                 moduleListBox.getSelectedIndex())).getType(),
                                 Histogram.Type.DELETE);
+                ModuleDataChecker monitor = new ModuleDataChecker();
+                DataRecordedEvent newModuleEvent = new DataRecordedEvent(ModuleList.moduleList.get(Integer.valueOf(
+                                moduleListBox.getSelectedIndex())));
+                monitor.fireEvent(newModuleEvent);
+                
                 ModuleList.moduleList.remove(
                         ModuleList.moduleList.get(Integer.valueOf(
                         moduleListBox.getSelectedIndex())));
@@ -137,6 +142,7 @@ public class Logging { // !implements EntryPoint
                 damageInfoLabel.setText("Damage:");
                 orientationInfoLabel.setText("Orientation:");
                 typeInfoLabel.setText("Type:");
+                
             }
         });
 
@@ -154,12 +160,12 @@ public class Logging { // !implements EntryPoint
             public void onChange(final ChangeEvent event) {
                 if (!ModuleList.moduleList.isEmpty()) {
                     Module mod =  ModuleList.moduleList.get(
-                            ModuleList.getIndexByCode(
-                            moduleListBox.getItemText(
-                                    moduleListBox.getSelectedIndex())));
+                    		ModuleList.getIndexByCode(
+                    				moduleListBox.getItemText(
+                    						moduleListBox.getSelectedIndex())));
                     locationInfoLabel.setText(
-                            "Location: (" + mod.getXCoor() + ", "
-                                    + mod.getYCoor() + ")");
+                    		"Location: (" + mod.getXCoor() + ", "
+                    				+ mod.getYCoor() + ")");
                     damageInfoLabel.setText("Damage: " + mod.getDamage());
                     orientationInfoLabel.setText(
                             "Orientation: " + mod.getTurns() + " flips");
