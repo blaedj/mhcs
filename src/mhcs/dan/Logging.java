@@ -1,7 +1,7 @@
 package mhcs.dan;
 
-import mhcs.blaed.DataRecordedEvent;
-import mhcs.blaed.ModuleDataChecker;
+//import mhcs.blaed.DataRecordedEvent;
+//import mhcs.blaed.ModuleDataChecker;
 import mhcs.danielle.MinimumConfiguration;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -129,10 +129,10 @@ public class Logging { // !implements EntryPoint
                         ModuleList.moduleList.get(Integer.valueOf(
                                 moduleListBox.getSelectedIndex())).getType(),
                                 Histogram.Type.DELETE);
-                ModuleDataChecker monitor = new ModuleDataChecker();
-                DataRecordedEvent newModuleEvent = new DataRecordedEvent(ModuleList.moduleList.get(Integer.valueOf(
-                                moduleListBox.getSelectedIndex())));
-                monitor.fireEvent(newModuleEvent);
+                //ModuleDataChecker monitor = new ModuleDataChecker();
+                //DataRecordedEvent newModuleEvent = new DataRecordedEvent(ModuleList.moduleList.get(Integer.valueOf(
+                //                moduleListBox.getSelectedIndex())));
+                //monitor.fireEvent(newModuleEvent);
                 
                 ModuleList.moduleList.remove(
                         ModuleList.moduleList.get(Integer.valueOf(
