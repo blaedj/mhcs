@@ -1,5 +1,7 @@
 package mhcs.danielle;
 
+import com.google.gwt.user.client.Window;
+
 public class CoordinateCalculator {
 	
 	private int xcoorMap; 
@@ -15,8 +17,11 @@ public class CoordinateCalculator {
 	 * @param ycoor string of module y coor.
 	 */
 	public CoordinateCalculator(int xcoor, int ycoor){
+		
 		this.xcoorMap = xcoor;
 		this.ycoorMap = ycoor;
+		
+		// Create the appropriate Point for this object
 		calculate(this.xcoorMap, this.ycoorMap);
 	}
 	
@@ -28,10 +33,25 @@ public class CoordinateCalculator {
 	private void calculate(int xcoor, int ycoor){
 		// x coordinate calculation 
 		// for grid position
-		xcoorGrid = xcoorMap-1;
+		if(xcoorMap == 0){
+			xcoorGrid = 0;
 		
+		}else if(xcoorMap < 0){
+			Window.alert("Map coordinate x should never be negative!");
+			xcoorGrid = 0;
+		}else{
+			xcoorGrid = xcoorMap-1;
+		}
 		// y coordinate calculation 
-		ycoorGrid = 50-ycoor;
+		if(ycoorMap > 50){
+			ycoorGrid = 0;
+		}else if(ycoorMap < 0){
+			Window.alert("Map coordinate y should never be negative!");
+			ycoorGrid = 0;
+		}else{
+			ycoorGrid = 50 - ycoorMap;
+		}
+		
 	}
 	
 	/**

@@ -30,42 +30,57 @@ import com.google.gwt.user.client.ui.Widget;
 public class MinimumConfigPage implements EntryPoint {
 	
 	ArrayList<Minimum> minList;
-	//private int length;
+	Button enterSave;
+	Button recalc;
+	
+	Grid buttonGrid;
+	Grid grid;
+	
+	HorizontalPanel horiz;
+	FlowPanel decImage;
+	Grid imageGrid;
+	
+	ScrollPanel scrollList;
+	DecoratorPanel modList;
+	DecoratorPanel modDetails;
+	DecoratorPanel decButton;
+	
+	TextArea ta;
+	ListBox lb;
+	
+	MinimumConfiguration minConfig;
+	CoordinateCalculator coorcalc;
+	Image im;
+	Point coor;
+	Minimum minItem;
 
-	 public void onModuleLoad() {
-	 }
+	public void onModuleLoad() {
+	}
 
 	public Widget createMinConfig(){
 		
-	 // Create horizontal Panel, Grids, Buttons, etc.
-	      HorizontalPanel horiz = new HorizontalPanel();
-	      Grid grid = new Grid(3,1);
-	      Grid buttonGrid = new Grid(1,2);
-	      Button recalc = new Button("Recalculate");
-	      Button enterSave = new Button("Enter & Save");
-	      
-	      
-	      FlowPanel decImage = new FlowPanel();
-	      Grid imageGrid = new Grid(50,100);
-	      
-	      
-	      
-	      decImage.add(imageGrid);
-		  decImage.addStyleName("landingMap");
-		  
-		  
-	      ScrollPanel scrollList = new ScrollPanel();
-	      DecoratorPanel modList = new DecoratorPanel();
-	      DecoratorPanel modDetails = new DecoratorPanel();
-	      DecoratorPanel decButton = new DecoratorPanel();
-	      final TextArea ta = new TextArea();
-	      ListBox lb = new ListBox();
+		makeEverything();
+		setChangeHandlers();
+	    setUpMinConfig(); 
+	    makeListBox();
+	    
+	    horiz.add(decImage);
+	    horiz.add(grid);  
 
-	      // Set up text area for module detail display
-	      ta.setCharacterWidth(37);
-	      ta.setVisibleLines(7);
-
-	      for(int i = 0; i < ModuleList.moduleList.size(); i++) {
+	    FlowPanel wrapper = new FlowPanel();
+	    wrapper.add(horiz);
+	
+	    return wrapper;
+	 }
+	
+	/**
+	 * sets the change handlers in the list box to display 
+	 * module information
+	 * Assumes access to ModuleList.moduleList
+	 */
+	private void setChangeHandlers(){
+		
+		for(int i = 0; i < ModuleList.moduleList.size(); i++) {
 	          final Module item = ModuleList.moduleList.get(i);
 	          ModuleType enumType = item.getType();
 	          String type = enumType.toString();
@@ -82,46 +97,95 @@ public class MinimumConfigPage implements EntryPoint {
 				}
 	    	  });
 	      }
-	      MinimumConfiguration minConfig = new MinimumConfiguration(ModuleList.moduleList);
-	      ArrayList<Minimum> minList = minConfig.getMinArray();
+	}
+	
+	/**
+	 * 
+	 */
+	private void makeEverything(){
+		// Create horizontal Panel, Grids, Buttons, etc.
+	      horiz = new HorizontalPanel();
+	      grid = new Grid(3,1);
+	      buttonGrid = new Grid(1,2);
+	      recalc = new Button("Recalculate");
+	      enterSave = new Button("Enter & Save");
 	      
-	      for(int i = 0; i < minList.size(); i++){
+	      
+	      decImage = new FlowPanel();
+	      imageGrid = new Grid(50,100);
+		  
+		  
+	      scrollList = new ScrollPanel();
+	      modList = new DecoratorPanel();
+	      modDetails = new DecoratorPanel();
+	      decButton = new DecoratorPanel();
+	      ta = new TextArea();
+	      lb = new ListBox();
+
+	      // Set up text area for module detail display
+	      ta.setCharacterWidth(37);
+	      ta.setVisibleLines(7);
+	      
+	}
+	
+	/**
+	 * 
+	 */
+	private void setUpMinConfig(){
+		
+		// Set up objects
+		minConfig = new MinimumConfiguration(ModuleList.moduleList);
+	    minList = minConfig.getMinArray();
+	    
+	    for(int i = 0; i < minList.size(); i++){
 	    	  
-	    	  Minimum pt = minList.get(i);
-	    	  Point coor = pt.getPoint();
-	    	  Image im;
-	    	  CoordinateCalculator coorcalc = new CoordinateCalculator((int)coor.getX(), (int)coor.getY());
-	    	  if(pt.getCode().equalsIgnoreCase("air")){
+	    	  minItem = minList.get(i);
+	    	  coor = minItem.getPoint();
+	    	  int tmpX = (int)coor.getX();
+	    	  int tmpY = (int)coor.getY();
+	    	  
+	    	  // object coorcalc has the minList(i) grid value
+	    	  // for x,y coord.
+	    	  coorcalc = new CoordinateCalculator(tmpX, tmpY);
+	    	  
+	    	  if(minItem.getCode().equalsIgnoreCase("air")){
 	    		  im = new Image("images/airlock.jpg");
-	    	  }else if(pt.getCode().equalsIgnoreCase("med")){
+	    	  }else if(minItem.getCode().equalsIgnoreCase("med")){
 	    		  im = new Image("images/medical.png");
-	    	  }else if(pt.getCode().equalsIgnoreCase("dorm")){
+	    	  }else if(minItem.getCode().equalsIgnoreCase("dorm")){
 	    		  im = new Image("images/dorm.jpg");
-	    	  }else if(pt.getCode().equalsIgnoreCase("plain")){
+	    	  }else if(minItem.getCode().equalsIgnoreCase("plain")){
 	    		  im = new Image("images/plain.png");
-	    	  }else if(pt.getCode().equalsIgnoreCase("power")){
+	    	  }else if(minItem.getCode().equalsIgnoreCase("power")){
 	    		  im = new Image("images/power.jpg");
-	    	  }else if(pt.getCode().equalsIgnoreCase("canteen")){
+	    	  }else if(minItem.getCode().equalsIgnoreCase("canteen")){
 	    		  im = new Image("images/canteen.png");
-	    	  }else if(pt.getCode().equalsIgnoreCase("sanitation")){
+	    	  }else if(minItem.getCode().equalsIgnoreCase("sanitation")){
 	    		  im = new Image("images/sanitation.jpg");
-	    	  }else if(pt.getCode().equalsIgnoreCase("gym")){
+	    	  }else if(minItem.getCode().equalsIgnoreCase("gym")){
 	    		  im = new Image("images/gym.png");
-	    	  }else if(pt.getCode().equalsIgnoreCase("control")) {
+	    	  }else if(minItem.getCode().equalsIgnoreCase("control")) {
 	    		  im = new Image("images/control.jpg");
 	    	  }else{
 	    		  im = new Image("images/storage.jpg");
 	    	  }
 
 	    	  im.setSize("5px", "5px");
-
+	    	  
 	    	  assert coorcalc.yCoorGrid() >= 0;
 	    	  assert coorcalc.xCoorGrid() >= 0;
 	    	  
 	    	  imageGrid.setWidget(coorcalc.xCoorGrid(), coorcalc.yCoorGrid(), im);
+	    	  decImage.add(imageGrid);
+			  decImage.addStyleName("landingMap");
 	      }
-
-	      // Make enough room for 19 items, then use scrollbar
+	}
+	
+	/**
+	 * 
+	 */
+	private void makeListBox(){
+		// Make enough room for 19 items, then use scrollbar
 	      // Can select item and 'display' will show details
 	      lb.setVisibleItemCount(19);
 	      lb.setPixelSize(250, 451);
@@ -137,16 +201,11 @@ public class MinimumConfigPage implements EntryPoint {
 	      decButton.setWidth("255px");
 	      decButton.add(buttonGrid);
 
+	      grid.setVisible(true);
 	      grid.setWidget(0, 0, modList);
 	      grid.setWidget(1, 0, modDetails);
 	      grid.setWidget(2, 0, decButton);
 
-	      horiz.add(decImage);
-	      horiz.add(grid);
-
-	      FlowPanel wrapper = new FlowPanel();
-	      wrapper.add(horiz);
-	      return wrapper;
-	   }
-	
+	      
+	}
 }

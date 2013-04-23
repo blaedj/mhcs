@@ -15,20 +15,14 @@ import mhcs.dan.ModuleList;
  *   @author Danielle Stewart 
  */
 public class MinimumConfiguration{
-	/**
-	 * ArrayList<Minimum>: the data members for this object.
-	 * There are public getters but no setters.
-	 */
-	private ArrayList<Minimum> minArray;
 	
-	/**
-	 * allGood and temp are privately used variables.
-	 */
+	private ArrayList<Minimum> minArray;
+	private ArrayList<Module> theList;
 	private boolean allGood;
 	private Module temp;
 	int count;
 
-	ArrayList<Module> theList;
+	
 	
 	/**
 	 * MinimumConfiguration constructor creates
