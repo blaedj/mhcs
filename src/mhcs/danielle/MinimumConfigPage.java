@@ -78,7 +78,6 @@ public class MinimumConfigPage implements EntryPoint {
 							+"\nY coordinate: "+item.getYCoor()+"\n"
 							+"\nDamage: "+item.getDamage()
 							+"\nTurns to upright: "+item.getTurns());
-					
 				}
 	    	  });
 	      }
