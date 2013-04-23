@@ -1,5 +1,7 @@
 package mhcs.dan;
 
+import mhcs.blaed.DataRecordedEvent;
+import mhcs.blaed.ModuleDataChecker;
 import mhcs.danielle.MinimumConfiguration;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -88,6 +90,10 @@ public class Logging { // !implements EntryPoint
                     ModuleList.addModule(newModule);
                     histogram.update(newModule.getType(), Histogram.Type.ADD);
                     // need to add an event so that we know when a module is recorded.
+                    ModuleDataChecker monitor = new ModuleDataChecker();
+                    DataRecordedEvent newModuleEvent = new DataRecordedEvent(newModule);
+                    monitor.fireEvent(newModuleEvent);
+                    
                 } catch (NumberFormatException e) {
                     Window.alert("Input Not A Number");
                 } catch (Exception e) {

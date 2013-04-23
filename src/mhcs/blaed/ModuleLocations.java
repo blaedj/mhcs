@@ -28,10 +28,12 @@ public class ModuleLocations {
     private Grid landingAreaGrid;
     //private DecoratorPanel decImage;
 
+    
+    
     public Panel createMainPanel(){
 	intitializeMembers();
 
-	ArrayList<Module> moduleList = getModuleList();
+	final ArrayList<Module> moduleList = getModuleList();
 
 	for (int i = 0; i < landingAreaGrid.getRowCount(); i++) {
 	    for (int j = 0; j < landingAreaGrid.getColumnCount(); j++) {
@@ -46,7 +48,16 @@ public class ModuleLocations {
 
 	containerPanel.add(landingAreaGrid);
 	containerPanel.addStyleName("landingMap");
+	
+	containerPanel.addHandler(new DataRecordedEventHandler() {
 
+		@Override
+		public void onDataRecorded(DataRecordedEvent event) {
+			plotModuleLocations(moduleList, landingAreaGrid);
+		}
+		
+	}, DataRecordedEvent.TYPE);
+	
 	return containerPanel;
     }
 
@@ -60,7 +71,9 @@ public class ModuleLocations {
 	// set the button's image according to the type of the module? or just a dot w/a number
 	// add a clickEventHandler to each button that calls a popup w/ details by module number.
 	// add each button to the grid based on coordinates.
-	Module module;
+
+    mapGrid.clear();
+   	Module module;
 	for (int i = 0; i < moduleList.size(); i++) {
 	    // make a new button
 	    module = moduleList.get(i);
@@ -108,19 +121,15 @@ public class ModuleLocations {
     }
 
     private ArrayList<Module> getModuleList() {
-	/**
-	 * TODO method stub, finish this when module class is figured out.
-	 */
-	//	ModuleList list = new ModuleList();
-	//list[0] = new HabitatModule(9, 3, 20);
 
-	//assert list[0] != null;
-	// HabitatModule(x, y, code)
-	ModuleList.addModule(new Module("21", "fine", "0", "0", "0"));
-	ModuleList.addModule(new Module("22", "fine", "0", "1", "0"));
+  	/// for testing only
+   	ModuleList.addModule(new Module("21", "fine", "2", "3", "0"));
+	ModuleList.addModule(new Module("22", "fine", "1", "1", "0"));
 	ModuleList.addModule(new Module("23", "fine", "10", "13", "0"));
 	ModuleList.addModule(new Module("24", "fine", "8", "2", "0"));
 	ModuleList.addModule(new Module("25", "fine", "42", "17", "0"));
+	/// for testing only
+	
 	return ModuleList.moduleList;
     }
 }

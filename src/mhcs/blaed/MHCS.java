@@ -28,14 +28,7 @@ public class MHCS implements EntryPoint {
      */
     public final void onModuleLoad() {
 	
-    ModuleList moduleList = new ModuleList(); 	
-    	
-	ModuleList.addModule(new Module("21", "fine", "0", "0", "0"));
-	ModuleList.addModule(new Module("22", "fine", "0", "1", "0"));
-	ModuleList.addModule(new Module("23", "fine", "10", "13", "0"));
-	moduleList.addModule(new Module("24", "fine", "8", "2", "0"));
-	moduleList.addModule(new Module("25", "fine", "42", "17", "0"));
-	
+    ModuleList moduleList = new ModuleList();
 	RootPanel.get().add(getMainPanel());
 
     }
@@ -54,13 +47,17 @@ public class MHCS implements EntryPoint {
 	FlowPanel moduleLocationsWrapper = new FlowPanel();
 
 	Logging logPage = new Logging();
-	MinimumConfigPage minConfig = new MinimumConfigPage();
+
 	ModuleLocations locations = new ModuleLocations();
 
 	TextBox textbox = new TextBox();
 	textbox.setText("test Text");
 
+	MinimumConfigPage minConfig = new MinimumConfigPage();
 	minConfigWrapper.add(minConfig.createMinConfig());
+
+	
+	
 	loggingPageWrapper.add(logPage.getLoggingPage());
 	moduleLocationsWrapper.add(locations.createMainPanel());
 

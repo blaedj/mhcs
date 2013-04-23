@@ -18,6 +18,7 @@ public class ModuleList extends ArrayList<Module> {
      */
     public ModuleList() {
     moduleList = new ArrayList<Module>();
+    //Storage storage = Storage.getLocalStorageIfSupported();
     }
 
     public static int length() {
