@@ -22,7 +22,7 @@ public class ModuleList extends ArrayList<Module> {
     }
 
     public static int length() {
-    	return ModuleList.length();
+    	return moduleList.size();
     }
 
     public static void addModule(Module module) {
