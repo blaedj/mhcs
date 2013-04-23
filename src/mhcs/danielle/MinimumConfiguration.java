@@ -185,10 +185,7 @@ public class MinimumConfiguration{
 			}
 			Minimum min = new Minimum(str,pt);
 			minArray.add(min);
-			
 		}
-		
-		
 	}
 	public void setSecondConfig(){
 		int total = 10;
@@ -196,7 +193,7 @@ public class MinimumConfiguration{
 		int valuey = 0;
 		String str = "";
 		
-		for(int i = 0; i < total; i++){
+		for(int i = 0; i < total; i++){	
 			
 			Point pt = new Point(valuex, valuey);
 			if((i >=0)&&(i < 3)){

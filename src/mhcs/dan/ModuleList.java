@@ -18,6 +18,7 @@ public class ModuleList extends ArrayList<Module> {
      */
     public ModuleList() {
     moduleList = new ArrayList<Module>();
+    //Storage storage = Storage.getLocalStorageIfSupported();
     }
 
     public static int length() {
@@ -27,7 +28,9 @@ public class ModuleList extends ArrayList<Module> {
     public static void addModule(Module module) {
 
     	moduleList.add(module);
-    	Storage modListLocal = Storage.getLocalStorageIfSupported();
+    	Storage modListLocal = Storage.getSessionStorageIfSupported(); 
+    	//Storage modListLocal = Storage.getLocalStorageIfSupported();
+    	
     	modListLocal.setItem(module.getCode(), "{" +
     	"moduleType: " + module.getType().toString() + ",\n" +
     	"xCoord: " + module.getXCoor() + ",\n" +

@@ -78,7 +78,6 @@ public class MinimumConfigPage implements EntryPoint {
 							+"\nY coordinate: "+item.getYCoor()+"\n"
 							+"\nDamage: "+item.getDamage()
 							+"\nTurns to upright: "+item.getTurns());
-					
 				}
 	    	  });
 	      }
@@ -112,7 +111,13 @@ public class MinimumConfigPage implements EntryPoint {
 	    	  }else{
 	    		  im = new Image("images/storage.jpg");
 	    	  }
+
 	    	  im.setSize("5px", "5px");
+
+
+	    	  assert coorcalc.xCoorGrid() >= 0;
+	    	  assert coorcalc.yCoorGrid() >= 0;
+
 	    	  imageGrid.setWidget(coorcalc.xCoorGrid(), coorcalc.yCoorGrid(), im);
 	      }
 
@@ -139,11 +144,8 @@ public class MinimumConfigPage implements EntryPoint {
 	      horiz.add(decImage);
 	      horiz.add(grid);
 
-	      // Add the widgets to the root panel.
-	      //RootPanel.get().add(horiz);
 	      FlowPanel wrapper = new FlowPanel();
 	      wrapper.add(horiz);
-	      //return horiz;
 	      return wrapper;
 	   }
 	
