@@ -115,10 +115,9 @@ public class MinimumConfigPage implements EntryPoint {
 
 	    	  im.setSize("5px", "5px");
 
-
-	    	  assert coorcalc.xCoorGrid() >= 0;
 	    	  assert coorcalc.yCoorGrid() >= 0;
-
+	    	  assert coorcalc.xCoorGrid() >= 0;
+	    	  
 	    	  imageGrid.setWidget(coorcalc.xCoorGrid(), coorcalc.yCoorGrid(), im);
 	      }
 
