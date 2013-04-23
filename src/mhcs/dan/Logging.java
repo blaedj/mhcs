@@ -87,6 +87,7 @@ public class Logging { // !implements EntryPoint
                                             turnsListBox.getSelectedIndex()));
                     ModuleList.addModule(newModule);
                     histogram.update(newModule.getType(), Histogram.Type.ADD);
+                    // need to add an event so that we know when a module is recorded.
                 } catch (NumberFormatException e) {
                     Window.alert("Input Not A Number");
                 } catch (Exception e) {

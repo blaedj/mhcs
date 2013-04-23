@@ -28,7 +28,7 @@ public class MinimumConfiguration{
 	private Module temp;
 	int count;
 
-	ModuleList theList;
+	ArrayList<Module> theList;
 	
 	/**
 	 * MinimumConfiguration constructor creates
@@ -38,12 +38,12 @@ public class MinimumConfiguration{
 	 * This coordinate point is returned as Java 
 	 * coordinates and *not* map coordinates.
 	 * 
-	 * @param theList is the list of modules
+	 * @param moduleList is the list of modules
 	 */
-	public MinimumConfiguration(ModuleList theList){
+	public MinimumConfiguration(ArrayList<Module> moduleList){
 		
-		this.theList = theList;
-		count = theList.size();
+		this.theList = moduleList;
+		count = moduleList.size();
 		allGood = testMinConfig();
 		minArray = new ArrayList<Minimum>();
 		
@@ -181,11 +181,11 @@ public class MinimumConfiguration{
 				valuex = 1;
 				valuey = 0;
 			}
-			assert(str.compareTo("") < 0);
+			//assert(str.compareTo("") < 0);
 			Minimum min = new Minimum(str,pt);
 			minArray.add(min);
 			
-			assert(minArray.size() == 10);
+			//assert(minArray.size() == 10);
 		}
 		
 		
