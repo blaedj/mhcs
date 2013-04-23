@@ -10,15 +10,14 @@ import com.google.gwt.storage.client.Storage;
  *
  */
 public class ModuleList extends ArrayList<Module> {
-//
-    public static ArrayList<Module> moduleList;
+
+     public static ArrayList<Module> moduleList;
 
     /**
      *
      */
     public ModuleList() {
     moduleList = new ArrayList<Module>();
-    //Storage storage = Storage.getLocalStorageIfSupported();
     }
 
     public static int length() {

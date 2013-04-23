@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
 
 
 /**
@@ -28,11 +29,40 @@ public class MHCS implements EntryPoint {
      */
     public final void onModuleLoad() {
 	
-	RootPanel.get().add(getMainPanel());
-
+	//RootPanel.get().add(getMainPanel());
+	RootPanel.get().add(createLogin());
+    
     }
 
-    /*
+    private Widget createLogin() {
+		final TextBox tb = new TextBox();
+	    final PasswordTextBox ptb = new PasswordTextBox();
+	    Button confirm = new Button("Confirm");
+	    FlexTable t = new FlexTable();
+	    t.setText(0,0,"Username");
+	    t.setText(0,5,"Password");
+	    t.setWidget(1,0,tb);
+	    t.setWidget(1,5,ptb); 
+	    t.setWidget(1,6,confirm);
+	    confirm.addClickHandler(new ClickHandler() {
+	    	//checks to see if password is mars and if username is Dalton, Blaed, Dan or Danielle
+        public void onClick(ClickEvent event) {
+        	final String s = ptb.getText();
+        	final String s2 = tb.getText();
+        	 if(!s.equals("mars"))         	 
+        	 Window.alert("Wrong Password. Try Again");
+        	 else if (!s2.equals("Astro"))
+        		 Window.alert("Wrong Username. Try again");
+        	 else
+        		 Window.alert("Log In Correct");
+        		 
+        }
+	    });
+		
+    	return null;
+	}
+
+	/*
      * creates the bare skeleton for a main panel
      * @return baseTabPanel the main tabbed panel
      */
