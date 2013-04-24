@@ -79,7 +79,6 @@ public class MHCS implements EntryPoint {
     	RootPanel.get().remove(toRemove);
     	panel.setVisible(true);
     	RootPanel.get().add(panel);
-
     }
     
 	/*
@@ -99,10 +98,10 @@ public class MHCS implements EntryPoint {
 
 	ModuleLocations locations = new ModuleLocations();
 
-//	FlowPanel minConfigWrapper = new FlowPanel();
-//	MinimumConfigPage minConfig = new MinimumConfigPage();
-//	minConfigWrapper.add(minConfig.createMinConfig());
-//	baseTabPanel.add(minConfigWrapper, "Minimum Configuration");	
+	FlowPanel minConfigWrapper = new FlowPanel();
+	MinimumConfigPage minConfig = new MinimumConfigPage();
+	minConfigWrapper.add(minConfig.createMinConfig());
+	baseTabPanel.add(minConfigWrapper, "Minimum Configuration");	
 	
 	loggingPageWrapper.add(logPage.getLoggingPage());
 	moduleLocationsWrapper.add(locations.createMainPanel());
@@ -110,8 +109,6 @@ public class MHCS implements EntryPoint {
 
 	baseTabPanel.add(loggingPageWrapper, "Module Logging Page");
 	baseTabPanel.add(moduleLocationsWrapper, "View Module locations");
-
-
 
 	baseTabPanel.selectTab(0);
 
