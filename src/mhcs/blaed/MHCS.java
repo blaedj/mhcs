@@ -6,7 +6,13 @@ import mhcs.dan.ModuleList;
 import mhcs.danielle.MinimumConfigPage;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabBar;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -29,40 +35,51 @@ public class MHCS implements EntryPoint {
      */
     public final void onModuleLoad() {
 	
-	RootPanel.get().add(getMainPanel());
-	//RootPanel.get().add(createLogin());
+	//RootPanel.get().add(getMainPanel());
+    	RootPanel.get().add(createLogin());
     
     }
 
-//    private Widget createLogin() {
-//		final TextBox tb = new TextBox();
-//	    final PasswordTextBox ptb = new PasswordTextBox();
-//	    Button confirm = new Button("Confirm");
-//	    FlexTable t = new FlexTable();
-//	    t.setText(0,0,"Username");
-//	    t.setText(0,5,"Password");
-//	    t.setWidget(1,0,tb);
-//	    t.setWidget(1,5,ptb); 
-//	    t.setWidget(1,6,confirm);
-//	    confirm.addClickHandler(new ClickHandler() {
-//	    	//checks to see if password is mars and if username is Dalton, Blaed, Dan or Danielle
-//        public void onClick(ClickEvent event) {
-//        	final String s = ptb.getText();
-//        	final String s2 = tb.getText();
-//        	 if(!s.equals("mars"))         	 
-//        	 Window.alert("Wrong Password. Try Again");
-//        	 else if (!s2.equals("Astro"))
-//        		 Window.alert("Wrong Username. Try again");
-//        	 else
-//
-//        }
-//	    });
-//		
-//    	return null;
-//	}
-//
-    private void logIn(){
-    	//RootPanel.get().rem
+    /**
+     * 
+     * @return
+     */
+    private Widget createLogin() {
+		final TextBox tb = new TextBox();
+	    final PasswordTextBox ptb = new PasswordTextBox();
+	    Button confirm = new Button("Confirm");
+	    final FlexTable mainTable = new FlexTable();
+	    mainTable.setText(0,0,"Username");
+	    mainTable.setText(0,5,"Password");
+	    mainTable.setWidget(1,0,tb);
+	    mainTable.setWidget(1,5,ptb); 
+	    mainTable.setWidget(1,6,confirm);
+	    confirm.addClickHandler(new ClickHandler() {
+	    	//checks to see if password is mars and if username is Dalton, Blaed, Dan or Danielle
+        public void onClick(ClickEvent event) {
+        	final String password = ptb.getText();
+        	final String userName = tb.getText();
+        	 if(!password.equals("mars"))         	 
+        	 Window.alert("Wrong Password. Try Again");
+        	 else if (!userName.equals("Astro")){
+        		 Window.alert("Wrong Username. Try again");        		 
+        	 }
+        	 else {
+        		 // everything is correct!
+        		 logIn(mainTable);
+        	 }
+        }
+	    });
+	    return mainTable;
+    }
+
+    private void logIn(Widget toRemove){
+    	TabPanel panel = getMainPanel();
+    	panel.setVisible(false);
+    	RootPanel.get().remove(toRemove);
+    	panel.setVisible(true);
+    	RootPanel.get().add(panel);
+
     }
     
 	/*
