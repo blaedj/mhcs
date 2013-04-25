@@ -1,4 +1,4 @@
- package mhcs.blaed;
+package mhcs.blaed;
 
 import mhcs.dan.Logging;
 import mhcs.dan.Module;
@@ -28,51 +28,59 @@ public class MHCS implements EntryPoint {
 
     private TabPanel baseTabPanel;
     private TabBar baseTabBar;
-    public static ModuleList moduleList;
+    //public static ModuleList moduleList;
     /*
      *
      * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
      */
     public final void onModuleLoad() {
-	
+
 	//RootPanel.get().add(getMainPanel());
     	RootPanel.get().add(createLogin());
-    
+
+    }
+
+    /**
+     *
+     * @return a widget that wraps the login page interface
+     */
+    private Widget createLogin() {
+	final TextBox tb = new TextBox();
+	final PasswordTextBox ptb = new PasswordTextBox();
+	Button confirm = new Button("Confirm");
+	final FlexTable mainTable = new FlexTable();
+	mainTable.setText(0,0,"Username");
+	mainTable.setText(0,5,"Password");
+	mainTable.setWidget(1,0,tb);
+	mainTable.setWidget(1,5,ptb);
+	mainTable.setWidget(1,6,confirm);
+	confirm.addClickHandler(new ClickHandler() {
+	    	//checks to see if password is mars and if username is Dalton, Blaed, Dan or Danielle
+		public void onClick(ClickEvent event) {
+		    final String password = ptb.getText();
+		    final String userName = tb.getText();
+		    if(!password.equals("mars"))
+			Window.alert("Wrong Password. Try Again");
+		    else if (!userName.equals("Astro")){
+			Window.alert("Wrong Username. Try again");
+		    }
+		    else {
+			// everything is correct!
+			logIn(mainTable);
+		    }
+		}
+	    });
+	return mainTable;
     }
 
     /**
      * 
-     * @return
+     * Remove the 'login' widget from the root panel and adds the mainpanel
+     * @param the widget to remove from the login screen,
+     * should be the login page widget,
+     * @pre the login was successful
+     * @post the main tabpanel is visible 
      */
-    private Widget createLogin() {
-		final TextBox tb = new TextBox();
-	    final PasswordTextBox ptb = new PasswordTextBox();
-	    Button confirm = new Button("Confirm");
-	    final FlexTable mainTable = new FlexTable();
-	    mainTable.setText(0,0,"Username");
-	    mainTable.setText(0,5,"Password");
-	    mainTable.setWidget(1,0,tb);
-	    mainTable.setWidget(1,5,ptb); 
-	    mainTable.setWidget(1,6,confirm);
-	    confirm.addClickHandler(new ClickHandler() {
-	    	//checks to see if password is mars and if username is Dalton, Blaed, Dan or Danielle
-        public void onClick(ClickEvent event) {
-        	final String password = ptb.getText();
-        	final String userName = tb.getText();
-        	 if(!password.equals("mars"))         	 
-        	 Window.alert("Wrong Password. Try Again");
-        	 else if (!userName.equals("Astro")){
-        		 Window.alert("Wrong Username. Try again");        		 
-        	 }
-        	 else {
-        		 // everything is correct!
-        		 logIn(mainTable);
-        	 }
-        }
-	    });
-	    return mainTable;
-    }
-
     private void logIn(Widget toRemove){
     	TabPanel panel = getMainPanel();
     	panel.setVisible(false);
@@ -80,9 +88,10 @@ public class MHCS implements EntryPoint {
     	panel.setVisible(true);
     	RootPanel.get().add(panel);
     }
-    
-	/*
-     * creates the bare skeleton for a main panel
+
+    /**	
+     * Creates the main panel interface, grabs all the pages
+     * needed and puts them into tabs.
      * @return baseTabPanel the main tabbed panel
      */
     private TabPanel getMainPanel() {
@@ -90,7 +99,7 @@ public class MHCS implements EntryPoint {
 	baseTabPanel   =  new TabPanel();
 	baseTabBar     = baseTabPanel.getTabBar();
 
-	
+
 	FlowPanel loggingPageWrapper = new FlowPanel();
 	FlowPanel moduleLocationsWrapper = new FlowPanel();
 
@@ -101,8 +110,8 @@ public class MHCS implements EntryPoint {
 	FlowPanel minConfigWrapper = new FlowPanel();
 	MinimumConfigPage minConfig = new MinimumConfigPage();
 	minConfigWrapper.add(minConfig.createMinConfig());
-	baseTabPanel.add(minConfigWrapper, "Minimum Configuration");	
-	
+	baseTabPanel.add(minConfigWrapper, "Minimum Configuration");
+
 	loggingPageWrapper.add(logPage.getLoggingPage());
 	moduleLocationsWrapper.add(locations.createMainPanel());
 
@@ -119,9 +128,10 @@ public class MHCS implements EntryPoint {
 	return baseTabPanel;
     }
 
-    /* switches the state of the tab, if enable then disable and vice versa
+    /**
+     * switches the state of the tab, if enable then disable and vice versa
      * @param tabIndex int the index of the tab to toggle
-     * @post the disabled/enabled state of the tab is switched
+     * @post the disabled/enabled state of the tab is opposite its pre-method state
      */
     public final void toggleTab(final int tabIndex) {
 	if (baseTabBar.isTabEnabled(tabIndex)) {
@@ -130,10 +140,4 @@ public class MHCS implements EntryPoint {
 	    baseTabBar.setTabEnabled(tabIndex, true);
 	}
     }
-
-    public final void setTabContents(final FlowPanel contents, final String title, final int tabIndex) {
-	baseTabBar.insertTab(contents, tabIndex - 1);
-	baseTabBar.removeTab(tabIndex);
-    }
-
 } // end MHCS
