@@ -11,35 +11,11 @@ import com.google.gwt.storage.client.Storage;
  */
 public class ModuleList extends ArrayList<Module> {
 
-	public static ArrayList<Module> moduleList;
+	public static ModuleList moduleList = new ModuleList();
 
-	/**
-	 *
-	 */
-	public ModuleList() {
-		moduleList = new ArrayList<Module>();
-	}
 
 	public static int length() {
 		return moduleList.size();
-	}
-
-	public static void addModule(Module module) {
-
-		moduleList.add(module);
-		Storage modListLocal = Storage.getSessionStorageIfSupported(); 
-		//Storage modListLocal = Storage.getLocalStorageIfSupported();
-
-		modListLocal.setItem(module.getCode(), "{" +
-				"moduleType: " + module.getType().toString() + ",\n" +
-				"xCoord: " + module.getXCoor() + ",\n" +
-				"yCoord: " + module.getYCoor() + ",\n" +
-				"damage: " + module.getDamage() + ",\n" +
-				"turns: " + module.getDamage() + ",\n" +"}");
-	}
-
-	public static ModuleList getModuleList(){
-		return null;//ModuleList;
 	}
 
 	/**

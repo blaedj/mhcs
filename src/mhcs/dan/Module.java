@@ -13,16 +13,24 @@ public class Module {
      *
      */
     public enum ModuleType {
-        PLAIN,
-        DORMITORY,
-        SANITATION,
-        FOOD_AND_WATER,
-        GYM_AND_RELAXATION,
-        CANTEEN,
-        POWER,
-        CONTROL,
-        AIRLOCK,
-        MEDICAL
+        PLAIN("plain"),
+        DORMITORY("dormitory"),
+        SANITATION("sanitation"),
+        FOOD_AND_WATER("food and water"),
+        GYM_AND_RELAXATION("gym and relaxation"),
+        CANTEEN("canteen"),
+        POWER("power"),
+        CONTROL("control"),
+        AIRLOCK("airlock"),
+        MEDICAL("medical");
+        
+        private String str;
+        
+        ModuleType(String str) {this.str = str;}
+        
+        public String toString() {
+        	return str;
+        }
     }
 
     private ModuleType type;

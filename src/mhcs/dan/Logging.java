@@ -1,25 +1,17 @@
 package mhcs.dan;
 
-//import mhcs.blaed.DataRecordedEvent;
-//import mhcs.blaed.ModuleDataChecker;
-import mhcs.danielle.MinimumConfiguration;
-
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -61,12 +53,6 @@ public class Logging { // !implements EntryPoint
     private Button confirmDeleteButton;
     private Button closeDeleteButton;
     private Histogram histogram;
-    private PopupPanel minConfig;
-    private FlowPanel minConfigAlert;
-    private Label alertLabel;
-    private Button alertB1;
-    private Button alertB2;
-    private ModuleList moduleList;
 
     public Logging() {
 
@@ -87,12 +73,8 @@ public class Logging { // !implements EntryPoint
                                     xCoorBox.getText(), yCoorBox.getText(),
                                     turnsListBox.getItemText(
                                             turnsListBox.getSelectedIndex()));
-                    ModuleList.addModule(newModule);
+                    ModuleList.moduleList.add(newModule);
                     histogram.update(newModule.getType(), Histogram.Type.ADD);
-
-//                    ModuleDataChecker monitor = new ModuleDataChecker();
-//                    DataRecordedEvent newModuleEvent = new DataRecordedEvent(newModule);
-//                    monitor.fireEvent(newModuleEvent);
                     
                 } catch (NumberFormatException e) {
                 	Window.alert("Input Not A Number");
@@ -104,15 +86,6 @@ public class Logging { // !implements EntryPoint
                 xCoorBox.setText("");
                 yCoorBox.setText("");
                 turnsListBox.setSelectedIndex(0);
-                MinimumConfiguration minTmp = new MinimumConfiguration(moduleList);
-                if(minTmp.testMinConfig()){
-                	minConfig.addCloseHandler(new CloseHandler<PopupPanel>() {
-    					@Override
-    					public void onClose(CloseEvent<PopupPanel> event) {
-    						
-    					}
-    				});
-                }
             }
         });
 
@@ -129,10 +102,6 @@ public class Logging { // !implements EntryPoint
                         ModuleList.moduleList.get(Integer.valueOf(
                                 moduleListBox.getSelectedIndex())).getType(),
                                 Histogram.Type.DELETE);
-                //ModuleDataChecker monitor = new ModuleDataChecker();
-                //DataRecordedEvent newModuleEvent = new DataRecordedEvent(ModuleList.moduleList.get(Integer.valueOf(
-                //                moduleListBox.getSelectedIndex())));
-                //monitor.fireEvent(newModuleEvent);
                 
                 ModuleList.moduleList.remove(
                         ModuleList.moduleList.get(Integer.valueOf(
@@ -196,7 +165,6 @@ public class Logging { // !implements EntryPoint
         damageInfoLabel = new Label("Damage:");
         orientationInfoLabel = new Label("Orientation:");
         typeInfoLabel = new Label("Type:");
-        moduleList = new ModuleList();
         moduleListBox = new ListBox();
         deleteTitle = new Label("Delete Module");
         deleteLeftPanel = new VerticalPanel();
@@ -223,16 +191,6 @@ public class Logging { // !implements EntryPoint
         confirmDeleteButton = new Button("Delete Module");
         closeDeleteButton = new Button("Close");
         histogram = new Histogram();
-        minConfig = new PopupPanel();
-        minConfigAlert = new FlowPanel();
-        alertB1 = new Button("OK");
-        alertB2 = new Button("See Min Configuration");
-        alertLabel = new Label("Minimum Configuration is Available");
-        minConfig = new PopupPanel();
-        minConfigAlert = new FlowPanel();
-        alertB1 = new Button("OK");
-        alertB2 = new Button("See Min Configuration");
-        alertLabel = new Label("Minimum Configuration is Available");
     }
 
     /**
@@ -290,11 +248,6 @@ public class Logging { // !implements EntryPoint
         mainPanel.setPixelSize(800, 400);
         mainPanel.add(backgroundPanel);
         mainPanel.add(deletePanel, 50, 50);
-        
-        minConfigAlert.add(alertLabel);
-        minConfigAlert.add(alertB1);
-        minConfigAlert.add(alertB2);
-        minConfig.add(minConfigAlert);
     }
 
     /**
@@ -373,7 +326,7 @@ public class Logging { // !implements EntryPoint
      */
     private void populateModuleListBox() {
         moduleListBox.clear();
-        for (Module mod : moduleList) {
+        for (Module mod : ModuleList.moduleList) {
             moduleListBox.addItem(mod.getCode());
         }
     }
