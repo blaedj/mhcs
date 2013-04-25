@@ -1,36 +1,49 @@
 package mhcs.danielle;
 
+import mhcs.dan.Module.ModuleType;
+
 import com.google.gwt.touch.client.Point;
 
 /**
  * This private class Minimum is a module type (enum Code)
- * and a Point with x/y coordinate corresponding to Java 
+ * and a Point with x/y coordinate corresponding to Java.
  * coordinate system for the display grid.
  */
 public class Minimum {
-	
-	private String code;
-	private Point pt;
-	
-	public Minimum(String code, Point pt){
-		this.code = code;
-		this.pt = pt;
-	}
-	
+    /**
+	 * String is code describing module.
+	 */
+	private final ModuleType code;
+
 	/**
-	 * getCode returns the enum Code of this Minimum
+	 * Point is point on Grid.
+	 */
+	private final Point point;
+
+	/**
+	 * Constructor.
+	 * @param code string
+	 * @param point point
+	 */
+	public Minimum(final ModuleType code, final Point point) {
+		this.code = code;
+		this.point = point;
+	}
+
+	/**
+	 * getCode returns the enum Code of this Minimum.
 	 * @return code (enum Code)
 	 */
-	public String getCode(){
+	public final ModuleType getCode() {
 		return code;
 	}
-	
+
 	/**
-	 * getPoint returns the (x,y) coordinate of this Minimum
+	 * getPoint returns the (x,y) coordinate of this Minimum.
 	 * @return (x,y) coordinate (Point)
 	 */
-	public Point getPoint(){
-		return pt;
+	public final Point getPoint() {
+		return point;
 	}
-	
+
 }

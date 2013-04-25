@@ -4,9 +4,24 @@ import com.google.gwt.user.client.Window;
 
 public class CoordinateCalculator {
 	
+	/**
+	 * xcoorMap is the coordinate of the module on landing area map.
+	 */
 	private int xcoorMap; 
+	
+	/**
+	 * ycoorMap is the coordinate of the module on landing area map. 
+	 */
 	private int ycoorMap;
+	
+	/**
+	 * xcoorGrid is the new x coordinate for the grid (column number).
+	 */
 	private int xcoorGrid;
+	
+	/**
+	 * ycoorGrid is the new y coordinate for the grid (row number).
+	 */
 	private int ycoorGrid;
 	
 	/**
@@ -47,6 +62,8 @@ public class CoordinateCalculator {
 			ycoorGrid = 0;
 		}else if(ycoorMap < 0){
 			Window.alert("Map coordinate y should never be negative!");
+			ycoorGrid = 0;
+		} else if (ycoorMap == 0) {
 			ycoorGrid = 0;
 		}else{
 			ycoorGrid = 50 - ycoorMap;
