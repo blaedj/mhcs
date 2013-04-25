@@ -77,7 +77,10 @@ public class MinimumConfiguration{
 	 * Tests to see if min config is possible
 	 * @return bool showing if min config is possible
 	 */
-	public boolean testMinConfig(){
+	public static boolean testMinConfig(){
+		ArrayList<Module> theList = ModuleList.moduleList;
+		int count = theList.size();
+		Module temp;
 		// Code code;
 		int i = 0;
 		boolean allGood = true;
@@ -97,49 +100,49 @@ public class MinimumConfiguration{
 			temp = theList.get(i);
 			/**
 			 * Counts each module type in our list
+			 * Need 3 plain and 1 of each non-plain type
 			 * 
 			 * index - code value
-			 * 0....plain
-			 * 1....med
-			 * 2....power
-			 * 3....storage	
-			 * 4....air
-			 * 5....canteen
-			 * 6....dorm
-			 * 7....sanitation
-			 * 8....gym
-			 * 9....control
+			 * 0....plain (need 3)
+			 * 1....power 
+			 * 2....storage	
+			 * 3....air
+			 * 4....canteen
+			 * 5....dorm
+			 * 6....sanitation
+			 * 7....control
 			 */
 			ModuleType codeTmp = temp.getType();
 			if(codeTmp.equals(ModuleType.PLAIN)){
 				codes[0]++;
-			}else if(codeTmp.equals(ModuleType.MEDICAL)){
-				codes[1]++;
 			}else if(codeTmp.equals(ModuleType.POWER)){
-				codes[2]++;
+				codes[1]++;
 			}else if(codeTmp.equals(ModuleType.FOOD_AND_WATER)){
-				codes[3]++;
+				codes[2]++;
 			}else if(codeTmp.equals(ModuleType.AIRLOCK)){
-				codes[4]++;
+				codes[3]++;
 			}else if(codeTmp.equals(ModuleType.CANTEEN)){
-				codes[5]++;
+				codes[4]++;
 			}else if(codeTmp.equals(ModuleType.DORMITORY)){
-				codes[6]++;
+				codes[5]++;
 			}else if(codeTmp.equals(ModuleType.SANITATION)){
-				codes[7]++;
-			}else if(codeTmp.equals(ModuleType.GYM_AND_RELAXATION)){
-				codes[8]++;
+				codes[6]++;
 			}else if(codeTmp.equals(ModuleType.CONTROL)){
-				codes[9]++;
+				codes[7]++;
 			}
 
 		}
-
+		// If we don't have 3 plain, we can't have a min
+		if(codes[0] == 3) {
 		// Test to make sure we aren't missing any modules
-		for(i = 0; i < 10; i++){
-			if(codes[i]==0){
-				allGood = false;
+			for(i = 1; i < 8; i++){
+			
+				if(codes[i]==0){
+					allGood = false; // There is a module missing
+				}
 			}
+		}else { // there isn't 3 plain
+			allGood = false;
 		}
 		return allGood;
 	}
