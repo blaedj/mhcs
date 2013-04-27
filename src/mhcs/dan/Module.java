@@ -40,6 +40,20 @@ public class Module {
     private String ycoor;
     private String turns;
 
+    @Override
+    public boolean equals(Object aThat){
+    	if (this == aThat){ return true; }
+    	if(! (aThat instanceof Module)) { return false; }
+    	Module that = (Module)aThat;
+    	return (
+    			this.getCode() == that.getCode() &&
+    			this.getDamage() == that.getDamage() &&
+    			this.getXCoor() == that.getXCoor() &&
+    			this.getYCoor() == that.getYCoor() &&
+    			this.getTurns() == that.getTurns()
+    			);
+    }
+    
     /**
      *
      * @param code the code of the module
