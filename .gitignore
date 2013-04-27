@@ -12,6 +12,8 @@ gwt-unitCache/
 .settings/
 .checkstyle
 doc/
+www-test/
+war/mhcs.MHCS.JUnit/
 
 # boilerplate generated classes #
 .apt_generated/
@@ -19,3 +21,7 @@ doc/
 # more caches and things from deploy #
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
+~*.*
+/test-classes/mhcs/blaed/test/placeholder.txt
+/test/mhcs/blaed/test/.#SaveLoggedModulesTest.java
+/test/mhcs/blaed/test/placeholder.txt
