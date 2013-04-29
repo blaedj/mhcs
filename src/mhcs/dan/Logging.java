@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -53,10 +54,28 @@ public class Logging { // !implements EntryPoint
     private Button confirmDeleteButton;
     private Button closeDeleteButton;
     private Histogram histogram;
+    private Grid icons;
+    private Image airlock;
+    private Image canteen;
+    private Image control;
+    private Image dorm;
+    private Image gym;
+    private Image med;
+    private Image plain;
+    private Image power;
+    private Image sanitation;
+    private Image storage;
+    private int thumbDim;
+    private VerticalPanel histogramPanel;
 
+    /**
+     * constructor for logging page.
+     */
     public Logging() {
 
         makeEverything();
+
+        histogram.update();
 
         enterButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
@@ -75,9 +94,9 @@ public class Logging { // !implements EntryPoint
                                             turnsListBox.getSelectedIndex()));
                     ModuleList.moduleList.add(newModule);
                     histogram.update(newModule.getType(), Histogram.Type.ADD);
-                    
+
                 } catch (NumberFormatException e) {
-                	Window.alert("Input Not A Number");
+                    Window.alert("Input Not A Number");
                 } catch (Exception e) {
                     Window.alert(e.getMessage());
                 }
@@ -102,16 +121,16 @@ public class Logging { // !implements EntryPoint
                         ModuleList.moduleList.get(Integer.valueOf(
                                 moduleListBox.getSelectedIndex())).getType(),
                                 Histogram.Type.DELETE);
-                
+
                 ModuleList.moduleList.remove(
                         ModuleList.moduleList.get(Integer.valueOf(
-                        moduleListBox.getSelectedIndex())));
+                                moduleListBox.getSelectedIndex())));
                 populateModuleListBox();
                 locationInfoLabel.setText("Location:");
                 damageInfoLabel.setText("Damage:");
                 orientationInfoLabel.setText("Orientation:");
                 typeInfoLabel.setText("Type:");
-                
+
             }
         });
 
@@ -129,12 +148,12 @@ public class Logging { // !implements EntryPoint
             public void onChange(final ChangeEvent event) {
                 if (!ModuleList.moduleList.isEmpty()) {
                     Module mod =  ModuleList.moduleList.get(
-                    		ModuleList.getIndexByCode(
-                    				moduleListBox.getItemText(
-                    						moduleListBox.getSelectedIndex())));
+                            ModuleList.getIndexByCode(
+                                    moduleListBox.getItemText(
+                                            moduleListBox.getSelectedIndex())));
                     locationInfoLabel.setText(
-                    		"Location: (" + mod.getXCoor() + ", "
-                    				+ mod.getYCoor() + ")");
+                            "Location: (" + mod.getXCoor() + ", "
+                                    + mod.getYCoor() + ")");
                     damageInfoLabel.setText("Damage: " + mod.getDamage());
                     orientationInfoLabel.setText(
                             "Orientation: " + mod.getTurns() + " flips");
@@ -174,6 +193,7 @@ public class Logging { // !implements EntryPoint
         deletePanel = new VerticalPanel();
         backgroundPanel = new HorizontalPanel();
         loggingPanel = new DecoratorPanel();
+        histogramPanel = new VerticalPanel();
         mainPanel = new AbsolutePanel();
         grid = new Grid(12, 1);
         codeLabel = new Label("Module Code");
@@ -191,10 +211,33 @@ public class Logging { // !implements EntryPoint
         confirmDeleteButton = new Button("Delete Module");
         closeDeleteButton = new Button("Close");
         histogram = new Histogram();
+        icons = new Grid(1, 10);
+        icons.setCellPadding(0);
+        thumbDim = 50;
+        airlock = new Image("images/airlock.jpg");
+        canteen = new Image("images/canteen.png");
+        control = new Image("images/control.jpg");
+        dorm = new Image("images/dorm.jpg");
+        gym = new Image("images/gym.png");
+        med = new Image("images/medical.png");
+        plain = new Image("images/plain.png");
+        power = new Image("images/power.jpg");
+        sanitation = new Image("images/sanitation.jpg");
+        storage = new Image("images/storage.jpg");
+        airlock.setPixelSize(thumbDim, thumbDim);
+        canteen.setPixelSize(thumbDim, thumbDim);
+        control.setPixelSize(thumbDim, thumbDim);
+        dorm.setPixelSize(thumbDim, thumbDim);
+        gym.setPixelSize(thumbDim, thumbDim);
+        med.setPixelSize(thumbDim, thumbDim);
+        plain.setPixelSize(thumbDim, thumbDim);
+        power.setPixelSize(thumbDim, thumbDim);
+        sanitation.setPixelSize(thumbDim, thumbDim);
+        storage.setPixelSize(thumbDim, thumbDim);
     }
 
     /**
-     * 
+     * Places panels within each other for overall structure.
      */
     private void assemblePanels() {
         moduleListBox.setWidth("200px");
@@ -240,10 +283,23 @@ public class Logging { // !implements EntryPoint
         grid.setWidget(9, 0, turnsListBox);
         grid.setWidget(10, 0, enterButton);
         grid.setWidget(11, 0, deleteButton);
+        
+        icons.setWidget(0, 0, plain);
+        icons.setWidget(0, 1, dorm);
+        icons.setWidget(0, 2, sanitation);
+        icons.setWidget(0, 3, storage);
+        icons.setWidget(0, 4, gym);
+        icons.setWidget(0, 5, canteen);
+        icons.setWidget(0, 6, power);
+        icons.setWidget(0, 7, control);
+        icons.setWidget(0, 8, airlock);
+        icons.setWidget(0, 9, med);
 
         loggingPanel.add(grid);
+        histogramPanel.add(histogram.get());
+        histogramPanel.add(icons);
         backgroundPanel.add(loggingPanel);
-        backgroundPanel.add(histogram.get());
+        backgroundPanel.add(histogramPanel);
 
         mainPanel.setPixelSize(800, 400);
         mainPanel.add(backgroundPanel);

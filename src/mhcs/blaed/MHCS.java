@@ -64,7 +64,7 @@ public class MHCS implements EntryPoint {
 				validUsernames.add("Dalton");
 				validUsernames.add("Dan");
 				validUsernames.add("Danielle");
-				if(validUsernames.contains(userName) && password == "mars"){
+				if(validUsernames.contains(userName) && password.equals("mars")){
 					logIn(mainTable);
 				}
 				else {
