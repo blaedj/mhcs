@@ -69,13 +69,13 @@ public class SaveLoggedModulesTest extends GWTTestCase{
 		Module testModule = new Module("20", "undamaged", "2", "3", "0");
 		ModuleList.moduleList.clear();
 		saver.retrieveModuleList("first");
-		
+
 		for(Module mod : ModuleList.moduleList){
 			System.out.println(mod.toString());
 		}
-			System.out.println("\nThis is the testModule: " + testModule.toString() + "\n" );	
-		
-		assertEquals("Failure - the module retrieved does not match expected value", ModuleList.moduleList.get(0).toString(), testModule.toString());
+		System.out.println("\nThis is the testModule: " + testModule.toString() + "\n" );
+		assertTrue("the module list does not contain the expected value.", ModuleList.moduleList.contains(testModule));
+
 	}
 
 

@@ -54,16 +54,9 @@ public class Module {
          */
         MEDICAL("medical");
 
-        /**
-         * string representation of the type.
-         */
         private String str;
 
-        /**
-         * constructor for the type.
-         * @param str string representation of the type.
-         */
-        ModuleType(final String str) {this.str = str;}
+        ModuleType(String str) {this.str = str;}
 
         /**
          * @return str string representation of the type.
@@ -99,17 +92,18 @@ public class Module {
     private String turns;
 
     @Override
-    public final boolean equals(final Object aThat) {
-        if (this == aThat) { return true; }
-        if (!(aThat instanceof Module)) { return false; }
-        Module that = (Module) aThat;
-        return (
-                this.getCode() == that.getCode() &&
-                this.getDamage() == that.getDamage() &&
-                this.getXCoor() == that.getXCoor() &&
-                this.getYCoor() == that.getYCoor() &&
-                this.getTurns() == that.getTurns()
-                );
+
+    public boolean equals(Object aThat){
+    	if (this == aThat){ return true; }
+    	if(! (aThat instanceof Module)) { return false; }
+    	Module that = (Module)aThat;
+    	return (
+		this.getCode().equals(that.getCode()) &&
+		this.getDamage().equals(that.getDamage()) &&
+		this.getXCoor().equals(that.getXCoor()) &&
+		this.getYCoor().equals(that.getYCoor()) &&
+		this.getTurns().equals(that.getTurns())
+		);
     }
 
     /**
@@ -121,7 +115,7 @@ public class Module {
      * @param turns the numbers of turns to orient the module upright
      */
     public Module(final String code, final String damage, final String xcoor,
-            final String ycoor, final String turns) {
+		  final String ycoor, final String turns) {
         this.code = code;
         this.damage = damage;
         this.xcoor = xcoor;

@@ -25,3 +25,15 @@ war/WEB-INF/classes/
 /test-classes/mhcs/blaed/test/placeholder.txt
 /test/mhcs/blaed/test/.#SaveLoggedModulesTest.java
 /test/mhcs/blaed/test/placeholder.txt
+/war/mhcs/gwt-voices.swf
+/war/oldSound/loadsuccessful.mp3
+/war/oldSound/loadsuccessful.wav
+/war/oldSound/logindenied.mp3
+/war/oldSound/logindenied.wav
+/war/oldSound/minconfigready.mp3
+/war/oldSound/minconfigready.wav
+/war/oldSound/saveSuccessful.mp3
+/war/oldSound/saveSuccessful.wav
+/war/oldSound/testwelcome.mp3
+/war/oldSound/welcome.mp3
+/war/oldSound/welcome.wav
