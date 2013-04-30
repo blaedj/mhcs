@@ -63,7 +63,7 @@ public class Module {
          * constructor for the type.
          * @param str string representation of the type.
          */
-        ModuleType(final String str) {this.str = str;}
+        ModuleType(final String astr) {this.str = astr;}
 
         /**
          * @return str string representation of the type.
@@ -100,16 +100,24 @@ public class Module {
 
     @Override
     public final boolean equals(final Object aThat) {
+        // if same object
         if (this == aThat) { return true; }
+        // if not a module object
         if (!(aThat instanceof Module)) { return false; }
         Module that = (Module) aThat;
-        return (
-                this.getCode() == that.getCode() &&
+        // checks for equality in every variable
+        return  this.getCode() == that.getCode() &&
                 this.getDamage() == that.getDamage() &&
                 this.getXCoor() == that.getXCoor() &&
                 this.getYCoor() == that.getYCoor() &&
-                this.getTurns() == that.getTurns()
-                );
+                this.getTurns() == that.getTurns();
+    }
+    
+    /**
+     * because checkstyle told me to.
+     */
+    public int hashCode() {
+        return code.hashCode();
     }
 
     /**
@@ -120,14 +128,15 @@ public class Module {
      * @param ycoor the y coordinate of where the module is located
      * @param turns the numbers of turns to orient the module upright
      */
-    public Module(final String code, final String damage, final String xcoor,
-            final String ycoor, final String turns) {
-        this.code = code;
-        this.damage = damage;
-        this.xcoor = xcoor;
-        this.ycoor = ycoor;
-        this.turns = turns;
+    public Module(final String acode, final String adamage, final String axcoor,
+            final String aycoor, final String aturns) {
+        this.code = acode;
+        this.damage = adamage;
+        this.xcoor = axcoor;
+        this.ycoor = aycoor;
+        this.turns = aturns;
         int codeInt = Integer.parseInt(code);
+        // assign module type based on code
         if (codeInt >= 1 && codeInt <= 40) {
             type = ModuleType.PLAIN;
         } else if (codeInt >= 61 && codeInt <= 80) {
@@ -172,7 +181,7 @@ public class Module {
     }
 
     /**
-     *
+     * Returns the type of the module.
      * @return type the type of module
      */
     public final ModuleType getType() {
@@ -180,7 +189,7 @@ public class Module {
     }
 
     /**
-     *
+     * Returns a string representation of the module.
      * @return a string representation of the module
      */
     public final String toString() {
