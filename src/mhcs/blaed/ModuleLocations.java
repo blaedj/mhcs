@@ -28,8 +28,6 @@ public class ModuleLocations {
 
     private FlowPanel containerPanel;
     private Grid landingAreaGrid;
-    //private DecoratorPanel decImage;
-
 
     /**
      * The main application framework
@@ -178,17 +176,6 @@ public class ModuleLocations {
      * @return the list of modules that have landed.
      */
     private ArrayList<Module> getModuleList() {
-
-    	/// for testing only
-    	//ModuleList.addModule(new Module("21", "fine", "2", "3", "0"));
-
-    	//ModuleList.addModule(new Module("22", "fine", "1", "1", "0"));
-
-    	//ModuleList.addModule(new Module("23", "fine", "10", "13", "0"));
-
-    	//ModuleList.addModule(new Module("24", "fine", "8", "2", "0"));
-    	//ModuleList.addModule(new Module("25", "fine", "42", "17", "0"));
-    	/// for testing only
     	return ModuleList.moduleList;
     }
 }

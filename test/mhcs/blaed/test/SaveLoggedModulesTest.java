@@ -41,10 +41,16 @@ public class SaveLoggedModulesTest extends GWTTestCase{
 	 */
 	private void createTestModules() {
 		ModuleList.moduleList.add(new Module("20", "undamaged", "2", "3", "0"));
-		
 	}
 
-
+	@Test
+	public void testNullList() {
+		localStorage.clear();
+		ModuleList.moduleList.clear();
+		saver.retreiveModuleList();
+		assertTrue(ModuleList.length() == 0);
+	}
+	
 	@Test
 	public void testSaveModuleListLocal() {
 

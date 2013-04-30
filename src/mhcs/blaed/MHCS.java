@@ -40,9 +40,6 @@ public class MHCS implements EntryPoint {
 
 	//RootPanel.get().add(getMainPanel());
 	RootPanel.get().add(createLogin());
-	SoundController sController = new SoundController();
-	Sound sound = sController.createSound(Sound.MIME_TYPE_AUDIO_MPEG_MP3, "sounds/AccessDeniedGuy.mp3");
-	sound.play();
     }
 
     /**
