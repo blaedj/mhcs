@@ -23,11 +23,11 @@ public class Module {
         CONTROL("control"),
         AIRLOCK("airlock"),
         MEDICAL("medical");
-        
+
         private String str;
-        
+
         ModuleType(String str) {this.str = str;}
-        
+
         public String toString() {
         	return str;
         }
@@ -46,14 +46,14 @@ public class Module {
     	if(! (aThat instanceof Module)) { return false; }
     	Module that = (Module)aThat;
     	return (
-    			this.getCode() == that.getCode() &&
-    			this.getDamage() == that.getDamage() &&
-    			this.getXCoor() == that.getXCoor() &&
-    			this.getYCoor() == that.getYCoor() &&
-    			this.getTurns() == that.getTurns()
+    			this.getCode().equals(that.getCode()) &&
+    			this.getDamage().equals(that.getDamage()) &&
+    			this.getXCoor().equals(that.getXCoor()) &&
+    			this.getYCoor().equals(that.getYCoor()) &&
+    			this.getTurns().equals(that.getTurns())
     			);
     }
-    
+
     /**
      *
      * @param code the code of the module
