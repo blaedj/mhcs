@@ -18,13 +18,10 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
-  
+
   <!--   The json handling module -->
   <inherits name='com.google.gwt.json.JSON' />
-  
-    <!-- Inherit sound support -->
-  <inherits name='com.allen_sauer.gwt.voices.gwt-voices'/>
-  
+
   <!-- Specify the app entry point class.                         -->
   <entry-point class='mhcs.blaed.MHCS'/>
 
