@@ -4,7 +4,10 @@ import mhcs.dan.Module.ModuleType;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.DecoratorPanel;
+import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -28,7 +31,7 @@ public class Histogram extends Widget {
         DELETE;
     }
 
-    private FlowPanel panel;
+    private VerticalPanel panel;
     private int plain;
     private int dormitory;
     private int sanitation;
@@ -45,6 +48,18 @@ public class Histogram extends Widget {
     private int barHeight;
     private int barSpacing;
     private int totalHeight;
+    private Grid icons;
+    private Image airlockIcon;
+    private Image canteenIcon;
+    private Image controlIcon;
+    private Image dormIcon;
+    private Image gymIcon;
+    private Image medIcon;
+    private Image plainIcon;
+    private Image powerIcon;
+    private Image sanitationIcon;
+    private Image storageIcon;
+    private int thumbDim;
 
     /**
      *
@@ -65,19 +80,69 @@ public class Histogram extends Widget {
         airlock = 0;
         medical = 0;
         canvas = Canvas.createIfSupported();
+        icons = new Grid(1, 10);
+        icons.setCellPadding(0);
+        thumbDim = 50;
+        airlockIcon = new Image("images/airlock.jpg");
+        canteenIcon = new Image("images/canteen.png");
+        controlIcon = new Image("images/control.jpg");
+        dormIcon = new Image("images/dorm.jpg");
+        gymIcon = new Image("images/gym.png");
+        medIcon = new Image("images/medical.png");
+        plainIcon = new Image("images/plain.png");
+        powerIcon = new Image("images/power.jpg");
+        sanitationIcon = new Image("images/sanitation.jpg");
+        storageIcon = new Image("images/storage.jpg");
+        airlockIcon.setPixelSize(thumbDim, thumbDim);
+        canteenIcon.setPixelSize(thumbDim, thumbDim);
+        controlIcon.setPixelSize(thumbDim, thumbDim);
+        dormIcon.setPixelSize(thumbDim, thumbDim);
+        gymIcon.setPixelSize(thumbDim, thumbDim);
+        medIcon.setPixelSize(thumbDim, thumbDim);
+        plainIcon.setPixelSize(thumbDim, thumbDim);
+        powerIcon.setPixelSize(thumbDim, thumbDim);
+        sanitationIcon.setPixelSize(thumbDim, thumbDim);
+        storageIcon.setPixelSize(thumbDim, thumbDim);
         makeCanvas();
         panel.add(canvas);
+        icons.setWidget(0, 0, plainIcon);
+        icons.setWidget(0, 1, dormIcon);
+        icons.setWidget(0, 2, sanitationIcon);
+        icons.setWidget(0, 3, storageIcon);
+        icons.setWidget(0, 4, gymIcon);
+        icons.setWidget(0, 5, canteenIcon);
+        icons.setWidget(0, 6, powerIcon);
+        icons.setWidget(0, 7, controlIcon);
+        icons.setWidget(0, 8, airlockIcon);
+        icons.setWidget(0, 9, medIcon);
+        panel.add(icons);
+    }
+    
+    /**
+     * Checks for consistency in variables.
+     */
+    private void checkConsistent() {
+        assert(plain >= 0);
+        assert(dormitory >= 0);
+        assert(sanitation >= 0);
+        assert(foodAndWater >= 0);
+        assert(gymAndRelaxation >= 0);
+        assert(canteen >= 0);
+        assert(power >= 0);
+        assert(control >= 0);
+        assert(airlock >= 0);
+        assert(medical >= 0);
     }
 
     /**
      *
      */
     private void makeCanvas() {
-        panel = new FlowPanel();
+        panel = new VerticalPanel();
         canvas.setHeight("200px");
-        canvas.setWidth("518px");
+        canvas.setWidth("522px");
         canvas.setCoordinateSpaceHeight(200);
-        canvas.setCoordinateSpaceWidth(518);
+        canvas.setCoordinateSpaceWidth(522);
         context = canvas.getContext2d();
     }
 
@@ -86,7 +151,9 @@ public class Histogram extends Widget {
      * @return panel the panel that holds the histogram
      */
     public final Widget get() {
-        return panel;
+        DecoratorPanel returnPanel = new DecoratorPanel();
+        returnPanel.add(panel);
+        return returnPanel;
     }
 
     /**
@@ -175,6 +242,7 @@ public class Histogram extends Widget {
         context.fillRect(barSpacing + 9 * (barWidth + barSpacing),
                 totalHeight - medical * barHeight,
                 barWidth, medical * barHeight);
+        checkConsistent();
     }
 
     /**
@@ -303,5 +371,6 @@ public class Histogram extends Widget {
                      totalHeight - medical * barHeight,
                      barWidth, medical * barHeight);
          }
+         checkConsistent();
      }
 }
