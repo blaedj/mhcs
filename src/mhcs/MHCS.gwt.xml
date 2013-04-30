@@ -18,6 +18,9 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
+  
+  <!--   The json handling module -->
+  <inherits name='com.google.gwt.json.JSON' />
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='mhcs.blaed.MHCS'/>
@@ -26,7 +29,7 @@
   <source path='blaed'/>
   <source path='dan'/>
   <source path='danielle'/>
-  <!-- <source path='dalton'/> -->
+  <source path='dalton'/>
 
   <source path='shared'/>
 

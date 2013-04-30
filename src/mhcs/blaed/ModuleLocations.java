@@ -18,11 +18,11 @@ import mhcs.dan.Module;
 import mhcs.dan.ModuleList;
 
 
-/*
+/**
  * This is the map that shows the landing locations of all the modules
  * and allows the user to see details about each module.
  * @author Blaed J
- * @class sets up a UI that can be returned via a static method
+ * @class creates a widget that shows the locations of all the modules landed
  */
 public class ModuleLocations {
 
@@ -32,8 +32,8 @@ public class ModuleLocations {
 
 
     /**
-     *
-     * @return the main interface panel for the application
+     * The main application framework
+     * @return the main interface panel
      */
     public Panel createMainPanel(){
 	intitializeMembers();
@@ -47,8 +47,6 @@ public class ModuleLocations {
 	}
 	landingAreaGrid.setPixelSize(500, 250);
 
-	// actually plot the modules according to their location
-	// pass in the list of modules and the image to plot them on.
 	plotModuleLocations(moduleList, landingAreaGrid);
 
 	Button clearButton = new Button("Clear the map");
@@ -94,36 +92,31 @@ public class ModuleLocations {
     }
 
     /**
-     *
+     * Clears the map of all module icons and then plots the locations of all the
+     * modules in the module list.
      * @param moduleList the module to plot on the map
      * @param mapGrid the map to plot the modules from moduleList on
+     * @post all the modules in the module list are plotted onto the map
      */
     private void plotModuleLocations( ArrayList<Module> moduleList, Grid mapGrid){
-
 	mapGrid.clear(true);
    	Module module;
 	for (int i = 0; i < moduleList.size(); i++) {
-	    // make a new button
 	    module = moduleList.get(i);
 	    assert module != null;
-
-	    mapGrid.setWidget(50 - Integer.parseInt(module.getYCoor()), Integer.parseInt(module.getXCoor()) - 1, createButton(module));
-
-
+	    mapGrid.setWidget(50 - Integer.parseInt(module.getYCoor()), Integer.parseInt(module.getXCoor()) - 1, createModuleRepresenter(module));
 	}
     }
 
     /**
-     *
-     * @param module the module to base the button on, uses module code and coordinates
+     * creates a button to represent a module on a map.
+     * @param module the module to represent with a button/icon
      * @return the button representing the module specified
      */
-    private PushButton createButton(final Module module) {
+    private PushButton createModuleRepresenter(final Module module) {
 
     	final PushButton moduleButton = new PushButton( module.getCode() );
-
     	moduleButton.setPixelSize(5, 5);
-
     	moduleButton.addClickHandler(new ClickHandler() {
     		@Override
     		public void onClick(ClickEvent event) {
@@ -180,21 +173,17 @@ public class ModuleLocations {
 		    default:
 
 		    }
-
-
-
 		    alertPanel.add(infoPanel);
 		    alertPanel.setModal(false);
 		    alertPanel.setAutoHideEnabled(true);
 		    alertPanel.center();
     		}
 	    });
-
     	return moduleButton;
     }
 
     /**
-     *
+     * Retrieve the current list of modules entered into the system.
      * @return the list of modules that have landed.
      */
     private ArrayList<Module> getModuleList() {

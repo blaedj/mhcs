@@ -2,35 +2,115 @@ package mhcs.dan;
 
 /**
  *
- * @author
+ * @author Daniel Hammond
  *
  */
 public class Module {
 
     /**
      *
-     * @author
+     * @author Daniel Hammond
      *
      */
     public enum ModuleType {
-        PLAIN,
-        DORMITORY,
-        SANITATION,
-        FOOD_AND_WATER,
-        GYM_AND_RELAXATION,
-        CANTEEN,
-        POWER,
-        CONTROL,
-        AIRLOCK,
-        MEDICAL
+        /**
+         * plain module.
+         */
+        PLAIN("plain"),
+        /**
+         * dormitory module.
+         */
+        DORMITORY("dormitory"),
+        /**
+         * sanitation module.
+         */
+        SANITATION("sanitation"),
+        /**
+         * food and water module.
+         */
+        FOOD_AND_WATER("food and water"),
+        /**
+         * gym and relaxation module.
+         */
+        GYM_AND_RELAXATION("gym and relaxation"),
+        /**
+         * canteen module.
+         */
+        CANTEEN("canteen"),
+        /**
+         * power module.
+         */
+        POWER("power"),
+        /**
+         * control module.
+         */
+        CONTROL("control"),
+        /**
+         * airlock module.
+         */
+        AIRLOCK("airlock"),
+        /**
+         * medical module.
+         */
+        MEDICAL("medical");
+
+        /**
+         * string representation of the type.
+         */
+        private String str;
+
+        /**
+         * constructor for the type.
+         * @param str string representation of the type.
+         */
+        ModuleType(final String str) {this.str = str;}
+
+        /**
+         * @return str string representation of the type.
+         */
+        public String toString() {
+            return str;
+        }
     }
 
+    /**
+     * type of module.
+     */
     private ModuleType type;
+    /**
+     * code of module.
+     */
     private String code;
+    /**
+     * damage of module.
+     */
     private String damage;
+    /**
+     * x coordinate of module.
+     */
     private String xcoor;
+    /**
+     * y coordinate of module.
+     */
     private String ycoor;
+    /**
+     * turns to correct orientation of module.
+     */
     private String turns;
+
+    @Override
+    public final boolean equals(final Object aThat) {
+        if (this == aThat) { return true; }
+        if (!(aThat instanceof Module)) { return false; }
+        Module that = (Module) aThat;
+        return (
+                this.getCode() == that.getCode() &&
+                this.getDamage() == that.getDamage() &&
+                this.getXCoor() == that.getXCoor() &&
+                this.getYCoor() == that.getYCoor() &&
+                this.getTurns() == that.getTurns()
+                );
+    }
 
     /**
      *

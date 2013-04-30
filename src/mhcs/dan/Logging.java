@@ -1,25 +1,18 @@
 package mhcs.dan;
 
-//import mhcs.blaed.DataRecordedEvent;
-//import mhcs.blaed.ModuleDataChecker;
-import mhcs.danielle.MinimumConfiguration;
-
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -61,16 +54,28 @@ public class Logging { // !implements EntryPoint
     private Button confirmDeleteButton;
     private Button closeDeleteButton;
     private Histogram histogram;
-    private PopupPanel minConfig;
-    private FlowPanel minConfigAlert;
-    private Label alertLabel;
-    private Button alertB1;
-    private Button alertB2;
-    private ModuleList moduleList;
+    private Grid icons;
+    private Image airlock;
+    private Image canteen;
+    private Image control;
+    private Image dorm;
+    private Image gym;
+    private Image med;
+    private Image plain;
+    private Image power;
+    private Image sanitation;
+    private Image storage;
+    private int thumbDim;
+    private VerticalPanel histogramPanel;
 
+    /**
+     * constructor for logging page.
+     */
     public Logging() {
 
         makeEverything();
+
+        histogram.update();
 
         enterButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
@@ -87,15 +92,11 @@ public class Logging { // !implements EntryPoint
                                     xCoorBox.getText(), yCoorBox.getText(),
                                     turnsListBox.getItemText(
                                             turnsListBox.getSelectedIndex()));
-                    ModuleList.addModule(newModule);
+                    ModuleList.moduleList.add(newModule);
                     histogram.update(newModule.getType(), Histogram.Type.ADD);
 
-//                    ModuleDataChecker monitor = new ModuleDataChecker();
-//                    DataRecordedEvent newModuleEvent = new DataRecordedEvent(newModule);
-//                    monitor.fireEvent(newModuleEvent);
-                    
                 } catch (NumberFormatException e) {
-                	Window.alert("Input Not A Number");
+                    Window.alert("Input Not A Number");
                 } catch (Exception e) {
                     Window.alert(e.getMessage());
                 }
@@ -104,15 +105,6 @@ public class Logging { // !implements EntryPoint
                 xCoorBox.setText("");
                 yCoorBox.setText("");
                 turnsListBox.setSelectedIndex(0);
-                MinimumConfiguration minTmp = new MinimumConfiguration(moduleList);
-                if(minTmp.testMinConfig()){
-                	minConfig.addCloseHandler(new CloseHandler<PopupPanel>() {
-    					@Override
-    					public void onClose(CloseEvent<PopupPanel> event) {
-    						
-    					}
-    				});
-                }
             }
         });
 
@@ -129,20 +121,16 @@ public class Logging { // !implements EntryPoint
                         ModuleList.moduleList.get(Integer.valueOf(
                                 moduleListBox.getSelectedIndex())).getType(),
                                 Histogram.Type.DELETE);
-                //ModuleDataChecker monitor = new ModuleDataChecker();
-                //DataRecordedEvent newModuleEvent = new DataRecordedEvent(ModuleList.moduleList.get(Integer.valueOf(
-                //                moduleListBox.getSelectedIndex())));
-                //monitor.fireEvent(newModuleEvent);
-                
+
                 ModuleList.moduleList.remove(
                         ModuleList.moduleList.get(Integer.valueOf(
-                        moduleListBox.getSelectedIndex())));
+                                moduleListBox.getSelectedIndex())));
                 populateModuleListBox();
                 locationInfoLabel.setText("Location:");
                 damageInfoLabel.setText("Damage:");
                 orientationInfoLabel.setText("Orientation:");
                 typeInfoLabel.setText("Type:");
-                
+
             }
         });
 
@@ -160,12 +148,12 @@ public class Logging { // !implements EntryPoint
             public void onChange(final ChangeEvent event) {
                 if (!ModuleList.moduleList.isEmpty()) {
                     Module mod =  ModuleList.moduleList.get(
-                    		ModuleList.getIndexByCode(
-                    				moduleListBox.getItemText(
-                    						moduleListBox.getSelectedIndex())));
+                            ModuleList.getIndexByCode(
+                                    moduleListBox.getItemText(
+                                            moduleListBox.getSelectedIndex())));
                     locationInfoLabel.setText(
-                    		"Location: (" + mod.getXCoor() + ", "
-                    				+ mod.getYCoor() + ")");
+                            "Location: (" + mod.getXCoor() + ", "
+                                    + mod.getYCoor() + ")");
                     damageInfoLabel.setText("Damage: " + mod.getDamage());
                     orientationInfoLabel.setText(
                             "Orientation: " + mod.getTurns() + " flips");
@@ -196,7 +184,6 @@ public class Logging { // !implements EntryPoint
         damageInfoLabel = new Label("Damage:");
         orientationInfoLabel = new Label("Orientation:");
         typeInfoLabel = new Label("Type:");
-        moduleList = new ModuleList();
         moduleListBox = new ListBox();
         deleteTitle = new Label("Delete Module");
         deleteLeftPanel = new VerticalPanel();
@@ -206,6 +193,7 @@ public class Logging { // !implements EntryPoint
         deletePanel = new VerticalPanel();
         backgroundPanel = new HorizontalPanel();
         loggingPanel = new DecoratorPanel();
+        histogramPanel = new VerticalPanel();
         mainPanel = new AbsolutePanel();
         grid = new Grid(12, 1);
         codeLabel = new Label("Module Code");
@@ -223,20 +211,33 @@ public class Logging { // !implements EntryPoint
         confirmDeleteButton = new Button("Delete Module");
         closeDeleteButton = new Button("Close");
         histogram = new Histogram();
-        minConfig = new PopupPanel();
-        minConfigAlert = new FlowPanel();
-        alertB1 = new Button("OK");
-        alertB2 = new Button("See Min Configuration");
-        alertLabel = new Label("Minimum Configuration is Available");
-        minConfig = new PopupPanel();
-        minConfigAlert = new FlowPanel();
-        alertB1 = new Button("OK");
-        alertB2 = new Button("See Min Configuration");
-        alertLabel = new Label("Minimum Configuration is Available");
+        icons = new Grid(1, 10);
+        icons.setCellPadding(0);
+        thumbDim = 50;
+        airlock = new Image("images/airlock.jpg");
+        canteen = new Image("images/canteen.png");
+        control = new Image("images/control.jpg");
+        dorm = new Image("images/dorm.jpg");
+        gym = new Image("images/gym.png");
+        med = new Image("images/medical.png");
+        plain = new Image("images/plain.png");
+        power = new Image("images/power.jpg");
+        sanitation = new Image("images/sanitation.jpg");
+        storage = new Image("images/storage.jpg");
+        airlock.setPixelSize(thumbDim, thumbDim);
+        canteen.setPixelSize(thumbDim, thumbDim);
+        control.setPixelSize(thumbDim, thumbDim);
+        dorm.setPixelSize(thumbDim, thumbDim);
+        gym.setPixelSize(thumbDim, thumbDim);
+        med.setPixelSize(thumbDim, thumbDim);
+        plain.setPixelSize(thumbDim, thumbDim);
+        power.setPixelSize(thumbDim, thumbDim);
+        sanitation.setPixelSize(thumbDim, thumbDim);
+        storage.setPixelSize(thumbDim, thumbDim);
     }
 
     /**
-     * 
+     * Places panels within each other for overall structure.
      */
     private void assemblePanels() {
         moduleListBox.setWidth("200px");
@@ -282,19 +283,27 @@ public class Logging { // !implements EntryPoint
         grid.setWidget(9, 0, turnsListBox);
         grid.setWidget(10, 0, enterButton);
         grid.setWidget(11, 0, deleteButton);
+        
+        icons.setWidget(0, 0, plain);
+        icons.setWidget(0, 1, dorm);
+        icons.setWidget(0, 2, sanitation);
+        icons.setWidget(0, 3, storage);
+        icons.setWidget(0, 4, gym);
+        icons.setWidget(0, 5, canteen);
+        icons.setWidget(0, 6, power);
+        icons.setWidget(0, 7, control);
+        icons.setWidget(0, 8, airlock);
+        icons.setWidget(0, 9, med);
 
         loggingPanel.add(grid);
+        histogramPanel.add(histogram.get());
+        histogramPanel.add(icons);
         backgroundPanel.add(loggingPanel);
-        backgroundPanel.add(histogram.get());
+        backgroundPanel.add(histogramPanel);
 
         mainPanel.setPixelSize(800, 400);
         mainPanel.add(backgroundPanel);
         mainPanel.add(deletePanel, 50, 50);
-        
-        minConfigAlert.add(alertLabel);
-        minConfigAlert.add(alertB1);
-        minConfigAlert.add(alertB2);
-        minConfig.add(minConfigAlert);
     }
 
     /**
@@ -373,7 +382,7 @@ public class Logging { // !implements EntryPoint
      */
     private void populateModuleListBox() {
         moduleListBox.clear();
-        for (Module mod : moduleList) {
+        for (Module mod : ModuleList.moduleList) {
             moduleListBox.addItem(mod.getCode());
         }
     }
