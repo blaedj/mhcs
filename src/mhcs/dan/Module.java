@@ -54,16 +54,17 @@ public class Module {
          */
         MEDICAL("medical");
 
-        /**
-         * string representation of the type.
-         */
         private String str;
 
+<<<<<<< HEAD
         /**
          * constructor for the type.
          * @param str string representation of the type.
          */
         ModuleType(final String astr) {this.str = astr;}
+=======
+        ModuleType(String str) {this.str = str;}
+>>>>>>> a482befedbd41c5e6958bfc92e886edfef8c0cca
 
         /**
          * @return str string representation of the type.
@@ -99,6 +100,7 @@ public class Module {
     private String turns;
 
     @Override
+<<<<<<< HEAD
     public final boolean equals(final Object aThat) {
         // if same object
         if (this == aThat) { return true; }
@@ -118,6 +120,20 @@ public class Module {
      */
     public int hashCode() {
         return code.hashCode();
+=======
+
+    public boolean equals(Object aThat){
+    	if (this == aThat){ return true; }
+    	if(! (aThat instanceof Module)) { return false; }
+    	Module that = (Module)aThat;
+    	return (
+		this.getCode().equals(that.getCode()) &&
+		this.getDamage().equals(that.getDamage()) &&
+		this.getXCoor().equals(that.getXCoor()) &&
+		this.getYCoor().equals(that.getYCoor()) &&
+		this.getTurns().equals(that.getTurns())
+		);
+>>>>>>> a482befedbd41c5e6958bfc92e886edfef8c0cca
     }
 
     /**
@@ -128,6 +144,7 @@ public class Module {
      * @param ycoor the y coordinate of where the module is located
      * @param turns the numbers of turns to orient the module upright
      */
+<<<<<<< HEAD
     public Module(final String acode, final String adamage, final String axcoor,
             final String aycoor, final String aturns) {
         this.code = acode;
@@ -135,6 +152,15 @@ public class Module {
         this.xcoor = axcoor;
         this.ycoor = aycoor;
         this.turns = aturns;
+=======
+    public Module(final String code, final String damage, final String xcoor,
+		  final String ycoor, final String turns) {
+        this.code = code;
+        this.damage = damage;
+        this.xcoor = xcoor;
+        this.ycoor = ycoor;
+        this.turns = turns;
+>>>>>>> a482befedbd41c5e6958bfc92e886edfef8c0cca
         int codeInt = Integer.parseInt(code);
         // assign module type based on code
         if (codeInt >= 1 && codeInt <= 40) {
