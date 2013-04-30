@@ -30,7 +30,6 @@ public class SoundPlayer {
 	modulesLoadedAudio = Audio.createIfSupported();
 	modulesLoadedAudio.addSource("sounds/ModulesLoadedGuy.mp3", AudioElement.TYPE_MP3);
 	modulesLoadedAudio.addSource("sounds/ModulesLoadedGuy.wav", AudioElement.TYPE_WAV);
-
     }
 
     public void playWelcome(){

@@ -12,7 +12,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -47,7 +46,7 @@ public class MHCS implements EntryPoint {
     }
 
     /**
-     *
+     * Login interface that checks for Username and password
      * @return a widget that wraps the login page interface
      */
     private Widget createLogin() {
@@ -55,23 +54,15 @@ public class MHCS implements EntryPoint {
 	final PasswordTextBox ptb = new PasswordTextBox();
 	Button confirm = new Button("Confirm");
 	final FlexTable mainTable = new FlexTable();
+	final SoundPlayer sound = new SoundPlayer();
 	mainTable.setText(0,0,"Username");
 	mainTable.setText(0,5,"Password");
 	mainTable.setWidget(1,0,tb);
 	mainTable.setWidget(1,5,ptb);
 	mainTable.setWidget(1,6,confirm);
-	Button playButton = new Button("test");
-	SoundController sCont = new SoundController();
-	final Sound sound = sCont.createSound(Sound.MIME_TYPE_AUDIO_MPEG_MP3, "sounds/welcomeguy.mp3");
-	playButton.addClickListener(new ClickListener() {
-		public void onClick(Widget sender) {
-		    sound.play();
-		}
-	    });
-	mainTable.setWidget(1,7,playButton);
+
 	confirm.addClickHandler(new ClickHandler() {
-		//checks to see if password is mars and if username is Dalton, Blaed, Dan or Danielle
-		public void onClick(ClickEvent event) {
+		public void onClick(final ClickEvent event) {
 		    final String password = ptb.getText();
 		    final String userName = tb.getText();
 		    ArrayList<String> validUsernames = new ArrayList<String>();
@@ -82,7 +73,9 @@ public class MHCS implements EntryPoint {
 		    validUsernames.add("Danielle");
 		    if(validUsernames.contains(userName) && password.equals("mars")){
 			    logIn(mainTable);
+			    sound.playWelcome();
 		    } else {
+			sound.playAccessDenied();
 			Window.alert("Wrong Username/Password. Try Again");
 		    }
 		}
@@ -98,7 +91,7 @@ public class MHCS implements EntryPoint {
      * @pre the login was successful
      * @post the main tabpanel is visible
      */
-    private void logIn(Widget toRemove){
+    private void logIn(final Widget toRemove){
 	TabPanel panel = getMainPanel();
 	panel.setVisible(false);
 	RootPanel.get().remove(toRemove);

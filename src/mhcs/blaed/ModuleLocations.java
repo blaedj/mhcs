@@ -62,22 +62,13 @@ public class ModuleLocations {
 	refreshButton.addClickHandler(new ClickHandler() {
 
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(final ClickEvent event) {
 		    plotModuleLocations(ModuleList.moduleList, landingAreaGrid);
 		}
 	    });
 
 	containerPanel.add(landingAreaGrid);
 	containerPanel.addStyleName("landingMap");
-
-	containerPanel.addHandler(new DataRecordedEventHandler() {
-		@Override
-		public void onDataRecorded(DataRecordedEvent event) {
-		    plotModuleLocations(moduleList, landingAreaGrid);
-		}
-
-	    }, DataRecordedEvent.TYPE);
-
 	containerPanel.add(refreshButton);
 	containerPanel.add(clearButton);
 	return containerPanel;
@@ -98,7 +89,7 @@ public class ModuleLocations {
      * @param mapGrid the map to plot the modules from moduleList on
      * @post all the modules in the module list are plotted onto the map
      */
-    private void plotModuleLocations( ArrayList<Module> moduleList, Grid mapGrid){
+    private void plotModuleLocations( final ArrayList<Module> moduleList, final Grid mapGrid){
 	mapGrid.clear(true);
    	Module module;
 	for (int i = 0; i < moduleList.size(); i++) {
@@ -119,7 +110,7 @@ public class ModuleLocations {
     	moduleButton.setPixelSize(5, 5);
     	moduleButton.addClickHandler(new ClickHandler() {
     		@Override
-    		public void onClick(ClickEvent event) {
+    		public void onClick(final ClickEvent event) {
 		    PopupPanel alertPanel = new PopupPanel();
 		    FlowPanel infoPanel = new FlowPanel();
 		    Label idLabel = new Label("Module ID:" + module.getCode());
@@ -134,7 +125,7 @@ public class ModuleLocations {
 		    infoPanel.addStyleName("largerFont");
 		    alertPanel.addCloseHandler(new CloseHandler<PopupPanel>() {
 			    @Override
-    				public void onClose(CloseEvent<PopupPanel> event) {
+    				public void onClose(final CloseEvent<PopupPanel> event) {
 				moduleButton.setStyleName("moduleSelected", false);
 			    }
     			});
