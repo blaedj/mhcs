@@ -10,9 +10,9 @@ import mhcs.dan.ModuleList;
 
 
 /**
- *  MinimumConfiguration objects returns the 
+ *  MinimumConfiguration objects returns the
  *  grid indices of the appropriate locations
- *  of each module in the configuration. 
+ *  of each module in the configuration.
  *   @author daniellestewart 
  */
 public class MinimumConfiguration {
@@ -29,12 +29,12 @@ public class MinimumConfiguration {
 	 */
 	private boolean allGood;
 	/**
-	 * adjustX is calculated by findCentroid and will 
+	 * adjustX is calculated by findCentroid and will
 	 * adjust accordingly.
 	 */
 	private int adjustX;
 	/**
-	 * adjustY is calculated by findCentroid and will 
+	 * adjustY is calculated by findCentroid and will
 	 * adjust accordingly.
 	 */
 	private int adjustY;
@@ -42,14 +42,14 @@ public class MinimumConfiguration {
 	 * MinimumConfiguration constructor creates
 	 * an object that consists of two lists: one of
 	 * module type and one of coordinate points.
-	 * This coordinate point is returned as Java 
+	 * This coordinate point is returned as Java
 	 * coordinates and *not* map coordinates.
 	 * May return empty array list. If this happens,
 	 * something went wrong in testing for a possible configuration.
 	 * @param moduleList is the list of modules
 	 */
 
-	public MinimumConfiguration(ArrayList<Module> theList){
+	public MinimumConfiguration(ArrayList<Module> theList) {
 		// Initialize data members
 		adjustX = 0;
 		adjustY = 0;
@@ -73,7 +73,8 @@ public class MinimumConfiguration {
 		ArrayList<Module> theList = ModuleList.moduleList;
 		int count = theList.size();
 		Module temp;
-		int i = 0;
+		String damaged = "damaged";
+;		int i = 0;
 		boolean allGood = true;
 
 		// create array for type count, initialize all to zero
@@ -87,7 +88,9 @@ public class MinimumConfiguration {
 		// Traverse list of modules counting types
 		for(i = 0; i < count; i++) {
 			assert (count == theList.size());
-
+			if(damaged.equalsIgnoreCase(theList.get(i).getDamage())) {
+			    continue;
+			}
 			temp = theList.get(i);
 			/**
 			 * Counts each module type in our list

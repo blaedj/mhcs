@@ -124,16 +124,16 @@ public class MinimumConfigPage implements EntryPoint {
 		enterSave = new Button("Enter & Save");
 		// All for testing
 		tmpModList = new ArrayList<Module>();
-		tmpModList.add(new Module("11","UNDAMAGED", "25", "11", "1"));
-		tmpModList.add(new Module("13", "UNDAMAGED", "35", "21", "1"));
-		tmpModList.add(new Module("15", "UNDAMAGED", "41", "91", "1"));
-		tmpModList.add(new Module("63", "UNDAMAGED", "35", "63", "1"));
-		tmpModList.add(new Module("99", "UNDAMAGED", "18", "81", "1"));
-		tmpModList.add(new Module("113", "UNDAMAGED", "31", "21", "1"));
-		tmpModList.add(new Module("141", "UNDAMAGED", "1", "21", "1"));
-		tmpModList.add(new Module("153", "UNDAMAGED", "17", "81", "1"));
-		tmpModList.add(new Module("163", "UNDAMAGED", "9", "9", "1"));
-		tmpModList.add(new Module("171", "UNDAMAGED", "21", "21", "1"));
+		tmpModList.add(new Module("1","DAMAGED", "1", "1", "0"));
+		tmpModList.add(new Module("2", "UNDAMAGED", "1","2", "1"));
+		tmpModList.add(new Module("3", "UNDAMAGED", "1", "3", "2"));
+		tmpModList.add(new Module("61", "UNDAMAGED", "1", "4", "0"));
+		tmpModList.add(new Module("91", "UNDAMAGED", "1", "5", "1"));
+		tmpModList.add(new Module("111", "UNDAMAGED", "1", "6", "2"));
+		tmpModList.add(new Module("141", "UNDAMAGED", "1", "7", "0"));
+		tmpModList.add(new Module("151", "UNDAMAGED", "1", "8", "1"));
+		tmpModList.add(new Module("161", "UNDAMAGED", "1", "9", "2"));
+		tmpModList.add(new Module("171", "UNDAMAGED", "1", "10", "0"));
 
 		minConfig1 = new MinimumConfiguration(tmpModList);
 		minArray = minConfig1.getMinArray();
@@ -199,23 +199,23 @@ public class MinimumConfigPage implements EntryPoint {
 					// TESTING STUFF
 					Module tempMod;
 					int code = Integer.parseInt(finalString);
-					if((code == 11)) {
+					if((code == 1)) {
 						tempMod = tmpModList.get(0); 
-					} else if(code == 13) {
+					} else if(code == 2) {
 						tempMod = tmpModList.get(1); 
-					} else if(code == 15) {
+					} else if(code == 3) {
 						tempMod = tmpModList.get(2);
-					} else if(code == 63) {
+					} else if(code == 61) {
 						tempMod = tmpModList.get(3);
-					} else if(code == 99) {
+					} else if(code == 91) {
 						tempMod = tmpModList.get(4);
-					}else if(code == 113) {
+					}else if(code == 111) {
 						tempMod = tmpModList.get(5);
 					} else if(code == 141) {
 						tempMod = tmpModList.get(6);
-					} else if(code == 153) {
+					} else if(code == 151) {
 						tempMod = tmpModList.get(7);
-					} else if(code == 163) {
+					} else if(code == 161) {
 						tempMod = tmpModList.get(8);
 					} else {
 						tempMod = tmpModList.get(9);

@@ -1,20 +1,37 @@
 package mhcs.danielle;
 
-import mhcs.dan.ModuleList;
+import java.util.ArrayList;
+
+import mhcs.dan.Module;
+//import mhcs.dan.ModuleList;
 /**
- * 
+ * This class creates a full configuration.
  * @author Danielle Stewart
  *
  */
 public class FullConfiguration {
+    /**
+     * private data member listSize is the size of the mod list
+     * that comes in.
+     */
 	private int listSize;
-	
-	public FullConfiguration(ModuleList mods){
+	/**
+	 * data member is the list of modules coming in
+	 * in terms of Maximum objects.
+	 */
+	private ArrayList<Maximum> maxList;
+	/**
+	 * this is the public constructor.
+	 * @param mods
+	 */
+	public FullConfiguration(ArrayList<Module> mods){
+	    maxList = new ArrayList<Maximum>();
 		listSize = mods.size();
 		testSizes();
-		
 	}
-	
+	/**
+	 * test the size of the list coming in.
+	 */
 	private void testSizes(){
 		if((listSize > 10)&&(listSize < 21)){
 			smallList();
@@ -26,16 +43,27 @@ public class FullConfiguration {
 			maxList();
 		}
 	}
-	
+	/**
+	 * makes small list.
+	 */
 	private void smallList(){
 		makeSmallSkeleton();
 	}
+	/**
+	 * makes medium list.
+	 */
 	private void mediumList(){
 		
 	}
+	/**
+	 * makes large list.
+	 */
 	private void largeList(){
 		
 	}
+	/**
+	 * makes max list.
+	 */
 	private void maxList(){
 		
 	}
@@ -52,5 +80,11 @@ public class FullConfiguration {
 	 */
 	private void makeSmallSkeleton() {
 		
+	}
+	/**
+	 * getter for the max array.
+	 */
+	public ArrayList<Maximum> getMaxArray() {
+	    return this.maxList;
 	}
 }
