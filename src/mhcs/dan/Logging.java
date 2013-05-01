@@ -23,36 +23,36 @@ public class Logging {
 
     /* properties */
 
-    private Label locationInfoLabel;
-    private Label damageInfoLabel;
-    private Label orientationInfoLabel;
-    private Label typeInfoLabel;
-    private ListBox moduleListBox;
-    private Label deleteTitle;
-    private VerticalPanel deletePanel;
-    private VerticalPanel deleteLeftPanel;
-    private VerticalPanel deleteRightPanel;
-    private HorizontalPanel deleteButtonPanel;
-    private HorizontalPanel deleteDataPanel;
-    private HorizontalPanel backgroundPanel;
-    private DecoratorPanel loggingPanel;
-    private AbsolutePanel mainPanel;
-    private Grid grid;
-    private Label codeLabel;
-    private TextBox codeTextBox;
-    private Label damageLabel;
-    private ListBox damageListBox;
-    private Label xCoorLabel;
-    private TextBox xCoorBox;
-    private Label yCoorLabel;
-    private TextBox yCoorBox;
-    private Label turnsLabel;
-    private ListBox turnsListBox;
-    private Button enterButton;
-    private Button deleteButton;
-    private Button confirmDeleteButton;
-    private Button closeDeleteButton;
-    private Histogram histogram;
+    private static Label locationInfoLabel;
+    private static Label damageInfoLabel;
+    private static Label orientationInfo;
+    private static Label typeInfoLabel;
+    private static ListBox moduleListBox;
+    private static Label deleteTitle;
+    private static VerticalPanel deletePanel;
+    private static VerticalPanel deleteLeftPanel;
+    private static VerticalPanel deleteRightPanel;
+    private static HorizontalPanel deleteButtonPanel;
+    private static HorizontalPanel deleteDataPanel;
+    private static HorizontalPanel backgroundPanel;
+    private static DecoratorPanel loggingPanel;
+    private static AbsolutePanel mainPanel;
+    private static Grid grid;
+    private static Label codeLabel;
+    private static TextBox codeTextBox;
+    private static Label damageLabel;
+    private static ListBox damageListBox;
+    private static Label xCoorLabel;
+    private static TextBox xCoorBox;
+    private static Label yCoorLabel;
+    private static TextBox yCoorBox;
+    private static Label turnsLabel;
+    private static ListBox turnsListBox;
+    private static Button enterButton;
+    private static Button deleteButton;
+    private static Button confirmDelButton;
+    private static Button closeDeleteButton;
+    private static Histogram histogram;
 
     /**
      * constructor for logging page.
@@ -61,30 +61,20 @@ public class Logging {
 
         makeEverything();
 
-        histogram.update();
-
         enterButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
                 try {
-                    int code = Integer.parseInt(codeTextBox.getText());
-                    int xcoor = Integer.parseInt(xCoorBox.getText());
-                    int ycoor = Integer.parseInt(yCoorBox.getText());
-                    checkCode(code);
-                    checkCoords(xcoor, ycoor);
-                    checkDuplicate(codeTextBox.getText());
-                    Module newModule = new Module(codeTextBox.getText(),
+                    if (!ModuleList.addModule(new Module(codeTextBox.getText(),
                             damageListBox.getItemText(
                                     damageListBox.getSelectedIndex()),
                                     xCoorBox.getText(), yCoorBox.getText(),
                                     turnsListBox.getItemText(
-                                            turnsListBox.getSelectedIndex()));
-                    ModuleList.moduleList.add(newModule);
-                    histogram.update(newModule.getType(), Histogram.Type.ADD);
-
+                                            turnsListBox.getSelectedIndex())))) {
+                        Window.alert("Invalid input");
+                    }
+                    histogram.update();
                 } catch (NumberFormatException e) {
                     Window.alert("Input Not A Number");
-                } catch (Exception e) {
-                    Window.alert(e.getMessage());
                 }
                 codeTextBox.setText("");
                 damageListBox.setSelectedIndex(0);
@@ -101,22 +91,16 @@ public class Logging {
             }
         });
 
-        confirmDeleteButton.addClickHandler(new ClickHandler() {
+        confirmDelButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
-                histogram.update(
-                        ModuleList.moduleList.get(Integer.valueOf(
-                                moduleListBox.getSelectedIndex())).getType(),
-                                Histogram.Type.DELETE);
-
-                ModuleList.moduleList.remove(
-                        ModuleList.moduleList.get(Integer.valueOf(
-                                moduleListBox.getSelectedIndex())));
+                ModuleList.removeModule(
+                        ModuleList.getModuleByCode(moduleListBox.getItemText(moduleListBox.getSelectedIndex())));
                 populateModuleListBox();
                 locationInfoLabel.setText("Location:");
                 damageInfoLabel.setText("Damage:");
-                orientationInfoLabel.setText("Orientation:");
+                orientationInfo.setText("Orientation:");
                 typeInfoLabel.setText("Type:");
-
+                histogram.update();
             }
         });
 
@@ -124,7 +108,7 @@ public class Logging {
             public void onClick(final ClickEvent event) {
                 locationInfoLabel.setText("Location:");
                 damageInfoLabel.setText("Damage:");
-                orientationInfoLabel.setText("Orientation:");
+                orientationInfo.setText("Orientation:");
                 typeInfoLabel.setText("Type:");
                 deletePanel.setVisible(false);
             }
@@ -132,8 +116,9 @@ public class Logging {
 
         moduleListBox.addChangeHandler(new ChangeHandler() {
             public void onChange(final ChangeEvent event) {
-                if (!ModuleList.moduleList.isEmpty()) {
-                    Module mod =  ModuleList.moduleList.get(
+                ModuleList modList = ModuleList.get();
+                if (!modList.isEmpty()) {
+                    Module mod =  modList.get(
                             ModuleList.getIndexByCode(
                                     moduleListBox.getItemText(
                                             moduleListBox.getSelectedIndex())));
@@ -141,7 +126,7 @@ public class Logging {
                             "Location: (" + mod.getXCoor() + ", "
                                     + mod.getYCoor() + ")");
                     damageInfoLabel.setText("Damage: " + mod.getDamage());
-                    orientationInfoLabel.setText(
+                    orientationInfo.setText(
                             "Orientation: " + mod.getTurns() + " flips");
                     typeInfoLabel.setText("Type: " + mod.getType().toString());
                 }
@@ -168,7 +153,7 @@ public class Logging {
     private void makeEverything() {
         locationInfoLabel = new Label("Location:");
         damageInfoLabel = new Label("Damage:");
-        orientationInfoLabel = new Label("Orientation:");
+        orientationInfo = new Label("Orientation:");
         typeInfoLabel = new Label("Type:");
         moduleListBox = new ListBox();
         deleteTitle = new Label("Delete Module");
@@ -193,7 +178,7 @@ public class Logging {
         turnsListBox = new ListBox();
         enterButton = new Button("Enter Module");
         deleteButton = new Button("Delete Entry");
-        confirmDeleteButton = new Button("Delete Module");
+        confirmDelButton = new Button("Delete Module");
         closeDeleteButton = new Button("Close");
         histogram = new Histogram();
     }
@@ -208,7 +193,7 @@ public class Logging {
         deleteLeftPanel.add(moduleListBox);
         deleteLeftPanel.add(locationInfoLabel);
         deleteLeftPanel.add(damageInfoLabel);
-        deleteLeftPanel.add(orientationInfoLabel);
+        deleteLeftPanel.add(orientationInfo);
         deleteLeftPanel.add(typeInfoLabel);
 
         //        deleteRightPanel.add(map);
@@ -216,7 +201,7 @@ public class Logging {
         deleteDataPanel.add(deleteLeftPanel);
         deleteDataPanel.add(deleteRightPanel);
 
-        deleteButtonPanel.add(confirmDeleteButton);
+        deleteButtonPanel.add(confirmDelButton);
         deleteButtonPanel.add(closeDeleteButton);
 
         deletePanel.addStyleName("documentClass-delete");
@@ -256,82 +241,11 @@ public class Logging {
     }
 
     /**
-     *
-     * @param x x coordinate
-     * @param y y coordinate
-     * @throws Exception invalid exception
-     */
-    private void checkCoords(final int x, final int y) throws Exception {
-        if (x < 0 || x > 100) {
-            throw new Exception("Invalid X Coordinate");
-        }
-        if (y < 0 || y > 50) {
-            throw new Exception("Invalid Y Coordinate");
-        }
-    }
-
-    /**
-     *
-     * @param code code of module
-     * @throws Exception thrown if module code already entered
-     */
-    private void checkDuplicate(final String code) throws Exception {
-        if (ModuleList.getIndexByCode(code) != -1) {
-            throw new Exception("Module code already entered");
-        }
-    }
-
-    /**
-     *
-     * @param code the module code being entered
-     * @throws Exception invalid code exception
-     */
-    private void checkCode(final int code) throws Exception {
-        boolean isValid = true;
-        if (code < 1) {
-            isValid = false;
-        }
-        if (code > 40 && code < 61) {
-            isValid = false;
-        }
-        if (code > 80 && code < 91) {
-            isValid = false;
-        }
-        if (code > 100 && code < 111) {
-            isValid = false;
-        }
-        if (code > 120 && code < 131) {
-            isValid = false;
-        }
-        if (code > 134 && code < 141) {
-            isValid = false;
-        }
-        if (code > 144 && code < 151) {
-            isValid = false;
-        }
-        if (code > 154 && code < 161) {
-            isValid = false;
-        }
-        if (code > 164 && code < 171) {
-            isValid = false;
-        }
-        if (code > 174 && code < 181) {
-            isValid = false;
-        }
-        if (code > 184) {
-            isValid = false;
-        }
-        if (!isValid) {
-            throw new Exception("Invalid Module Code");
-        }
-    }
-
-    /**
-     *
+     * Add the modules to the list box.
      */
     private void populateModuleListBox() {
         moduleListBox.clear();
-        for (Module mod : ModuleList.moduleList) {
+        for (Module mod : ModuleList.get()) {
             moduleListBox.addItem(mod.getCode());
         }
     }

@@ -8,6 +8,32 @@ package mhcs.dan;
 public class Module {
 
     /**
+     * type of module.
+     */
+    private transient ModuleType type;
+    /**
+     * code of module.
+     */
+    private transient String code;
+    /**
+     * damage of module.
+     */
+    private transient String damage;
+    /**
+     * x coordinate of module.
+     */
+    private transient String xcoor;
+    /**
+     * y coordinate of module.
+     */
+    private transient String ycoor;
+    /**
+     * turns to correct orientation of module.
+     */
+    private transient String turns;
+
+
+    /**
      *
      * @author Daniel Hammond
      *
@@ -69,32 +95,6 @@ public class Module {
             return str;
         }
     }
-
-    /**
-     * type of module.
-     */
-    private ModuleType type;
-    /**
-     * code of module.
-     */
-    private String code;
-    /**
-     * damage of module.
-     */
-    private String damage;
-    /**
-     * x coordinate of module.
-     */
-    private String xcoor;
-    /**
-     * y coordinate of module.
-     */
-    private String ycoor;
-    /**
-     * turns to correct orientation of module.
-     */
-    private String turns;
-
     @Override
     public final boolean equals(final Object aThat) {
         // if same object

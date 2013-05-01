@@ -15,26 +15,26 @@ public class ModuleListTest extends GWTTestCase {
     
     @Before
     public void gwtSetUp() {
-        ModuleList.moduleList.clear();
+        ModuleList.clearList();
         createTestModules();
     }
     
     @After
     public void gwtTearDown() {
-        ModuleList.moduleList.clear();
+        ModuleList.clearList();
     }
     
     private void createTestModules() {
-        ModuleList.moduleList.add(new Module("1", "undamaged", "2", "3", "0"));
-        ModuleList.moduleList.add(new Module("61", "damaged", "5", "7", "2"));
-        ModuleList.moduleList.add(new Module("91", "uncertain", "20", "30", "1"));
-        ModuleList.moduleList.add(new Module("111", "undamaged", "11", "12", "0"));
-        ModuleList.moduleList.add(new Module("131", "undamaged", "10", "10", "0"));
-        ModuleList.moduleList.add(new Module("141", "undamaged", "10", "10", "0"));
-        ModuleList.moduleList.add(new Module("151", "undamaged", "10", "10", "0"));
-        ModuleList.moduleList.add(new Module("161", "undamaged", "10", "10", "0"));
-        ModuleList.moduleList.add(new Module("171", "undamaged", "10", "10", "0"));
-        ModuleList.moduleList.add(new Module("181", "undamaged", "10", "10", "0"));       
+        ModuleList.addModule(new Module("1", "undamaged", "2", "3", "0"));
+        ModuleList.addModule(new Module("61", "damaged", "5", "7", "2"));
+        ModuleList.addModule(new Module("91", "uncertain", "20", "30", "1"));
+        ModuleList.addModule(new Module("111", "undamaged", "11", "12", "0"));
+        ModuleList.addModule(new Module("131", "undamaged", "10", "10", "0"));
+        ModuleList.addModule(new Module("141", "undamaged", "10", "10", "0"));
+        ModuleList.addModule(new Module("151", "undamaged", "10", "10", "0"));
+        ModuleList.addModule(new Module("161", "undamaged", "10", "10", "0"));
+        ModuleList.addModule(new Module("171", "undamaged", "10", "10", "0"));
+        ModuleList.addModule(new Module("181", "undamaged", "10", "10", "0"));       
     }
     
     @Test
@@ -46,9 +46,10 @@ public class ModuleListTest extends GWTTestCase {
     
     @Test
     public void testGetModuleByCode() {
-        assertEquals(ModuleList.getModuleByCode("1"), ModuleList.moduleList.get(0));
-        assertEquals(ModuleList.getModuleByCode("111"), ModuleList.moduleList.get(3));
-        assertEquals(ModuleList.getModuleByCode("181"), ModuleList.moduleList.get(9));
+        ModuleList modList = ModuleList.get();
+        assertEquals(ModuleList.getModuleByCode("1"), modList.get(0));
+        assertEquals(ModuleList.getModuleByCode("111"), modList.get(3));
+        assertEquals(ModuleList.getModuleByCode("181"), modList.get(9));
     }
     
     @Test
