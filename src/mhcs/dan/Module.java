@@ -87,7 +87,6 @@ public class Module {
          * @param str string representation of the type.
          */
         ModuleType(final String astr) {this.str = astr;}
-
         /**
          * @return str string representation of the type.
          */
@@ -115,6 +114,7 @@ public class Module {
      */
     public int hashCode() {
         return code.hashCode();
+
     }
 
     /**
@@ -132,6 +132,9 @@ public class Module {
         this.xcoor = axcoor;
         this.ycoor = aycoor;
         this.turns = aturns;
+
+   
+
         int codeInt = Integer.parseInt(code);
         // assign module type based on code
         if (codeInt >= 1 && codeInt <= 40) {
