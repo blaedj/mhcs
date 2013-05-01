@@ -123,7 +123,7 @@ public class ModuleSerializer {
 		JSONObject jModule;
 		for(int index = 0; index < requestedArray.size(); index++){
 			jModule = (JSONObject)requestedArray.get(index);
-			ModuleList.moduleList.add(jsonToModule(jModule));
+			ModuleList.addModule(jsonToModule(jModule));
 		}
 	}
 

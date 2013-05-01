@@ -64,7 +64,7 @@ public class ModuleLocations {
 
 		@Override
 		public void onClick(final ClickEvent event) {
-		    plotModuleLocations(ModuleList.moduleList, landingAreaGrid);
+		    plotModuleLocations(ModuleList.get(), landingAreaGrid);
 		}
 	    });
 	// add the widgets
@@ -180,6 +180,6 @@ public class ModuleLocations {
      * @return the list of modules that have landed.
      */
     private ArrayList<Module> getModuleList() {
-    	return ModuleList.moduleList;
+    	return ModuleList.get();
     }
 }
