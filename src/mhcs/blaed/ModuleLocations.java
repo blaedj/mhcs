@@ -26,8 +26,10 @@ import mhcs.dan.ModuleList;
  */
 public class ModuleLocations {
 
-    private FlowPanel containerPanel;
-    private Grid landingAreaGrid;
+    // the main panel for the module locations panel.
+	transient private FlowPanel containerPanel;
+    
+    transient private Grid landingAreaGrid;
 
     /**
      * The main application framework
@@ -37,7 +39,8 @@ public class ModuleLocations {
 	intitializeMembers();
 
 	final ArrayList<Module> moduleList = getModuleList();
-
+	
+	// add a style to each cell in the table
 	for (int i = 0; i < landingAreaGrid.getRowCount(); i++) {
 	    for (int j = 0; j < landingAreaGrid.getColumnCount(); j++) {
 		landingAreaGrid.getCellFormatter().setStylePrimaryName(i, j, "tableCell");
@@ -52,7 +55,7 @@ public class ModuleLocations {
 
 	clearButton.addClickHandler(new ClickHandler() {
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(final ClickEvent event) {
 		    landingAreaGrid.clear(true);
 		}
 	    });
@@ -64,7 +67,7 @@ public class ModuleLocations {
 		    plotModuleLocations(ModuleList.moduleList, landingAreaGrid);
 		}
 	    });
-
+	// add the widgets
 	containerPanel.add(landingAreaGrid);
 	containerPanel.addStyleName("landingMap");
 	containerPanel.add(refreshButton);
@@ -107,6 +110,7 @@ public class ModuleLocations {
     	final PushButton moduleButton = new PushButton( module.getCode() );
     	moduleButton.setPixelSize(5, 5);
     	moduleButton.addClickHandler(new ClickHandler() {
+    		
     		@Override
     		public void onClick(final ClickEvent event) {
 		    PopupPanel alertPanel = new PopupPanel();

@@ -19,11 +19,16 @@ public class SaveLoggedModulesTest extends GWTTestCase{
 
 	private Storage localStorage;
 	private ModuleSerializer saver;
-
+	
+	public SaveLoggedModulesTest(){
+		super();
+		localStorage = Storage.getLocalStorageIfSupported();
+		saver = new ModuleSerializer(ModuleList.moduleList);
+	}
+	
 	@Before
 	public void gwtSetUp() throws Exception {
 		// create some test modules
-
 		createTestModules();
 		saver = new ModuleSerializer(ModuleList.moduleList);
 		saver.saveToLocal("first");
@@ -45,7 +50,7 @@ public class SaveLoggedModulesTest extends GWTTestCase{
 
 	@Test
 	public void testNullList() {
-		localStorage.clear();
+		localStorage.clear(); // make sure the list is empty to start with
 		ModuleList.moduleList.clear();
 		saver.retreiveModuleList();
 		assertTrue(ModuleList.length() == 0);
