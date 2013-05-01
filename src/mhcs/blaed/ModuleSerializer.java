@@ -11,6 +11,7 @@ import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.storage.client.Storage;
+import com.google.gwt.user.client.Window;
 
 /**
  *
@@ -19,7 +20,7 @@ import com.google.gwt.storage.client.Storage;
  */
 public class ModuleSerializer {
 
-	private ModuleList globalList;
+	transient final private ModuleList globalList;
 
 	public ModuleSerializer(final ModuleList list) {
 		globalList = list;
@@ -32,15 +33,12 @@ public class ModuleSerializer {
 	 */
 	public void saveToLocal(final String listKey) {
 
-		JSONArray moduleArray = new JSONArray();
-		moduleArray = setJsonArray();//
-
-		Storage localStorage = Storage.getLocalStorageIfSupported();
-		if(localStorage != null){
-			localStorage.setItem(listKey, moduleArray.toString());
+		final Storage localStorage = Storage.getLocalStorageIfSupported();
+		if(localStorage == null){
+			Window.alert("Local Storage not supported. Some functionality will be limited.");
 		}
 		else{
-			System.err.println("Local storage does not seem to be supported for this browser");
+			localStorage.setItem(listKey, setJsonArray().toString());			
 		}
 	}
 
@@ -76,9 +74,9 @@ public class ModuleSerializer {
 
 	/**
 	 * Load a previously saved list of modules
-	 * @param listKey the key of the list of logged modules to retrieve, must equal the key of a previously save module
+	 * @param listKey the key of the list of modules to retrieve, equal to key of a save list
 	 * @pre Browser supports localStorage and listKey is a valid localStorage key
-	 * @post the contents of the local storage value specified by 'listKey' are inserted into the moduleList.
+	 * @post the contents of the local storage value specified by 'listKey' are put into the moduleList.
 	 */
 	public void retrieveModuleList(final String listKey) {
 		Storage localStorage = Storage.getLocalStorageIfSupported();
@@ -99,10 +97,10 @@ public class ModuleSerializer {
 		boolean valid = false;
 		for (index = 0; index < localStorage.getLength(); index++){
 			String key = localStorage.key(index);
-			valid = testArray((JSONParser.parseStrict( localStorage.getItem(key) )));
+			valid = inspectArray(JSONParser.parseStrict( localStorage.getItem(key) ));
 			if(valid){
 				requestedArray = (JSONArray)JSONParser.parseLenient(localStorage.getItem(key));	
-			}
+			} 
 		}
 		if(requestedArray != null && requestedArray.isNull() != JSONNull.getInstance()){
 			processArray(requestedArray);
@@ -114,19 +112,15 @@ public class ModuleSerializer {
 	 * @param subject the JSONValue to inspect
 	 * @return the subject is a JSONArray
 	 */
-	private boolean testArray(final JSONValue subject) {
-		if(subject.isArray() == null || subject.toString().length() == 0){
-			return false;
-		}
-
-		return true;
+	private boolean inspectArray(final JSONValue subject) {
+		return subject.isArray() == null || subject.toString().length() == 0;
 	}
 
 	/**
 	 * @param requestedArray the array to process into the moduleList
 	 */
 	private void processArray(final JSONArray requestedArray) {
-		JSONObject jModule = new JSONObject();
+		JSONObject jModule;
 		for(int index = 0; index < requestedArray.size(); index++){
 			jModule = (JSONObject)requestedArray.get(index);
 			ModuleList.moduleList.add(jsonToModule(jModule));
@@ -146,8 +140,7 @@ public class ModuleSerializer {
 		String yCoor = jsonModule.get("yCoor").toString();
 		String turns = jsonModule.get("turns").toString();
 
-		Module module = new Module(code, damage, xCoor, yCoor, turns);
-		return module;
+		return new Module(code, damage, xCoor, yCoor, turns);
 	}
 
 

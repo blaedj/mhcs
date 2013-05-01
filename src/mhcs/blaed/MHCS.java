@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import mhcs.dan.Logging;
 import mhcs.danielle.MinimumConfigPage;
 
-import com.allen_sauer.gwt.voices.client.Sound;
-import com.allen_sauer.gwt.voices.client.SoundController;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -29,8 +27,8 @@ import com.google.gwt.user.client.ui.Widget;
 public class MHCS implements EntryPoint {
 
 
-    private TabPanel baseTabPanel;
-    private TabBar baseTabBar;
+    transient private TabPanel baseTabPanel;
+    transient private TabBar baseTabBar;	// 
     //public static ModuleList moduleList;
     /*
      *
@@ -47,28 +45,30 @@ public class MHCS implements EntryPoint {
      * @return a widget that wraps the login page interface
      */
     private Widget createLogin() {
-	final TextBox tb = new TextBox();
-	final PasswordTextBox ptb = new PasswordTextBox();
-	Button confirm = new Button("Confirm");
+	final TextBox userNameInput = new TextBox();
+	final PasswordTextBox passwordInput = new PasswordTextBox();
+	final Button confirm = new Button("Confirm");
 	final FlexTable mainTable = new FlexTable();
 	final SoundPlayer sound = new SoundPlayer();
-	mainTable.setText(0,0,"Username");
-	mainTable.setText(0,5,"Password");
-	mainTable.setWidget(1,0,tb);
-	mainTable.setWidget(1,5,ptb);
+	userNameInput.setText("Username");
+	passwordInput.setText("Password");
+	
+	mainTable.setWidget(1,0,userNameInput);
+	mainTable.setWidget(1,5,passwordInput);
 	mainTable.setWidget(1,6,confirm);
 
 	confirm.addClickHandler(new ClickHandler() {
 		public void onClick(final ClickEvent event) {
-		    final String password = ptb.getText();
-		    final String userName = tb.getText();
+		    final String password = passwordInput.getText();
+		    final String userName = userNameInput.getText();
 		    ArrayList<String> validUsernames = new ArrayList<String>();
 		    validUsernames.add("Astro");
 		    validUsernames.add("Blaed");
 		    validUsernames.add("Dalton");
 		    validUsernames.add("Dan");
 		    validUsernames.add("Danielle");
-		    if(validUsernames.contains(userName) && password.equals("mars")){
+		    // check if username and password are correct
+		    if(validUsernames.contains(userName) && password.equals("Mars")){
 			    logIn(mainTable);
 			    sound.playWelcome();
 		    } else {
@@ -108,25 +108,25 @@ public class MHCS implements EntryPoint {
 	baseTabBar     = baseTabPanel.getTabBar();
 
 
-	FlowPanel loggingPageWrapper = new FlowPanel();
-	FlowPanel moduleLocationsWrapper = new FlowPanel();
+	FlowPanel loggingPageWrap = new FlowPanel();
+	FlowPanel modLocationsWrap = new FlowPanel();
 
 	Logging logPage = new Logging();
 
 	ModuleLocations locations = new ModuleLocations();
 
-	FlowPanel minConfigWrapper = new FlowPanel();
+	FlowPanel minConfigWrap = new FlowPanel();
 	MinimumConfigPage minConfig = new MinimumConfigPage();
 
-	minConfigWrapper.add(minConfig.createMinConfig());
-	baseTabPanel.add(minConfigWrapper, "Minimum Configuration");
+	minConfigWrap.add(minConfig.createMinConfig());
+	baseTabPanel.add(minConfigWrap, "Minimum Configuration");
 
-	loggingPageWrapper.add(logPage.getLoggingPage());
-	moduleLocationsWrapper.add(locations.createMainPanel());
+	loggingPageWrap.add(logPage.getLoggingPage());
+	modLocationsWrap.add(locations.createMainPanel());
 
 
-	baseTabPanel.add(loggingPageWrapper, "Module Logging Page");
-	baseTabPanel.add(moduleLocationsWrapper, "View Module locations");
+	baseTabPanel.add(loggingPageWrap, "Module Logging Page");
+	baseTabPanel.add(modLocationsWrap, "View Module locations");
 
 	baseTabPanel.selectTab(0);
 

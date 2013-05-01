@@ -4,11 +4,11 @@ import com.google.gwt.dom.client.AudioElement;
 import com.google.gwt.media.client.Audio;
 
 public class SoundPlayer {
-    private Audio welcomeAudio;
-    private Audio accessDeniedAudio;
-    private Audio errorAudio;
-    private Audio saveSucceedAudio;
-    private Audio modulesLoadedAudio;
+    transient private Audio welcomeAudio;
+    transient private Audio accessDeniedAudio;
+    transient private Audio errorAudio;
+    transient private Audio saveSucceedAudio;
+    transient private Audio modsLoadedAudio;
 
     public SoundPlayer(){
 	welcomeAudio = Audio.createIfSupported();
@@ -27,9 +27,9 @@ public class SoundPlayer {
 	saveSucceedAudio.addSource("sounds/SaveSuccessfulGuy.mp3", AudioElement.TYPE_MP3);
 	saveSucceedAudio.addSource("sounds/SaveSuccessfulGuy.wav", AudioElement.TYPE_WAV);
 
-	modulesLoadedAudio = Audio.createIfSupported();
-	modulesLoadedAudio.addSource("sounds/ModulesLoadedGuy.mp3", AudioElement.TYPE_MP3);
-	modulesLoadedAudio.addSource("sounds/ModulesLoadedGuy.wav", AudioElement.TYPE_WAV);
+	modsLoadedAudio = Audio.createIfSupported();
+	modsLoadedAudio.addSource("sounds/ModulesLoadedGuy.mp3", AudioElement.TYPE_MP3);
+	modsLoadedAudio.addSource("sounds/ModulesLoadedGuy.wav", AudioElement.TYPE_WAV);
     }
 
     public void playWelcome(){
@@ -49,7 +49,7 @@ public class SoundPlayer {
     }
 
     public void playModulesLoaded() {
-	modulesLoadedAudio.play();
+	modsLoadedAudio.play();
     }
 
 }
