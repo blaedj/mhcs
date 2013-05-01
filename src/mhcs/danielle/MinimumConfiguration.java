@@ -21,10 +21,6 @@ public class MinimumConfiguration {
 	 */
 	private ArrayList<Minimum> minArray;
 	/**
-	 * theList of modules.
-	 */
-	private ArrayList<Module> theList;
-	/**
 	 * allGood flag to show if min config is possible.
 	 */
 	private boolean allGood;
@@ -39,6 +35,10 @@ public class MinimumConfiguration {
 	 */
 	private int adjustY;
 	/**
+	 * The list of modules.
+	 */
+	ModuleList theList;
+	/**
 	 * MinimumConfiguration constructor creates
 	 * an object that consists of two lists: one of
 	 * module type and one of coordinate points.
@@ -49,12 +49,12 @@ public class MinimumConfiguration {
 	 * @param moduleList is the list of modules
 	 */
 
-	public MinimumConfiguration(ArrayList<Module> theList) {
+	public MinimumConfiguration() {
 		// Initialize data members
 		adjustX = 0;
 		adjustY = 0;
 
-		this.theList = theList;
+		this.theList = ModuleList.get();
 		allGood = testMinConfig();
 		minArray = new ArrayList<Minimum>();
 
@@ -70,7 +70,7 @@ public class MinimumConfiguration {
 	 */
 	public static boolean testMinConfig() {
 		// Set up some local variables for static function
-		ArrayList<Module> theList = ModuleList.moduleList;
+	    ModuleList theList = ModuleList.get();
 		int count = theList.size();
 		Module temp;
 		String damaged = "damaged";
