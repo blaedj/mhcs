@@ -2,8 +2,10 @@ package mhcs.blaed;
 
 import java.util.ArrayList;
 
+import mhcs.dalton.WeatherFeed;
 import mhcs.dan.Logging;
 import mhcs.danielle.MinimumConfigPage;
+
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -28,7 +30,7 @@ public class MHCS implements EntryPoint {
 
 
     transient private TabPanel baseTabPanel;
-    transient private TabBar baseTabBar;	// 
+    transient private TabBar baseTabBar;	//
     //public static ModuleList moduleList;
     /*
      *
@@ -52,7 +54,7 @@ public class MHCS implements EntryPoint {
 	final SoundPlayer sound = new SoundPlayer();
 	userNameInput.setText("Username");
 	passwordInput.setText("Password");
-	
+
 	mainTable.setWidget(1,0,userNameInput);
 	mainTable.setWidget(1,5,passwordInput);
 	mainTable.setWidget(1,6,confirm);
@@ -123,11 +125,11 @@ public class MHCS implements EntryPoint {
 
 	loggingPageWrap.add(logPage.getLoggingPage());
 	modLocationsWrap.add(locations.createMainPanel());
-
+	WeatherFeed weather = new WeatherFeed();
 
 	baseTabPanel.add(loggingPageWrap, "Module Logging Page");
 	baseTabPanel.add(modLocationsWrap, "View Module locations");
-
+	baseTabPanel.add( weather.getweatherfeed(), "View the Weather forecast");
 	baseTabPanel.selectTab(0);
 
 	baseTabPanel.setVisible(true);
