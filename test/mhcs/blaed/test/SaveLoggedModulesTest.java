@@ -94,7 +94,7 @@ public class SaveLoggedModulesTest extends GWTTestCase {
 		assertTrue("the module list does not contain the expected value.", ModuleList.get().contains(testModule));
 	}
 
-	@Test
+	@Test	
 	public void testRetrieveFirstModuleList(){
 		ModuleList.clearList();
 		saver.retreiveModuleList();
