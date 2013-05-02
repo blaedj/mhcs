@@ -150,6 +150,11 @@ public class FullConfiguration {
 	        if(codes[0] >=20) {
 	           if((codes[5] >= 8) && (codes[6] >= 4) && (codes[8] >= 1)) {
 	               // Then we have enough dorm, med, and sanitation
+	               if((codes[2] >= 3) && (codes[4] >= 3)
+	                       && (codes[1] >= 2) && (codes[3] >= 2) && (codes[9] >=2)) {
+	                   // Now we have enough of everything
+	                   
+	               }
 	               
 	           }
 	        }

@@ -130,7 +130,7 @@ public class FullConfigPage implements EntryPoint {
 		tmpModList.add(new Module("163", "UNDAMAGED", "9", "9", "1"));
 		tmpModList.add(new Module("171", "UNDAMAGED", "21", "21", "1"));
 
-		maxConfig1 = new FullConfiguration(tmpModList);
+		maxConfig1 = new FullConfiguration();
 		maxArray = maxConfig1.getMaxArray();
 
 		// Creating scroll list of modules
