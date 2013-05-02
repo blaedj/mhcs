@@ -148,7 +148,10 @@ public class FullConfiguration {
 	        }// End of Small Configuration Test
 	    } else if(flag == 1) { // Case: med config test
 	        if(codes[0] >=20) {
-	            
+	           if((codes[5] >= 8) && (codes[6] >= 4) && (codes[8] >= 1)) {
+	               // Then we have enough dorm, med, and sanitation
+	               
+	           }
 	        }
 	    } else if(flag == 3) {// Case: lrg config test
 	        
