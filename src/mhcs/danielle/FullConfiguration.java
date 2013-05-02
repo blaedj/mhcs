@@ -2,12 +2,14 @@ package mhcs.danielle;
 
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.Window;
+
 import mhcs.dan.Module;
 import mhcs.dan.Module.ModuleType;
 import mhcs.dan.ModuleList;
-//import mhcs.dan.ModuleList;
 /**
- * This class creates a full configuration.
+ * This class creates a full configuration
+ * based on how many modules are in the list.
  * @author Danielle Stewart
  *
  */
@@ -15,7 +17,7 @@ public class FullConfiguration {
     /**
      * the list of modules.
      */
-    ModuleList theList;
+    private ModuleList theList;
     /**
      * private data member listSize is the size of the mod list
      * that comes in.
@@ -30,23 +32,23 @@ public class FullConfiguration {
 	 * list of modules and their types for counting.
 	 */
 	private int codes[];
+//***//****//****//****//*****//*******CONSTRUCTOR
 	/**
-	 * this is the public constructor.
-	 * @param mods
+	 * This is the public constructor.
 	 */
-	public FullConfiguration(ArrayList<Module> mods){
+	public FullConfiguration(){
 	    theList = ModuleList.get();
 	    maxList = new ArrayList<Maximum>();
-	    listSize = mods.size();
+	    listSize = theList.size();
 	    codes = new int[10];
 	    // Initialize codes to all zero elements.
 	    for(int i = 0; i < codes.length; i++) {
 	        codes[i] = 0;
 	    }
-	    
 	    countTypes();
 		testSizes();
 	}
+//********************************************
 	/**
 	 * private method will count the type of each undamaged
 	 * module for configuration build.
@@ -104,62 +106,59 @@ public class FullConfiguration {
             }
         }
 	}
+//***********************************************
 	/**
 	 * test the size of the list coming in.
 	 */
 	private void testSizes(){
 	    boolean valid = true;
-		if((listSize > 10)&&(listSize < 21)){
-			valid = testSmallList();
-		}else if ((listSize >= 21)&&(listSize < 31)) {
-			valid = testMediumList();
-		}else if ((listSize >= 31)&&(listSize < 51)) {
-			valid = testLargeList();
-		}else {
-			valid = testMaxList();
+	    int flag = 0;
+		if((listSize > 10) && (listSize < 21)) {
+		    flag = 1;
+		    testList(flag);
+		} else if ((listSize >= 21) && (listSize < 31)) {
+		} else if ((listSize >= 31) && (listSize < 51)) {
+		} else {
 		}
+		// If valid is false, we cannot make a full.
 		if(valid == false) {
+		    Window.alert("Sorry! Unable to make full confligration.");
+		} else {
 		    
 		}
 	}
+//*********************************************
 	/**
 	 * makes small list.
 	 */
-	private boolean testSmallList(){
-	    boolean valid = true;
-	    if(codes[0] >= 4) {
-	        
-	    } else {
-	       valid = false; 
-	    }
-	    for(int i = 1; i < 10; i++) {
-	        if(codes[i] < 1) {
-	            valid = false;
+	private boolean testList(int flag) {
+	    boolean valid = false;
+	    // Case: small config test
+	    if(flag == 0) {
+	        //Make sure there are the correct number of modules.
+	        if(codes[0] >= 4) { // Then we can check all the others
+	            for(int i = 1; i < 10; i++) {
+	                if(codes[i] < 1) {
+	                    valid = false;
+	                }
+	                valid = true;
+	            }
+	        } else { // There aren't enough plain mods.
+	            valid = false; 
+	        }// End of Small Configuration Test
+	    } else if(flag == 1) { // Case: med config test
+	        if(codes[0] >=20) {
+	            
 	        }
+	    } else if(flag == 3) {// Case: lrg config test
+	        
+	    } else { // Case: max config
+	        
 	    }
+	    
 	    return valid;
 	}
-	/**
-	 * makes medium list.
-	 */
-	private boolean testMediumList(){
-		
-	}
-	/**
-	 * makes large list.
-	 * @return 
-	 */
-	private boolean testLargeList(){
-		
-	}
-	/**
-	 * makes max list.
-	 * @return 
-	 */
-	private boolean testMaxList(){
-		
-	}
-	
+//****************************************
 	/**
 	 * makeSmallSkeleton will create a skeleton framework
 	 * for the configuration. This framework by itself follows 
@@ -173,6 +172,7 @@ public class FullConfiguration {
 	private void makeSmallSkeleton() {
 		
 	}
+//*************************************
 	/**
 	 * getter for the max array.
 	 */

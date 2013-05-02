@@ -71,6 +71,13 @@ public class MinimumConfiguration {
 	public static boolean testMinConfig() {
 		// Set up some local variables for static function
 	    ModuleList theList = ModuleList.get();
+	    
+	    // If there is no module list, there cannot be 
+	    // configurations.
+	    if(theList.isEmpty()) {
+	        return false;
+	    }
+	    // So, we have a module list to test...
 		int count = theList.size();
 		Module temp;
 		String damaged = "damaged";
@@ -249,7 +256,7 @@ public class MinimumConfiguration {
 	 * configuration. 
 	 */
 	public void setSecondConfig(){
-		int total = 10;
+	    int total = 10;
 		int valuex = 0;
 		int valuey = 0;
 		ModuleType type;
