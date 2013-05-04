@@ -34,13 +34,13 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class MinimumConfigPage implements EntryPoint {
 	/**
-	 * Creates the page and returns the widget to be put into 
+	 * Creates the page and returns the widget to be put into
 	 * a tab.
 	 * @return this page as a widget.
 	 */
 	public Widget createMinConfig() {
 		initialize();
-		setUpMinConfig();
+		setUpMinConfig(minConfig1);
 
 		FlowPanel wrapper = new FlowPanel();
 		wrapper.add(mainPanel);
@@ -49,9 +49,9 @@ public class MinimumConfigPage implements EntryPoint {
 	//**********************************************
     /**
      * Initializes everything .
-     * (during testing, also holds module list creation).
      */
     private void initialize() {
+        theModList = ModuleList.get();
         mainPanel = new HorizontalPanel();
         imagePanel = new ScrollPanel();
         mainListPanelDecorator = new DecoratorPanel();
@@ -60,29 +60,18 @@ public class MinimumConfigPage implements EntryPoint {
         detailList = new FlowPanel();
         details = new TextArea();
         details.setText("Select a module to see details");
-        details.setCharacterWidth(37);
-        details.setVisibleLines(7);
+        details.setCharacterWidth(2 * 2 * 2 * 2 * 2); // 32.
+        details.setVisibleLines((2 * 2 * 2) - 1); // 7.
         scroll = new ListBox();
-        imageGrid = new Grid(50,100);
-        buttonGrid = new Grid(1,2);
-        mainButtonGrid = new Grid(3,1);
+        imageGrid = new Grid((2 * 2 + 1) * (2 * 2 * 2 + 2),
+                2 * ((2 * 2 + 1) * (2 * 2 * 2 + 2)));
+             // The grid is (50, 100)
+        buttonGrid = new Grid(1, 2);
+        mainButtonGrid = new Grid((1 + 2), 1);
         recalculate = new Button("Recalculate");
         enterSave = new Button("Enter & Save");
-        // All for testing
-        tmpModList = new ModuleList();
-        tmpModList.add(new Module("1","DAMAGED", "1", "1", "0"));
-        tmpModList.add(new Module("2", "UNDAMAGED", "1","2", "1"));
-        tmpModList.add(new Module("3", "UNDAMAGED", "1", "3", "2"));
-        tmpModList.add(new Module("61", "UNDAMAGED", "1", "4", "0"));
-        tmpModList.add(new Module("91", "UNDAMAGED", "1", "5", "1"));
-        tmpModList.add(new Module("111", "UNDAMAGED", "1", "6", "2"));
-        tmpModList.add(new Module("141", "UNDAMAGED", "1", "7", "0"));
-        tmpModList.add(new Module("151", "UNDAMAGED", "1", "8", "1"));
-        tmpModList.add(new Module("161", "UNDAMAGED", "1", "9", "2"));
-        tmpModList.add(new Module("171", "UNDAMAGED", "1", "10", "0"));
-
         minConfig1 = new MinimumConfiguration();
-        minArray = minConfig1.getMinArray();
+        minArray = minConfig1.getMinArray(theModList);
 
         // Creating scroll list of modules
         createScrollList();
@@ -95,32 +84,49 @@ public class MinimumConfigPage implements EntryPoint {
 	/**
 	 * setUpMinConfig will create the min configuration 1
 	 * to create minConfig 2, user must push "recalculate".
+	 * @param minConfig configuration to use.
 	 */
-	private void setUpMinConfig() {
+	public static void setUpMinConfig(
+	        final MinimumConfiguration minConfig) {
+
 	    // Set up the array of minimum objects
-		minArray = minConfig1.getMinArray();
+		ArrayList<Minimum> minArray = minConfig.
+		        getMinArray(ModuleList.get());
+		//assert (minConfig != null);
+        //assert (minArray.size() > 0);
 		// Collect all their types and set up images
 		for (int i = 0; i < minArray.size(); i++) {
 			Minimum minItem = minArray.get(i);
 			Point tmpPoint = minItem.getPoint();
 
-			if (minItem.getCode().equals(ModuleType.AIRLOCK)) {
+			// This messy if code is just setting up
+			// images for each module on the map.
+			if (minItem.getCode().
+			        equals(ModuleType.AIRLOCK)) {
 				image = new Image("images/airlock.jpg");
-			} else if (minItem.getCode().equals(ModuleType.MEDICAL)) {
+			} else if (minItem.getCode().
+			        equals(ModuleType.MEDICAL)) {
 				image = new Image("images/medical.png");
-			} else if (minItem.getCode().equals(ModuleType.DORMITORY)) {
+			} else if (minItem.getCode().
+			        equals(ModuleType.DORMITORY)) {
 				image = new Image("images/dorm.jpg");
-			} else if (minItem.getCode().equals(ModuleType.PLAIN)) {
+			} else if (minItem.getCode().
+			        equals(ModuleType.PLAIN)) {
 				image = new Image("images/plain.png");
-			} else if (minItem.getCode().equals(ModuleType.POWER)) {
+			} else if (minItem.getCode().
+			        equals(ModuleType.POWER)) {
 				image = new Image("images/power.jpg");
-			} else if (minItem.getCode().equals(ModuleType.CANTEEN)) {
+			} else if (minItem.getCode().
+			        equals(ModuleType.CANTEEN)) {
 				image = new Image("images/canteen.png");
-			} else if (minItem.getCode().equals(ModuleType.SANITATION)) {
+			} else if (minItem.getCode().
+			        equals(ModuleType.SANITATION)) {
 				image = new Image("images/sanitation.jpg");
-			} else if (minItem.getCode().equals(ModuleType.GYM_AND_RELAXATION)) {
+			} else if (minItem.getCode().
+			        equals(ModuleType.GYM_AND_RELAXATION)) {
 				image = new Image("images/gym.png");
-			} else if (minItem.getCode().equals(ModuleType.CONTROL)) {
+			} else if (minItem.getCode().
+			        equals(ModuleType.CONTROL)) {
 				image = new Image("images/control.jpg");
 			} else {
 				image = new Image("images/storage.jpg");
@@ -135,23 +141,9 @@ public class MinimumConfigPage implements EntryPoint {
 			flow.setVisible(true);
 			flow.add(image);
 			// Set image on grid
-			imageGrid.setWidget((int)tmpPoint.getY(),
-					(int)tmpPoint.getX(), 
+			imageGrid.setWidget((int) tmpPoint.getY(),
+					(int) tmpPoint.getX(),
 					flow);
-
-			/**
-			 * Testing on why I can't see module images on grid.
-			if(imageGrid.isVisible()) {
-				Window.alert("The image grid is visible");
-			} else {
-				Window.alert("I am invisible... but that doesn't mean I am not watching you...");
-			}
-			if(imageGrid.isCellPresent(21, 21)) {
-				Window.alert("The image grid cell (21, 21) exists. For what it's worth...");
-			} else {
-				Window.alert("Why don't I exist?");
-			}
-			*/
 		}
 	}
 
@@ -166,8 +158,8 @@ public class MinimumConfigPage implements EntryPoint {
 		imagePanel.getElement().getStyle().setOverflow(Overflow.AUTO);
 		imageGrid.setVisible(true);
 		// Set sandy part of map
-		for(int i = 0; i < 10; i++) {
-			for(int j = 39; j < 49; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 39; j < 49; j++) {
 				imageGrid.setText(i, j, "X");
 			}
 		}
@@ -176,8 +168,8 @@ public class MinimumConfigPage implements EntryPoint {
 	}
 //*************************************************
 	/**
-	 * Separates out the important additions to 
-	 * the main panel framework. 
+	 * Separates out the important additions to
+	 * the main panel framework.
 	 */
 	private void setUpPanelDetails() {
 		mainPanel.add(imagePanel);
@@ -185,7 +177,7 @@ public class MinimumConfigPage implements EntryPoint {
 	}
 //**************************************************
 	/**
-	 * This creates the scrollable list that holds modules used in 
+	 * This creates the scrollable list that holds modules used in
 	 * min configuration. Also sets up action handlers for selectable
 	 * modules in the list.
 	 */
@@ -195,27 +187,29 @@ public class MinimumConfigPage implements EntryPoint {
 		scroll.setPixelSize(250, 451);
 		scroll.setVisibleItemCount(109);
 
-		for(int i = 0; i < tmpModList.size(); i++) {
-			final Module mod = tmpModList.get(i);
+		for (int i = 0; i < theModList.size(); i++) {
+			final Module mod = theModList.get(i);
 			final String item = mod.getType().toString();
 			scroll.addItem(mod.getCode() + ": " + item);
 			scroll.addChangeHandler(new ChangeHandler() {
 
-			// Here is where we attach the handlers to each 
-			// selectable module on the list. 
+			// Here is where we attach the handlers to each
+			// selectable module on the list.
 				@Override
 				public void onChange(final ChangeEvent event) {
-					int selection = scroll.getSelectedIndex();
-					String selString = scroll.getItemText(selection);
+					int selection =
+					        scroll.getSelectedIndex();
+					String selString =
+					        scroll.getItemText(selection);
 					int semicolon = selString.indexOf(':');
-					String finalString = selString.substring(0, semicolon);
+					String finalString =
+					        selString.substring(0,
+					                semicolon);
 					// TESTING STUFF
-					Module tempMod;
-					int code = Integer.parseInt(finalString);
-					if((code == 1)) {
-						tempMod = tmpModList.get(0); 
+					/*if((code == 1)) {
+						tempMod = tmpModList.get(0);
 					} else if(code == 2) {
-						tempMod = tmpModList.get(1); 
+						tempMod = tmpModList.get(1);
 					} else if(code == 3) {
 						tempMod = tmpModList.get(2);
 					} else if(code == 61) {
@@ -232,16 +226,24 @@ public class MinimumConfigPage implements EntryPoint {
 						tempMod = tmpModList.get(8);
 					} else {
 						tempMod = tmpModList.get(9);
-					}
-					//@SuppressWarnings("static-access")
-					//int tmpIndex = ModuleList.moduleList.getIndexByCode(finalString);
-					//Module tempMod = ModuleList.moduleList.get(tmpIndex);
+					}*/
+					@SuppressWarnings("static-access")
+					int tmpIndex = theModList.
+					    getIndexByCode(finalString);
+					Module tempMod =
+					        theModList.get(tmpIndex);
 
-					details.setText("Code: " + tempMod.getCode()
-							+ "\n"+"X coordinate: " + tempMod.getXCoor()
-							+ "\nY coordinate: " + tempMod.getYCoor()+"\n"
-							+ "\nDamage: " + tempMod.getDamage()
-							+ "\nTurns to upright: " + tempMod.getTurns());
+					details.setText("Code: "
+					        + tempMod.getCode()
+							+ "\n"
+					        + "X coordinate: "
+					        + tempMod.getXCoor()
+							+ "\nY coordinate: "
+					        + tempMod.getYCoor() + "\n"
+							+ "\nDamage: "
+					        + tempMod.getDamage()
+							+ "\nTurns to upright: "
+					        + tempMod.getTurns());
 				}
 			});
 		}
@@ -250,7 +252,7 @@ public class MinimumConfigPage implements EntryPoint {
 		mainListPanel.setTitle("Modules");
 		detailList.add(details);
 
-		// Now we attach onChange handler 
+		// Now we attach onChange handler
 		// to each item in the scroll list
 	}
 	/**
@@ -259,101 +261,98 @@ public class MinimumConfigPage implements EntryPoint {
 	private void createButtonPanel() {
 	    // Set up listeners for recalculate and enter/Save
 	    recalculate.addClickHandler(new ClickHandler() {
-	        public void onClick(ClickEvent event) {
+	        public void onClick(final ClickEvent event) {
 	            // Get second configuration
 	            minConfig1.setSecondConfig();
 	          }
 	        });
 	    enterSave.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 // handle the enterSave event
-                
               }
             });
 		buttonGrid.setWidth("225px");
 		buttonGrid.setWidget(0, 0, recalculate);
 		buttonGrid.setWidget(0, 1, enterSave);
 		mainButtonGrid.setVisible(true);
-		mainButtonGrid.setWidget(0 ,0, mainListPanel);
+		mainButtonGrid.setWidget(0, 0, mainListPanel);
 		mainButtonGrid.setWidget(1, 0, detailList);
 		mainButtonGrid.setWidget(2, 0, buttonGrid);
 		mainListPanelDecorator.add(mainButtonGrid);
 	}
 	/**
-	 * main panel - holds it all
+	 * main panel - holds it all.
 	 */
-	HorizontalPanel mainPanel;
+	private HorizontalPanel mainPanel;
 	/**
 	 * image held here.
 	 */
-	ScrollPanel imagePanel;
+	private ScrollPanel imagePanel;
 	/**
 	 * holds list of modules.
 	 */
-	FlowPanel mainListPanel;
+	private FlowPanel mainListPanel;
 	/**
 	 * decorates list.
 	 */
-	DecoratorPanel mainListPanelDecorator;
+	private DecoratorPanel mainListPanelDecorator;
 	/**
 	 * scrollable list.
 	 */
-	ScrollPanel scrollList;
+	private ScrollPanel scrollList;
 	/**
-	 * text area holds selected module details
+	 * text area holds selected module details.
 	 */
-	FlowPanel detailList;
+	private FlowPanel detailList;
 	/**
 	 * text area holds string details.
 	 */
-	TextArea details;
+	private TextArea details;
 	/**
 	 * scroll is the list of modules.
 	 */
-	ListBox scroll;
+	private ListBox scroll;
 	/**
-	 * image grid is what plots locations and holds images. 
+	 * image grid is what plots locations and holds images.
 	 */
-	Grid imageGrid;
+	private static Grid imageGrid;
 	/**
 	 * button grid holds the buttons in place (Enter&Save, Recalc).
 	 */
-	Grid buttonGrid;
+	private Grid buttonGrid;
 	/**
-	 * Yet another cause interfaces are complicated to code. 
+	 * Yet another cause interfaces are complicated to code.
 	 */
-	Grid mainButtonGrid;
+	private Grid mainButtonGrid;
 	/**
 	 * Button for recalc the configuration.
 	 */
-	Button recalculate;
+	private Button recalculate;
 	/**
 	 * enterSave is to say "yes" to this configuration.
 	 */
-	Button enterSave;
+	private Button enterSave;
 	/**
-	 * The min config object
+	 * The min config object.
 	 */
-	MinimumConfiguration minConfig1;
+	private static MinimumConfiguration minConfig1;
 	/**
-	 * An array list of objects to put on grid and where. 
+	 * An array list of objects to put on grid and where.
 	 */
-	ArrayList<Minimum> minArray;
+	private ArrayList<Minimum> minArray;
 	/**
-	 * The little image for each mod on the map. 
+	 * The little image for each mod on the map.
 	 */
-	Image image;
+	private static Image image;
 	/**
 	 * tmp mod list is used for testing purposes.
 	 */
-	private ModuleList tmpModList;
-	
+	private ModuleList theModList;
 	/**
-	 * Empty for now (Ask Blaed). 
+	 * Empty for now.
 	 */
 	@Override
 	public void onModuleLoad() {
 		// TODO Auto-generated method stub
-		
 	}
 }

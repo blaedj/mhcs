@@ -31,18 +31,18 @@ public class FullConfiguration {
 	/**
 	 * list of modules and their types for counting.
 	 */
-	private int codes[];
+	private int[] codes;
 //***//****//****//****//*****//*******CONSTRUCTOR
 	/**
 	 * This is the public constructor.
 	 */
-	public FullConfiguration(){
+	public FullConfiguration() {
 	    theList = ModuleList.get();
 	    maxList = new ArrayList<Maximum>();
 	    listSize = theList.size();
 	    codes = new int[10];
 	    // Initialize codes to all zero elements.
-	    for(int i = 0; i < codes.length; i++) {
+	    for (int i = 0; i < codes.length; i++) {
 	        codes[i] = 0;
 	    }
 	    countTypes();
@@ -57,15 +57,15 @@ public class FullConfiguration {
 	    String damaged = "damaged";
 	    Module temp;
 	 // Traverse list of modules counting types
-        for(int i = 0; i < theList.size(); i++) {
-            
+        for (int i = 0; i < theList.size(); i++) {
+
             assert (listSize == theList.size());
-            
-            if(damaged.equalsIgnoreCase(
+
+            if (damaged.equalsIgnoreCase(
                     theList.get(i).getDamage())) {
                 continue;
             }
-            
+
             temp = theList.get(i);
             /**
              * Counts each module type in our list.
@@ -83,25 +83,25 @@ public class FullConfiguration {
              * 9....gym
              */
             ModuleType codeTmp = temp.getType();
-            if(codeTmp.equals(ModuleType.PLAIN)) {
+            if (codeTmp.equals(ModuleType.PLAIN)) {
                 codes[0]++;
-            } else if(codeTmp.equals(ModuleType.POWER)) {
+            } else if (codeTmp.equals(ModuleType.POWER)) {
                 codes[1]++;
-            } else if(codeTmp.equals(ModuleType.FOOD_AND_WATER)) {
+            } else if (codeTmp.equals(ModuleType.FOOD_AND_WATER)) {
                 codes[2]++;
-            } else if(codeTmp.equals(ModuleType.AIRLOCK)) {
+            } else if (codeTmp.equals(ModuleType.AIRLOCK)) {
                 codes[3]++;
-            } else if(codeTmp.equals(ModuleType.CANTEEN)) {
+            } else if (codeTmp.equals(ModuleType.CANTEEN)) {
                 codes[4]++;
-            } else if(codeTmp.equals(ModuleType.DORMITORY)) {
+            } else if (codeTmp.equals(ModuleType.DORMITORY)) {
                 codes[5]++;
-            } else if(codeTmp.equals(ModuleType.SANITATION)) {
+            } else if (codeTmp.equals(ModuleType.SANITATION)) {
                 codes[6]++;
-            } else if(codeTmp.equals(ModuleType.CONTROL)) {
+            } else if (codeTmp.equals(ModuleType.CONTROL)) {
                 codes[7]++;
-            } else if(codeTmp.equals(ModuleType.MEDICAL)) {
+            } else if (codeTmp.equals(ModuleType.MEDICAL)) {
                 codes[8]++;
-            } else if(codeTmp.equals(ModuleType.GYM_AND_RELAXATION)) {
+            } else if (codeTmp.equals(ModuleType.GYM_AND_RELAXATION)) {
                 codes[9]++;
             }
         }
@@ -110,10 +110,10 @@ public class FullConfiguration {
 	/**
 	 * test the size of the list coming in.
 	 */
-	private void testSizes(){
+	private void testSizes() {
 	    boolean valid = true;
 	    int flag = 0;
-		if((listSize > 10) && (listSize < 21)) {
+		if ((listSize > 10) && (listSize < 21)) {
 		    flag = 1;
 		    testList(flag);
 		} else if ((listSize >= 21) && (listSize < 31)) {
@@ -121,49 +121,58 @@ public class FullConfiguration {
 		} else {
 		}
 		// If valid is false, we cannot make a full.
-		if(valid == false) {
+		if (!valid) {
 		    Window.alert("Sorry! Unable to make full confligration.");
 		} else {
-		    
+
 		}
 	}
 //*********************************************
 	/**
-	 * makes small list.
+	 * Tests list.
+	 * @param flag tells what size we want.
+	 * @return boolean true if we can make a configuration.
 	 */
-	private boolean testList(int flag) {
+	private boolean testList(final int flag) {
 	    boolean valid = false;
 	    // Case: small config test
-	    if(flag == 0) {
+	    if (flag == 0) {
 	        //Make sure there are the correct number of modules.
-	        if(codes[0] >= 4) { // Then we can check all the others
-	            for(int i = 1; i < 10; i++) {
-	                if(codes[i] < 1) {
+	        if (codes[0] >= 4) {
+	            // Then we can check all the others
+	            for (int i = 1; i < 10; i++) {
+	                if (codes[i] < 1) {
 	                    valid = false;
 	                }
 	                valid = true;
 	            }
 	        } else { // There aren't enough plain mods.
-	            valid = false; 
-	        }// End of Small Configuration Test
-	    } else if(flag == 1) { // Case: med config test
-	        if(codes[0] >=20) {
-	           if((codes[5] >= 8) && (codes[6] >= 4) && (codes[8] >= 1)) {
+	            valid = false;
+	        } // End of Small Configuration Test
+	    } else if (flag == 1) {
+	        // Case: med config test
+	        if (codes[0] >= 20) {
+	           if ((codes[5] >= 8)
+	                   && (codes[6] >= 4)
+	                   && (codes[8] >= 1)) {
 	               // Then we have enough dorm, med, and sanitation
-	               if((codes[2] >= 3) && (codes[4] >= 3)
-	                       && (codes[1] >= 2) && (codes[3] >= 2) && (codes[9] >=2)) {
+	               if ((codes[2] >= 3)
+	                       && (codes[4] >= 3)
+	                       && (codes[1] >= 2)
+	                       && (codes[3] >= 2)
+	                       && (codes[9] >= 2)) {
 	                   // Now we have enough of everything
-	                   
+	                   valid = true;
 	               }
-	               
 	           }
 	        }
-	    } else if(flag == 3) {// Case: lrg config test
-	        
-	    } else { // Case: max config
-	        
+	    } else if (flag == 3) {
+	        // Case: lrg config test
+
+	    } else {
+	        // Case: max config
+
 	    }
-	    
 	    return valid;
 	}
 //****************************************
