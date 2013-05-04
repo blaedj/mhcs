@@ -1,5 +1,7 @@
 package mhcs.dan;
 
+import com.google.gwt.user.client.Window;
+
 /**
  *
  * @author Daniel Hammond
@@ -38,7 +40,7 @@ public class Module {
      * @author Daniel Hammond
      *
      */
-    public enum ModuleType {
+    public static enum ModuleType {
         /**
          * plain module.
          */
@@ -113,7 +115,7 @@ public class Module {
      * because checkstyle told me to.
      */
     public int hashCode() {
-        return code.hashCode();
+        return this.toString().hashCode();
 
     }
 

@@ -2,6 +2,8 @@ package mhcs.dan;
 
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.Window;
+
 /**
  *
  * @author Daniel Hammond
@@ -14,27 +16,80 @@ public class ModuleList extends ArrayList<Module> {
      * Global list of all modules.
      */
     private static ModuleList list = new ModuleList();
-    
+
+    /**
+     * Global list of damaged modules.
+     */
+    private static ModuleList damagedList = new ModuleList();
+
+    /**
+     * Gets the list of undamaged modules.
+     * @return a copy of the modules list
+     */
     public static ModuleList get() {
         return list;
     }
     
-    public static void clearList() {
-        list.clear();
+    /**
+     * Gets the list of damaged modules.
+     * @return a copy of the damaged modules list
+     */
+    public static ModuleList getDamaged() {
+        return damagedList;
     }
 
+    /**
+     * Clears the list of modules.
+     */
+    public static void clearList() {
+        list.clear();
+        damagedList.clear();
+    }
+
+    /**
+     * 
+     * @param mod
+     * @return
+     */
     public static boolean addModule(final Module mod) {
         if (isValid(mod)) {
-            list.add(mod);
-            return true;
+            if (mod.getDamage().equals("undamaged")) {
+                list.add(mod);
+                return true;
+            } else if (mod.getDamage().equals("damaged")) {
+                damagedList.add(mod);
+                return true;
+            }
         }
         return false;
     }
+
+    /**
+     * Attempts to remove a given module from the list.
+     * @param mod the module to be removed
+     * @return true if the module is successfully removed
+     */
+    public static boolean removeModule(final Module mod) {
+        if (mod.getDamage().equals("undamaged")) {
+            return list.remove(mod);
+        } else {
+            return damagedList.remove(mod);
+        }
+    }
     
-    public static void removeModule(final Module mod) {
-        list.remove(mod);
+    /**
+     * Checks if both lists are empty.
+     * @return true if both lists are empty
+     */
+    public static boolean isEmptyList() {
+        return list.isEmpty() && damagedList.isEmpty();
     }
 
+    /**
+     * Checks if the module input data is valid input.
+     * @param mod the module to check
+     * @return true if the module is valid
+     */
     private static boolean isValid(final Module mod) {
         if (checkCode(Integer.parseInt(mod.getCode()))
                 && !checkDuplicate(mod.getCode())
@@ -51,7 +106,7 @@ public class ModuleList extends ArrayList<Module> {
      * @return true if already in list or false if not in list
      */
     private static boolean checkDuplicate(final String code) {
-        if (getIndexByCode(code) == -1) {
+        if (getModuleByCode(code) == null) {
             return false;
         }
         return true;
@@ -139,9 +194,14 @@ public class ModuleList extends ArrayList<Module> {
                 return mod;
             }
         }
+        for (Module mod : damagedList) {
+            if (mod.getCode().equals(code)) {
+                return mod;
+            }
+        }
         return null;
     }
-    
+
     /**
      * Accessor for modules by index.
      * @param index the index to retrieve the module from

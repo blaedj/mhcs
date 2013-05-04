@@ -2,9 +2,13 @@ package mhcs.dan;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -50,20 +54,31 @@ public class Histogram extends Widget {
         canvas.setCoordinateSpaceHeight(200);
         canvas.setCoordinateSpaceWidth(522);
         context = canvas.getContext2d();
+        panel.add(canvas);
+        makeIcons();
+        
+    }
+    
+    private void makeIcons() {
+        final PopupPanel numberPanel = new PopupPanel(true, true);
+        final Label popupLabel = new Label();
+        numberPanel.add(popupLabel);
         Grid icons;
         int thumbDim = 50;
         icons = new Grid(1, 10);
         icons.setCellPadding(0);
-        Image airlockIcon = new Image("images/airlock.jpg");
-        Image canteenIcon = new Image("images/canteen.png");
-        Image controlIcon = new Image("images/control.jpg");
-        Image dormIcon = new Image("images/dorm.jpg");
-        Image gymIcon = new Image("images/gym.png");
-        Image medIcon = new Image("images/medical.png");
-        Image plainIcon = new Image("images/plain.png");
-        Image powerIcon = new Image("images/power.jpg");
-        Image sanitationIcon = new Image("images/sanitation.jpg");
-        Image storageIcon = new Image("images/storage.jpg");
+        
+        final Image airlockIcon = new Image("images/airlock.jpg");
+        final Image canteenIcon = new Image("images/canteen.png");
+        final Image controlIcon = new Image("images/control.jpg");
+        final Image dormIcon = new Image("images/dorm.jpg");
+        final Image gymIcon = new Image("images/gym.png");
+        final Image medIcon = new Image("images/medical.png");
+        final Image plainIcon = new Image("images/plain.png");
+        final Image powerIcon = new Image("images/power.jpg");
+        final Image sanitationIcon = new Image("images/sanitation.jpg");
+        final Image storageIcon = new Image("images/storage.jpg");
+        
         airlockIcon.setPixelSize(thumbDim, thumbDim);
         canteenIcon.setPixelSize(thumbDim, thumbDim);
         controlIcon.setPixelSize(thumbDim, thumbDim);
@@ -74,7 +89,87 @@ public class Histogram extends Widget {
         powerIcon.setPixelSize(thumbDim, thumbDim);
         sanitationIcon.setPixelSize(thumbDim, thumbDim);
         storageIcon.setPixelSize(thumbDim, thumbDim);
-        panel.add(canvas);
+        
+        airlockIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("airlock modules: " + airlock);
+                numberPanel.show();
+            }
+        });
+        
+        canteenIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("canteen modules: " + canteen);
+                numberPanel.show();
+            }
+        });
+        
+        controlIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("control modules: " + control);
+                numberPanel.show();
+            }
+        });
+        
+        dormIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("dormitory modules: " + dormitory);
+                numberPanel.show();
+            }
+        });
+        
+        gymIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("gym and relaxation modules: " + gymAndRelaxation);
+                numberPanel.show();
+            }
+        });
+        
+        medIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("medical modules: " + medical);
+                numberPanel.show();
+            }
+        });
+        
+        plainIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("plain modules: " + plain);
+                numberPanel.show();
+            }
+        });
+        
+        powerIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("power modules: " + power);
+                numberPanel.show();
+            }
+        });
+        
+        sanitationIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("sanitation modules: " + sanitation);
+                numberPanel.show();
+            }
+        });
+        
+        storageIcon.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+                popupLabel.setText("food and water modules: " + foodAndWater);
+                numberPanel.show();
+            }
+        });
+        
         icons.setWidget(0, 0, plainIcon);
         icons.setWidget(0, 1, dormIcon);
         icons.setWidget(0, 2, sanitationIcon);

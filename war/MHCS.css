@@ -28,6 +28,10 @@ h1 {
     width: 100%;
     max-width:100%;
 }
+.loginWr {
+    margin: 20%;
+    Background: url(images/Marsfromspace.png) no-repeat center center;
+}
 .tableCell {
 /*  	  border: 1px solid #222; */
     min-height: 10px;
