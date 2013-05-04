@@ -22,7 +22,7 @@ public class GPSDataReceiver {
      * get module information from test cases page.
      * @param testCase the number of the test case
      */
-    public void loadDataByNumber(final int testCase) {
+    public static void loadDataByNumber(final int testCase) {
         url = url + testCase;
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, url);
 
@@ -30,7 +30,7 @@ public class GPSDataReceiver {
             Request request = builder.sendRequest(null, new RequestCallback() {
 
                 public void onError(final Request request, final Throwable exception) {
-                    Window.alert("onError: Couldn't retrieve JSON");
+                    Window.alert("GPS feed not available");
                 }
 
                 public void onResponseReceived(final Request request, final Response response) {
@@ -40,8 +40,7 @@ public class GPSDataReceiver {
                         addModules(reply);
                     } else {
                         // if not a valid response
-                        Window.alert("Couldn't retrieve JSON (" + response.getStatusText()
-                                + ")");
+                        Window.alert("GPS feed not available");
                     }
                 }
             });
@@ -50,7 +49,8 @@ public class GPSDataReceiver {
         }
     }
     
-    private void addModules(final String reply) {
+    private static void addModules(final String reply) {
+        ModuleList.clearList();
         JSONArray jsonArray = (JSONArray)JSONParser.parseLenient(reply);
         String code;
         String damage;

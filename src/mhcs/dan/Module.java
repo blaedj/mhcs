@@ -113,7 +113,7 @@ public class Module {
      * because checkstyle told me to.
      */
     public int hashCode() {
-        return code.hashCode();
+        return this.toString().hashCode();
 
     }
 
