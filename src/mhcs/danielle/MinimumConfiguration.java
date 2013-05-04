@@ -13,10 +13,14 @@ import mhcs.dan.ModuleList;
  *  MinimumConfiguration objects returns the
  *  grid indices of the appropriate locations
  *  of each module in the configuration.
- *   @author daniellestewart 
+ *   @author daniellestewart
  */
 public class MinimumConfiguration {
-	/**
+    /**
+     * Module list to work with.
+     */
+    private ModuleList theList;
+    /**
 	 * minArray.
 	 */
 	private ArrayList<Minimum> minArray;
@@ -35,10 +39,6 @@ public class MinimumConfiguration {
 	 */
 	private int adjustY;
 	/**
-	 * The list of modules.
-	 */
-	ModuleList theList;
-	/**
 	 * MinimumConfiguration constructor creates
 	 * an object that consists of two lists: one of
 	 * module type and one of coordinate points.
@@ -46,23 +46,30 @@ public class MinimumConfiguration {
 	 * coordinates and *not* map coordinates.
 	 * May return empty array list. If this happens,
 	 * something went wrong in testing for a possible configuration.
-	 * @param moduleList is the list of modules
 	 */
 
 	public MinimumConfiguration() {
 		// Initialize data members
 		adjustX = 0;
 		adjustY = 0;
-
-		this.theList = ModuleList.get();
-		allGood = testMinConfig();
-		minArray = new ArrayList<Minimum>();
-
-		if(allGood == true) {
-			setMinConfig();
-		} else {
-			minArray.clear();
-		}
+		theList = ModuleList.get();
+		createMinArray();
+	}
+	/**
+	 * Creates minimum array.
+	 */
+	private void createMinArray() {
+	    this.minArray = new ArrayList<Minimum>();
+	    // Go through modList and copy pertinent information.
+	    for (int k = 0; k < theList.size(); k++) {
+	        Module tMod = theList.get(k);
+	        Point tPoint = new Point(
+	                Integer.parseInt(tMod.getXCoor()),
+	                Integer.parseInt(tMod.getYCoor()));
+	        ModuleType tType = tMod.getType();
+	        this.minArray.add(new Minimum(tType, tPoint));
+	    }
+	    // Now the array has been created.
 	}
 	/**
 	 * Tests to see if minimum configuration is possible.
@@ -70,34 +77,34 @@ public class MinimumConfiguration {
 	 */
 	public static boolean testMinConfig() {
 		// Set up some local variables for static function
-	    ModuleList theList = ModuleList.get();
-	    
-	    // If there is no module list, there cannot be 
+	    // If there is no module list, there cannot be
 	    // configurations.
-	    if(theList.isEmpty()) {
+
+	    MinimumConfiguration minCon = new MinimumConfiguration();
+	    ArrayList<Minimum> minArray = minCon.getMinArray(ModuleList.get());
+	    if (minArray.size() == 0) {
 	        return false;
 	    }
-	    // So, we have a module list to test...
-		int count = theList.size();
+	    ModuleList theList = ModuleList.get();
+	    if (theList.size() < 2 + (2 * 2 * 2)) {
+	        return false;
+	    }
+		// We have a list to test.
 		Module temp;
-		String damaged = "damaged";
-;		int i = 0;
+		int i = 0;
 		boolean allGood = true;
 
-		// create array for type count, initialize all to zero
-		int[] codes = new int[10];
-		for(i = 0; i < 10; i++) {
+		// create array size 10 for type count.
+		// Initialize all to zero.
+		int[] codes = new int[2 + (2 * 2 * 2)]; // size = 10.
+		for (i = 0; i < (2 + (2 * 2 * 2)); i++) {
 			codes[i] = 0;
 		}
-		assert(codes[7]==0);
-		assert(codes[9]==0);
+		assert (codes[1 + (2 * 2 * 2)] == 0); // 9.
 
 		// Traverse list of modules counting types
-		for(i = 0; i < count; i++) {
-			assert (count == theList.size());
-			if(damaged.equalsIgnoreCase(theList.get(i).getDamage())) {
-			    continue;
-			}
+		for (i = 0; i < theList.size(); i++) {
+
 			temp = theList.get(i);
 			/**
 			 * Counts each module type in our list
@@ -114,83 +121,95 @@ public class MinimumConfiguration {
 			 * 7....control
 			 */
 			ModuleType codeTmp = temp.getType();
-			if(codeTmp.equals(ModuleType.PLAIN)) {
+			if (codeTmp.equals(ModuleType.PLAIN)) {
 				codes[0]++;
-			} else if(codeTmp.equals(ModuleType.POWER)) {
+			} else if (codeTmp.equals(ModuleType.POWER)) {
 				codes[1]++;
-			} else if(codeTmp.equals(ModuleType.FOOD_AND_WATER)) {
+			} else if (codeTmp.equals(ModuleType.FOOD_AND_WATER)) {
 				codes[2]++;
-			} else if(codeTmp.equals(ModuleType.AIRLOCK)) {
-				codes[3]++;
-			} else if(codeTmp.equals(ModuleType.CANTEEN)) {
-				codes[4]++;
-			} else if(codeTmp.equals(ModuleType.DORMITORY)) {
-				codes[5]++;
-			} else if(codeTmp.equals(ModuleType.SANITATION)) {
-				codes[6]++;
-			} else if(codeTmp.equals(ModuleType.CONTROL)) {
-				codes[7]++;
+			} else if (codeTmp.equals(ModuleType.AIRLOCK)) {
+				codes[2 + 1]++;
+			} else if (codeTmp.equals(ModuleType.CANTEEN)) {
+				codes[2 * 2]++;
+			} else if (codeTmp.equals(ModuleType.DORMITORY)) {
+				codes[2 * 2 + 1]++;
+			} else if (codeTmp.equals(ModuleType.SANITATION)) {
+				codes[2 * 2 + 2]++;
+			} else if (codeTmp.equals(ModuleType.CONTROL)) {
+				codes[2 * 2 * 2 - 1]++;
 			}
 
 		}
-		/*
+
 		// If we don't have 3 plain, we can't have a minimum
-		if(codes[0] == 3) {
+		if (codes[0] >= (1 + 2)) {
 		// Test to make sure we aren't missing any modules
-			for(i = 1; i < 8; i++){
-			
-				if(codes[i]==0){
-					allGood = false; // There is a module missing
+			for (i = 1; i < (2 * 2 * 2); i++) { // i < 8
+
+				if (codes[i] == 0) {
+					allGood = false;
+					// There is a module missing
 				}
 			}
-		}else { // there isn't 3 plain
+		} else {
+		    // there isn't 3 plain
 			allGood = false;
 		}
-		*/
+		if (allGood) {
+		    // We can make configuration.
+		    setMinConfig(minArray);
+		}
 		return allGood;
 	}
 //*********************************************************************
 	/**
-	 * setMinConfig will set *grid* coord for map. 
+	 * setMinConfig will set *grid* coord for map.
+	 * @param minArray is the list of modules showing type/coordinate.
 	 */
-	public void setMinConfig(){
-		
+	public static final void setMinConfig(
+	        final ArrayList<Minimum> minArray) {
+
 		// Find centroid of the modules in landing area
 		// Returns the MAP coordinate, NOT the grid coordinate.
-	
+
 		Point centroid = findCentroid();
-		int total = 10;
+		assert ((int) centroid.getX() >= 0);
+		assert ((int) centroid.getY() >= 0);
+		int total = 2 * 2 * 2 + 2; // 10.
 		ModuleType type;
+		ModuleType typeReal;
 		int valuex = 0;
 		int valuey = 0;
+		int adjustX = 0;
+		int adjustY = 0;
 		Point point;
-		
+
 		// if x is between 40 and 50, we might be in sandy- check y
-		if((centroid.getX() >= 40) && (centroid.getX() <= 50)) {
-			
+		if ((centroid.getX() >= 40)
+		        && (centroid.getX() <= 50)) {
+
 			// if y is between 40 and 50, we are in the sandy area
-			if((centroid.getY() >= 40) && (centroid.getY() <= 50)) {
-				
+			if ((centroid.getY() >= 40)
+			        && (centroid.getY() <= 50)) {
+
 				// Case 1: Left side of sandy
-				if(centroid.getX() < 45) {
+				if (centroid.getX() < 45) {
 					// Case 1.1: Left upper
-					if(centroid.getY() >= 45) {
+					if (centroid.getY() >= 45) {
 						adjustX = 35;
-						adjustY = 3;
+						adjustY = 1 + 2;
 					} else {
 						// Case 1.2: Left Lower
 						adjustY = 30;
 						adjustX = 35;
-						
 					}
 				// End of Case 1
 				// Case 2: Right side of sandy
-				} else {		
-					
+				} else {
 					// Case 2.1: Right upper
-					if(centroid.getX() >= 45) {
+					if (centroid.getX() >= 45) {
 						adjustX = 59;
-						adjustY = 3;
+						adjustY = 1 + 2;
 					} else {
 					// Case 2.2: Right lower
 						adjustX = 59;
@@ -199,64 +218,87 @@ public class MinimumConfiguration {
 				} // End of Case 2
 			}
 		}
-
-		// Traverse list and collect coord. of modules used
-		for(int i = 0; i < total; i++){
-
-			
-			if((i >=0)&&(i < 3)){
+		// Local counter to keep track of how many plain
+		// modules we have collected.
+		int countPlain = 0;
+		/** Traverse modules and set up list of Minimum objects.
+		 * The points are set as the adjustment needed
+		 * for the configuration placement.
+		 */
+		for (int i = 0; i < total; i++) {
+		    // Get the real module type.
+		    typeReal = minArray.get(i).getCode();
+		    // Start testing and setting up minimum list.
+			if (typeReal.equals(ModuleType.PLAIN)) {
 				type = ModuleType.PLAIN;
-				if(i == 0){
+				if (countPlain == 0) {
 					valuex = 1;
 					valuey = 1;
-				}else if(i == 1){
-					valuex = 3;
+				} else if (countPlain == 1) {
+					valuex = 1 + 2;
 					valuey = 1;
-				}else if(i == 2){
+				} else if (countPlain == 2) {
 					valuex = 2;
 					valuey = 2;
 				}
-			}else if(i == 3){
+				// Increment plain so we know how many
+				// we have collected.
+				countPlain++;
+			} else if (typeReal.equals(ModuleType.SANITATION)) {
 				type = ModuleType.SANITATION;
-				valuex = 3;
+				valuex = 1 + 2;
 				valuey = 0;
-			}else if(i == 4){
+			} else if (typeReal.equals(ModuleType.CONTROL)) {
 				type = ModuleType.CONTROL;
 				valuex = 2;
-				valuey = 3;
-			}else if(i == 5){
+				valuey = 1 + 2;
+			} else if (typeReal.equals(ModuleType.AIRLOCK)) {
 				type = ModuleType.AIRLOCK;
 				valuex = 1;
 				valuey = 0;
-			}else if(i ==6){
+			} else if (typeReal.equals(ModuleType.CANTEEN)) {
 				type = ModuleType.CANTEEN;
 				valuex = 2;
 				valuey = 1;
-			}else if(i == 7){
+			} else if (typeReal.equals(ModuleType.POWER)) {
 				type = ModuleType.POWER;
 				valuex = 0;
 				valuey = 1;
-			}else if(i == 8){
+			} else if (typeReal.equals(ModuleType.FOOD_AND_WATER)) {
 				type = ModuleType.FOOD_AND_WATER;
 				valuex = 1;
 				valuey = 2;
-			}else {
+			} else if (typeReal.equals(ModuleType.DORMITORY)) {
 				type = ModuleType.DORMITORY;
-				valuex = 3;
+				valuex = 1 + 2;
 				valuey = 2;
+			} else if (typeReal.equals(ModuleType.MEDICAL)) {
+			    type = ModuleType.MEDICAL;
+			} else {
+			    type = ModuleType.GYM_AND_RELAXATION;
 			}
-			point = new Point(valuex + adjustX, valuey + adjustY);
-			Minimum min = new Minimum(type,point);
+			// Create type and point for minimum object.
+			if ((adjustX > 0) || (adjustY > 0)) {
+			    valuex += adjustX;
+			    valuey += adjustY;
+			} else {
+			    valuex += (int) centroid.getX();
+			    valuey += (int) centroid.getY();
+			}
+			point = new Point(valuex, valuey);
+			Minimum min = new Minimum(type, point);
 			minArray.add(min);
 		}
+		MinimumConfigPage.setUpMinConfig(new MinimumConfiguration());
 	}
 //*********************************************************************
 	/**
-	 * setSecondConfig will display the second minimum 
-	 * configuration. 
+	 * setSecondConfig will display the second minimum
+	 * configuration.
 	 */
-	public void setSecondConfig(){
-	    int total = 10;
+	public final void setSecondConfig() {
+	    ArrayList<Minimum> minA = new ArrayList<Minimum>();
+	    int total = (2 * 2 * 2 + 2); // 10.
 		int valuex = 0;
 		int valuey = 0;
 		ModuleType type;
@@ -264,9 +306,9 @@ public class MinimumConfiguration {
 
 		for (int i = 0; i < total; i++) {
 
-			if ((i >= 0) && (i < 3)) {
+			if ((i >= 0) && (i < (1 + 2))) {
 				type = ModuleType.PLAIN;
-				if (i == 0){
+				if (i == 0) {
 					valuex = 1;
 					valuey = 1;
 				} else if (i == 1) {
@@ -276,22 +318,22 @@ public class MinimumConfiguration {
 					valuex = 2;
 					valuey = 2;
 				}
-			} else if (i == 3) {
+			} else if (i == (1 + 2)) {
 				type = ModuleType.SANITATION;
-				valuex = 3;
+				valuex = 1 + 2;
 				valuey = 2;
-			} else if (i == 4) {
+			} else if (i == (2 + 2)) {
 				type = ModuleType.CONTROL;
 				valuex = 0;
 				valuey = 1;
-			} else if (i == 5) {
+			} else if (i == (2 * 2 + 1)) {
 				type = ModuleType.AIRLOCK;
 				valuex = 1;
 				valuey = 0;
-			} else if (i ==6) {
+			} else if (i == (1 + 2) * 2) {
 				type = ModuleType.MEDICAL;
 				valuex = 1;
-				valuey = 3;
+				valuey = 1 + 2;
 			} else if (i == 7) {
 				type = ModuleType.POWER;
 				valuex = 2;
@@ -306,49 +348,65 @@ public class MinimumConfiguration {
 				valuey = 3;
 			}
 			point = new Point(valuex + adjustX, valuey + adjustY);
-			Minimum min = new Minimum(type,point);
+			Minimum min = new Minimum(type, point);
 			minArray.add(min);
-
 		}
+		this.minArray = minA;
+		setMinConfig(minArray);
 	}
 //*******************************************************************
 	/**
-	 * getMinArray() returns arraylist of Minimum objects. 
+	 * getMinArray() returns arraylist of Minimum objects.
 	 * This array holds the modules that will be used in the min
-	 * configuration. 
+	 * configuration.
 	 * @return ArrayList<Minimum>
 	 */
-	public ArrayList<Minimum> getMinArray(){
-		return minArray;
+	public final ArrayList<Minimum> getMinArray(ModuleList mods) {
+	    ArrayList<Minimum> minimum
+	    = new ArrayList<Minimum>();
+        // Go through modList and copy pertinent information.
+        for (int k = 0; k < mods.size(); k++) {
+            Module tMod = mods.get(k);
+            Point tPoint = new Point(
+                    Integer.parseInt(tMod.getXCoor()),
+                    Integer.parseInt(tMod.getYCoor()));
+            ModuleType tType = tMod.getType();
+            minimum.add(new Minimum(tType, tPoint));
+        }
+        // Now the array has been created.
+	    return minimum;
 	}
-//*******************************************************************	
+//*******************************************************************
 	/**
 	 * This will find the centroid of the set of n 2d coordinates.
 	 * A point is returned holding (x, y) - these coordinates
 	 * correspond to the map and NOT the java grid coordinates.
-	 * The centroid is found by: X = (x1 + x2 + ... + xn)/n
-	 * 							 Y = (y1 + y2 + ... + yn)/n
+	 * The centroid is found by:
+	 * X = (x1 + x2 + ... + xn)/n
+	 * Y = (y1 + y2 + ... + yn)/n
 	 * @return Point of the centroid
 	 */
-	public Point findCentroid() {
+	public final static Point findCentroid() {
 		int xSum = 0;
 		int ySum = 0;
 		String temp = "";
-		
-		for(int i = 0; i < theList.size(); i++) {
+
+		for (int i = 0; i < ModuleList.get().size(); i++) {
 			// Add up all x and y values
-			temp = theList.get(i).getXCoor();
+			temp = ModuleList.get().get(i).getXCoor();
 			xSum += Integer.parseInt(temp);
-			temp = theList.get(i).getYCoor();
+			temp = ModuleList.get().get(i).getYCoor();
 			ySum += Integer.parseInt(temp);
 		}
-		// divide values by n 
-		xSum = xSum/theList.size();
-		ySum = ySum/theList.size();
-		
+		// divide values by n
+		xSum = xSum / ModuleList.get().size();
+		ySum = ySum / ModuleList.get().size();
+
 		// Initialize centroid
-		Point centroid = new Point(xSum,ySum);
-		
+		xSum += -1;
+		ySum = 50 - ySum;
+		Point centroid = new Point(xSum, ySum);
+
 		return centroid;
 	}
 }

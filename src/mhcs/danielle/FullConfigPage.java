@@ -2,6 +2,7 @@ package mhcs.danielle;
 import java.util.ArrayList;
 import mhcs.dan.Module;
 import mhcs.dan.Module.ModuleType;
+import mhcs.dan.ModuleList;
 //import mhcs.dan.ModuleList;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -26,11 +27,11 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class FullConfigPage implements EntryPoint {
 	/**
-	 * Creates the page and returns the widget to be put into 
+	 * Creates the page and returns the widget to be put into
 	 * a tab.
 	 * @return this page as a widget.
 	 */
-	public Widget createFullConfig() {
+	public final Widget createFullConfig() {
 		initialize();
 		setUpFullConfig();
 		FlowPanel wrapper = new FlowPanel();
@@ -75,7 +76,7 @@ public class FullConfigPage implements EntryPoint {
 			} else if (maxItem.getCode().
 					equals(ModuleType.CONTROL)) {
 				image = new Image("images/control.jpg");
-			} else{
+			} else {
 				image = new Image("images/storage.jpg");
 			}
 
@@ -88,8 +89,8 @@ public class FullConfigPage implements EntryPoint {
 			flow.setVisible(true);
 			flow.add(image);
 
-			imageGrid.setWidget((int)tmpPoint.getY(),
-					(int)tmpPoint.getX(), 
+			imageGrid.setWidget((int) tmpPoint.getY(),
+					(int) tmpPoint.getX(),
 					flow);
 		}
 	}
@@ -98,6 +99,7 @@ public class FullConfigPage implements EntryPoint {
 	 * (during testing, also holds module list creation).
 	 */
 	private void initialize() {
+	    modList = ModuleList.get();
 		mainPanel = new HorizontalPanel();
 		imagePanel = new FlowPanel();
 		mainListPanelDecorator = new DecoratorPanel();
@@ -117,19 +119,6 @@ public class FullConfigPage implements EntryPoint {
 		recalculate = new Button("Recalculate");
 		enterSave = new Button("Enter & Save");
 
-		// All for testing
-		tmpModList = new ArrayList<Module>();
-		tmpModList.add(new Module("11","UNDAMAGED", "25", "11", "1"));
-		tmpModList.add(new Module("13", "UNDAMAGED", "35", "21", "1"));
-		tmpModList.add(new Module("15", "UNDAMAGED", "41", "91", "1"));
-		tmpModList.add(new Module("63", "UNDAMAGED", "35", "63", "1"));
-		tmpModList.add(new Module("99", "UNDAMAGED", "18", "81", "1"));
-		tmpModList.add(new Module("113", "UNDAMAGED", "31", "21", "1"));
-		tmpModList.add(new Module("141", "UNDAMAGED", "1", "21", "1"));
-		tmpModList.add(new Module("153", "UNDAMAGED", "17", "81", "1"));
-		tmpModList.add(new Module("163", "UNDAMAGED", "9", "9", "1"));
-		tmpModList.add(new Module("171", "UNDAMAGED", "21", "21", "1"));
-
 		maxConfig1 = new FullConfiguration();
 		maxArray = maxConfig1.getMaxArray();
 
@@ -148,8 +137,8 @@ public class FullConfigPage implements EntryPoint {
 	private void setUpImageGrid() {
 		imageGrid.setVisible(true);
 		// Set sandy part of map
-		for(int i = 0; i < 10; i++) {
-			for(int j = 39; j < 49; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 39; j < 49; j++) {
 				imageGrid.setText(i, j, "X");
 			}
 		}
@@ -157,7 +146,7 @@ public class FullConfigPage implements EntryPoint {
 		imagePanel.addStyleName("landingMap");
 	}
 	/**
-	 * Separates out the important additions 
+	 * Separates out the important additions
 	 * to the main panel framework.
 	 */
 	private void setUpPanelDetails() {
@@ -175,54 +164,42 @@ public class FullConfigPage implements EntryPoint {
 		scroll.setPixelSize(250, 451);
 		scroll.setVisibleItemCount(109);
 
-		for(int i = 0; i < tmpModList.size(); i++) {
+		for (int i = 0; i < tmpModList.size(); i++) {
 			final Module mod = tmpModList.get(i);
 			final String item = mod.getType().toString();
 
 			scroll.addItem(mod.getCode() + ": " + item);
 			scroll.addChangeHandler(new ChangeHandler() {
-			// Here is where we attach the handlers to each
-			// selectable module on the list.
+			 // Now we attach onChange handler
+		     // to each item in the scroll list
 				@Override
 				public void onChange(final ChangeEvent event) {
-					int selection = scroll.getSelectedIndex();
-					String selString = scroll.getItemText(selection);
-					int semicolon = selString.indexOf(':');
-					String finalString = selString.substring(0, semicolon);
-					
-					
-					// TESTING STUFF
-					Module tempMod;
-					int code = Integer.parseInt(finalString);
-					if((code == 11)) {
-						tempMod = tmpModList.get(0);
-					} else if(code == 13) {
-						tempMod = tmpModList.get(1);
-					} else if(code == 15) {
-						tempMod = tmpModList.get(2);
-					} else if(code == 63) {
-						tempMod = tmpModList.get(3);
-					} else if(code == 99) {
-						tempMod = tmpModList.get(4);
-					} else if(code == 113) {
-						tempMod = tmpModList.get(5);
-					} else if(code == 141) {
-						tempMod = tmpModList.get(6);
-					} else if(code == 153) {
-						tempMod = tmpModList.get(7);
-					} else if(code == 163) {
-						tempMod = tmpModList.get(8);
-					} else {
-						tempMod = tmpModList.get(9);
-					}
-					//@SuppressWarnings("static-access")
-					//int tmpIndex = ModuleList.moduleList.getIndexByCode(finalString);
-					//Module tempMod = ModuleList.moduleList.get(tmpIndex);
-					details.setText("Code: " + tempMod.getCode()
-							+ "\n"+"X coordinate: " + tempMod.getXCoor()
-							+ "\nY coordinate: " + tempMod.getYCoor()+"\n"
-							+ "\nDamage: " + tempMod.getDamage()
-							+ "\nTurns to upright: " + tempMod.getTurns());
+					int selection
+					= scroll.getSelectedIndex();
+					String selString
+					= scroll.getItemText(selection);
+					int semicolon
+					= selString.indexOf(':');
+					String finalString
+					= selString.substring(0, semicolon);
+
+					// Set up the text for module details
+					@SuppressWarnings("static-access")
+					int tmpIndex
+					= modList.getIndexByCode(finalString);
+					Module tempMod
+					= modList.get(tmpIndex);
+					details.setText("Code: "
+					+ tempMod.getCode()
+							+ "\n"
+					+ "X coordinate: "
+					+ tempMod.getXCoor()
+							+ "\nY coordinate: "
+					+ tempMod.getYCoor() + "\n"
+							+ "\nDamage: "
+					+ tempMod.getDamage()
+							+ "\nTurns to upright: "
+					+ tempMod.getTurns());
 				}
 			});
 		}
@@ -230,8 +207,6 @@ public class FullConfigPage implements EntryPoint {
 		mainListPanel.add(scrollList);
 		mainListPanel.setTitle("Modules");
 		detailList.add(details);
-		// Now we attach onChange handler
-		// to each item in the scroll list
 	}
 	/**
 	 * This creates the buttons and sets them in a grid panel.
@@ -247,6 +222,10 @@ public class FullConfigPage implements EntryPoint {
 		mainButtonGrid.setWidget(2, 0, buttonGrid);
 		mainListPanelDecorator.add(mainButtonGrid);
 	}
+	/**
+	 * The module list.
+	 */
+	private ModuleList modList;
 	/**
 	 * main panel - holds it all.
 	 */
@@ -268,7 +247,7 @@ public class FullConfigPage implements EntryPoint {
 	 */
 	private ScrollPanel scrollList;
 	/**
-	 * text area holds selected module details
+	 * text area holds selected module details.
 	 */
 	private FlowPanel detailList;
 	/**

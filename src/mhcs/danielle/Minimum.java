@@ -22,8 +22,8 @@ public class Minimum {
 
 	/**
 	 * Constructor.
-	 * @param code string
 	 * @param point point
+	 * @param code string
 	 */
 	public Minimum(final ModuleType code, final Point point) {
 		this.code = code;

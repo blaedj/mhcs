@@ -2,6 +2,8 @@ package mhcs.dan;
 
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.Window;
+
 /**
  *
  * @author Daniel Hammond
