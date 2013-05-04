@@ -32,7 +32,7 @@ public class GPSDataReceiver {
             Request request = builder.sendRequest(null, new RequestCallback() {
 
                 public void onError(final Request request, final Throwable exception) {
-                    Window.alert("GPS feed not available1");
+                    Window.alert("GPS feed not available");
                 }
 
                 public void onResponseReceived(final Request request, final Response response) {
@@ -42,7 +42,8 @@ public class GPSDataReceiver {
                         addModules(reply);
                     } else {
                         // if not a valid response
-                        Window.alert("GPS feed not available2" + "\n" + newUrl);
+                        Window.alert("GPS feed not available");
+                        
                     }
                 }
             });

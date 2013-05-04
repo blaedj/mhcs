@@ -121,7 +121,7 @@ public class Logging {
                         ModuleList.getModuleByCode(moduleListBox.getItemText(moduleListBox.getSelectedIndex())));
                 // refresh list box to current list
                 populateModuleListBox();
-                // set module informatoion to empty
+                // set module information to empty
                 locationInfoLabel.setText("Location:");
                 damageInfoLabel.setText("Damage:");
                 orientationInfo.setText("Orientation:");
