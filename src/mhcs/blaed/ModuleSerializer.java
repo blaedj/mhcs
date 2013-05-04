@@ -2,6 +2,7 @@ package mhcs.blaed;
 
 import mhcs.dan.Module;
 import mhcs.dan.ModuleList;
+import mhcs.dan.test.ModuleListTest;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONNull;
@@ -22,8 +23,11 @@ public class ModuleSerializer {
 
 	transient final private ModuleList globalList;
 
-	public ModuleSerializer(final ModuleList list) {
-		globalList = list;
+	/**
+	 * creates a new module serializer using the static ModuleList.get()
+	 */
+	public ModuleSerializer() {
+		globalList = ModuleList.get();
 	}
 
 	/**
@@ -34,14 +38,78 @@ public class ModuleSerializer {
 	public void saveToLocal(final String listKey) {
 
 		final Storage localStorage = Storage.getLocalStorageIfSupported();
+		final SoundPlayer player =  new SoundPlayer();
 		if(localStorage == null){
 			Window.alert("Local Storage not supported. Some functionality will be limited.");
+			player.playErrorOccured();
 		}
 		else{
 			localStorage.setItem(listKey, setJsonArray().toString());			
 		}
 	}
 
+	/**
+	 * Load a previously saved list of modules
+	 * @param listKey the key of the list of modules to retrieve, equal to key of a save list
+	 * @pre Browser supports localStorage and listKey is a valid localStorage key
+	 * @post the contents of the local storage value specified by 'listKey' are put into the moduleList.
+	 */
+	public boolean retrieveModuleList(final String listKey) {
+		Storage localStorage = Storage.getLocalStorageIfSupported();
+		JSONArray requestedArray = (JSONArray)JSONParser.parseStrict(localStorage.getItem(listKey));
+		SoundPlayer player = new SoundPlayer();
+		if( processArray(requestedArray)){
+			player.playModulesLoaded();
+			return true;
+		}
+		else {
+			player.playErrorOccured();
+			return false;
+		}
+	}
+
+	/**
+	 * Load a previously saved list of modules, loads the first list it finds. If the current list is not 
+	 * empty, it will be emptied prior to adding any modules.
+	 * @pre Browser supports local storage and a list has been save to local storage
+	 * @post the contents of the first list in local storage has been loaded into the moduleList
+	 */
+	public boolean retrieveModuleList() {
+		Storage localStorage = Storage.getLocalStorageIfSupported();
+		JSONArray requestedArray = null;
+		int index;
+		boolean valid = false;
+		boolean success = false;
+		SoundPlayer player = new SoundPlayer();
+		if(localStorage.getLength() > 0){
+			ModuleList.clearList();
+		}
+		else {
+			player.playErrorOccured();
+			return success;
+		}
+		for (index = 0; index < localStorage.getLength(); index++){
+			String key = localStorage.key(index);
+			valid = inspectArray(JSONParser.parseStrict( localStorage.getItem(key) ));
+			
+			if(valid){
+				requestedArray = (JSONArray)JSONParser.parseLenient(localStorage.getItem(key));	
+				break;
+			} 
+		}
+		// load the modules into the global list and set a success code.
+		if(requestedArray != null && requestedArray.isNull() != JSONNull.getInstance()){
+			success = processArray(requestedArray); 
+		}
+		if (success) {
+			player.playModulesLoaded();
+		} else { // the processing did not succeed, play an error message.
+			player.playErrorOccured();
+		}
+		return success;
+	}
+
+	
 	/**
 	 * creates a JSONArray from the contents of the class membet 'globalList'
 	 * @return JSONArray representation of globalList
@@ -72,40 +140,8 @@ public class ModuleSerializer {
 		return jmodule;
 	}
 
-	/**
-	 * Load a previously saved list of modules
-	 * @param listKey the key of the list of modules to retrieve, equal to key of a save list
-	 * @pre Browser supports localStorage and listKey is a valid localStorage key
-	 * @post the contents of the local storage value specified by 'listKey' are put into the moduleList.
-	 */
-	public void retrieveModuleList(final String listKey) {
-		Storage localStorage = Storage.getLocalStorageIfSupported();
-		JSONArray requestedArray = (JSONArray)JSONParser.parseStrict(localStorage.getItem(listKey));
-		processArray(requestedArray);
-	}
 
 
-	/**
-	 * Load a previously saved list of modules, loads the first list it finds.
-	 * @pre Browser supports local storage and a list has been save to local storage
-	 * @post the contents of the first list in local storage has been loaded into the moduleList
-	 */
-	public void retreiveModuleList() {
-		Storage localStorage = Storage.getLocalStorageIfSupported();
-		JSONArray requestedArray = null;
-		int index;
-		boolean valid = false;
-		for (index = 0; index < localStorage.getLength(); index++){
-			String key = localStorage.key(index);
-			valid = inspectArray(JSONParser.parseStrict( localStorage.getItem(key) ));
-			if(valid){
-				requestedArray = (JSONArray)JSONParser.parseLenient(localStorage.getItem(key));	
-			} 
-		}
-		if(requestedArray != null && requestedArray.isNull() != JSONNull.getInstance()){
-			processArray(requestedArray);
-		}
-	}
 
 	/**
 	 *  Check to see if a JSONValue is a valid JSONArray
@@ -119,12 +155,18 @@ public class ModuleSerializer {
 	/**
 	 * @param requestedArray the array to process into the moduleList
 	 */
-	private void processArray(final JSONArray requestedArray) {
-		JSONObject jModule;
-		for(int index = 0; index < requestedArray.size(); index++){
-			jModule = (JSONObject)requestedArray.get(index);
-			ModuleList.addModule(jsonToModule(jModule));
+	private boolean processArray(final JSONArray requestedArray) {
+		boolean success = false;
+		if (requestedArray.size() > 0){
+			success = true;
+
+			JSONObject jModule;
+			for(int index = 0; index < requestedArray.size(); index++) {
+				jModule = (JSONObject)requestedArray.get(index);
+				ModuleList.addModule(jsonToModule(jModule));
+			}
 		}
+		return success;
 	}
 
 	/**
@@ -133,7 +175,7 @@ public class ModuleSerializer {
 	 * @return a Module object based on the JSONObject passed in.
 	 */
 	private Module jsonToModule( final JSONObject jsonModule) {
-	    String code = jsonModule.get("code").toString();
+		String code = jsonModule.get("code").toString();
 		String damage = jsonModule.get("damage").toString();
 		damage = damage.substring(1, damage.length() - 1);
 		String xCoor = jsonModule.get("xCoor").toString();
@@ -142,9 +184,5 @@ public class ModuleSerializer {
 
 		return new Module(code, damage, xCoor, yCoor, turns);
 	}
-
-
-
-
 
 }

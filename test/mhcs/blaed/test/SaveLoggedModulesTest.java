@@ -26,14 +26,14 @@ public class SaveLoggedModulesTest extends GWTTestCase {
 	public SaveLoggedModulesTest(){
 		super();
 		localStorage = Storage.getLocalStorageIfSupported();
-		saver = new ModuleSerializer(ModuleList.get());
+		saver = new ModuleSerializer();
 	}
 	
 	@Before
 	public void gwtSetUp() throws Exception {
 		// create some test modules
 		createTestModules();
-		saver = new ModuleSerializer(ModuleList.get());
+		saver = new ModuleSerializer();
 		saver.saveToLocal("first");
 		localStorage = Storage.getLocalStorageIfSupported();
 	}
@@ -56,7 +56,7 @@ public class SaveLoggedModulesTest extends GWTTestCase {
 	public void testNullList() {
 		localStorage.clear(); // make sure the list is empty to start with
 		ModuleList.clearList();
-		saver.retreiveModuleList();
+		saver.retrieveModuleList();
 		assertTrue(ModuleList.length() == 0);
 	}
 	
@@ -97,11 +97,18 @@ public class SaveLoggedModulesTest extends GWTTestCase {
 	@Test	
 	public void testRetrieveFirstModuleList(){
 		ModuleList.clearList();
-		saver.retreiveModuleList();
+		saver.retrieveModuleList();
 		Module testModule = new Module("20", "undamaged", "2", "3", "0");
 		assertTrue("the module list does not contain the expected value.", ModuleList.get().contains(testModule));		
 	}
 
+	@Test
+	public void testSameKey() {
+		localStorage.setItem("first", "TESTING");
+		
+	}
+	
+	
 	@Override
 	public String getModuleName() {
 		return "mhcs.MHCS";
