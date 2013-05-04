@@ -19,7 +19,8 @@
 
   <!-- Other module inherits                                      -->
 
-  <!--   The json handling module -->
+  <!--   Other module inherits -->
+  <inherits name='com.google.gwt.http.HTTP'/>
   <inherits name='com.google.gwt.json.JSON' />
 
   <!-- Specify the app entry point class.                         -->
@@ -30,7 +31,5 @@
   <source path='dan'/>
   <source path='danielle'/>
   <source path='dalton'/>
-
-  <source path='shared'/>
 
 </module>

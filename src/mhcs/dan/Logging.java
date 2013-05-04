@@ -37,7 +37,6 @@ public class Logging {
     private static VerticalPanel deletePanel;
     private static VerticalPanel deleteLeftPanel;
     private static HorizontalPanel deleteButtonPanel;
-    private static HorizontalPanel deleteDataPanel;
     private static Button confirmDelButton;
     private static Button closeDeleteButton;
 
@@ -75,19 +74,27 @@ public class Logging {
 
         enterButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
+                // try adding module to the list
                 if (!ModuleList.addModule(new Module(codeTextBox.getText(),
                         damageListBox.getItemText(damageListBox.getSelectedIndex()),
                         xCoorBox.getText(), yCoorBox.getText(),
                         turnsListBox.getItemText(turnsListBox.getSelectedIndex())))) {
+                    // announce if error on adding
                     Window.alert("Invalid input");
                 }
+                // update histrogram to new state of list
                 histogram.update();
+                // check if minimum already alerted
                 if (!minConfig) {
+                    // if not alerted, check for possible minimum configuration
                     if (MinimumConfiguration.testMinConfig()) {
-                        minConfig = true;
+                        // alert that minimum configuration possible
                         Window.alert("Minimum configuration possible");
+                        // set that alert was displayed
+                        minConfig = true;
                     }
                 }
+                // reset input boxes to empty and first choice
                 codeTextBox.setText("");
                 damageListBox.setSelectedIndex(0);
                 xCoorBox.setText("");
@@ -96,80 +103,119 @@ public class Logging {
             }
         });
 
+        // button to open delete interface
         deleteButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
+                // fill list box of modules in list
                 populateModuleListBox();
+                // display delete interface
                 deletePanel.setVisible(true);
             }
         });
 
+        // button to delete selected module
         confirmDelButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
+                // remove module from list
                 ModuleList.removeModule(
                         ModuleList.getModuleByCode(moduleListBox.getItemText(moduleListBox.getSelectedIndex())));
+                // refresh list box to current list
                 populateModuleListBox();
+                // set module informatoion to empty
                 locationInfoLabel.setText("Location:");
                 damageInfoLabel.setText("Damage:");
                 orientationInfo.setText("Orientation:");
                 typeInfoLabel.setText("Type:");
+                // update histogram to current state of module list
                 histogram.update();
+                // check if minimum configuration is no longer possible
                 if (!MinimumConfiguration.testMinConfig()) {
+                    // alert that minimum configuration is not possible
                     Window.alert("Minimum configuration no longer possible.");
+                    // set that alert should be displayed when minimum
+                    // configuration is possible
                     minConfig = false;
                 }
             }
         });
 
+        // button to close delete interface
         closeDeleteButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
+                // reset module information to empty
                 locationInfoLabel.setText("Location:");
                 damageInfoLabel.setText("Damage:");
                 orientationInfo.setText("Orientation:");
                 typeInfoLabel.setText("Type:");
+                // hide delete interface
                 deletePanel.setVisible(false);
             }
         });
 
+        // module information on change of selection
         moduleListBox.addChangeHandler(new ChangeHandler() {
             public void onChange(final ChangeEvent event) {
+                // check if list is not empty
                 if (!ModuleList.isEmptyList()) {
+                    // retrieve module from that of which is selected
                     Module mod =  ModuleList.getModuleByCode(moduleListBox.getItemText(moduleListBox.getSelectedIndex()));
-                    locationInfoLabel.setText(
-                            "Location: (" + mod.getXCoor() + ", "
-                                    + mod.getYCoor() + ")");
+                    // update module information panel
+                    locationInfoLabel.setText("Location: (" + mod.getXCoor() + ", " + mod.getYCoor() + ")");
                     damageInfoLabel.setText("Damage: " + mod.getDamage());
-                    orientationInfo.setText(
-                            "Orientation: " + mod.getTurns() + " flips");
+                    orientationInfo.setText("Orientation: " + mod.getTurns() + " flips");
                     typeInfoLabel.setText("Type: " + mod.getType().toString());
                 }
             }
         });
 
+        // button to save current module list to storage
         saveButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
-                ModuleSerializer saver = new ModuleSerializer(ModuleList.get());
+                // create saver
+                ModuleSerializer saver = new ModuleSerializer();
+                // save list under "saveList"
                 saver.saveToLocal("saveList");
-                histogram.update();
             }
         });
 
+        // button to load modules from previously saved list
         loadButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
+                // create module loader
                 ModuleSerializer loader = new ModuleSerializer();
+                // try retrieving list
                 if (!loader.retrieveModuleList("saveList")) {
+                    // alert if load was unsuccessful
                     Window.alert("Failed to load modules");
                 }
+                if (MinimumConfiguration.testMinConfig()) {
+                    // alert that minimum configuration possible
+                    Window.alert("Minimum configuration possible");
+                    // set that alert was displayed
+                    minConfig = true;
+                }
+                // update histogram to current state of module list
                 histogram.update();
             }
         });
 
+        // button to load data from "gps"
         addTestButton.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
+                // load data for given test case
                 GPSDataReceiver.loadDataByNumber(testCaseList.getSelectedIndex() + 1);
+                if (MinimumConfiguration.testMinConfig()) {
+                    // alert that minimum configuration possible
+                    Window.alert("Minimum configuration possible");
+                    // set that alert was displayed
+                    minConfig = true;
+                }
+                // update histogram to current state of module list
                 histogram.update();
             }
         });
 
+        // assemble the interface
         assemblePanels();
     }
 
@@ -194,7 +240,6 @@ public class Logging {
         moduleListBox = new ListBox();
         deleteLeftPanel = new VerticalPanel();
         deleteButtonPanel = new HorizontalPanel();
-        deleteDataPanel = new HorizontalPanel();
         deletePanel = new VerticalPanel();
         backgroundPanel = new HorizontalPanel();
         loggingPanel = new DecoratorPanel();
@@ -223,23 +268,26 @@ public class Logging {
      * Places panels within each other for overall structure.
      */
     private void assemblePanels() {
+        // set properties for list box in delete panel
         moduleListBox.setWidth("200px");
         moduleListBox.setVisibleItemCount(10);
 
+        // add list box of modules to panel
         deleteLeftPanel.add(moduleListBox);
+        // add module details to panel
         deleteLeftPanel.add(locationInfoLabel);
         deleteLeftPanel.add(damageInfoLabel);
         deleteLeftPanel.add(orientationInfo);
         deleteLeftPanel.add(typeInfoLabel);
 
-        deleteDataPanel.add(deleteLeftPanel);
-
+        // add buttons to panel
         deleteButtonPanel.add(confirmDelButton);
         deleteButtonPanel.add(closeDeleteButton);
 
+        // create delete interface
         deletePanel.addStyleName("documentClass-delete");
         deletePanel.add(new Label("Delete Module"));
-        deletePanel.add(deleteDataPanel);
+        deletePanel.add(deleteLeftPanel);
         deletePanel.add(deleteButtonPanel);
         deletePanel.setVisible(false);
 

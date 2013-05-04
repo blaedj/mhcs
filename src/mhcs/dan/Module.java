@@ -1,5 +1,7 @@
 package mhcs.dan;
 
+import com.google.gwt.user.client.Window;
+
 /**
  *
  * @author Daniel Hammond
