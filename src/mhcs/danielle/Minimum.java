@@ -46,4 +46,16 @@ public class Minimum {
 		return point;
 	}
 
+	    @Override
+    public final boolean equals(final Object aThat) {
+        // if same object
+        if (this == aThat) { return true; }
+        // if not a module object
+        if (!(aThat instanceof Minimum)) { return false; }
+        Minimum that = (Minimum) aThat;
+        // checks for equality in every variable
+        return  this.getCode() == that.getCode() &&
+                this.getPoint().equals(that.getPoint());
+    }
+
 }
