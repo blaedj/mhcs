@@ -33,7 +33,7 @@ public class FullConfigPage implements EntryPoint {
 	 */
 	public final Widget createFullConfig() {
 		initialize();
-		setUpFullConfig();
+		setUpFullConfig(new FullConfiguration());
 		FlowPanel wrapper = new FlowPanel();
 		wrapper.add(mainPanel);
 		return wrapper;
@@ -41,10 +41,13 @@ public class FullConfigPage implements EntryPoint {
 	/**
 	 * setUpMinConfig will create the min configuration 1
 	 * to create minConfig 2, user must push "recalculate".
+	 * @param maxConfig is this configuration.
 	 */
-	private void setUpFullConfig() {
+	public static void setUpFullConfig(
+	        final FullConfiguration maxConfig) {
 
-		maxArray = maxConfig1.getMaxArray();
+	    ArrayList<Maximum> maxArray = maxConfig.getMaxArray();
+	    Image image;
 		for (int i = 0; i < maxArray.size(); i++) {
 			Maximum maxItem = maxArray.get(i);
 			Point tmpPoint = maxItem.getPoint();
@@ -113,9 +116,9 @@ public class FullConfigPage implements EntryPoint {
 		details.setVisibleLines(7);
 		scroll = new ListBox();
 
-		imageGrid = new Grid(50,100);
-		buttonGrid = new Grid(1,2);
-		mainButtonGrid = new Grid(3,1);
+		imageGrid = new Grid(50, 100);
+		buttonGrid = new Grid(1, 2);
+		mainButtonGrid = new Grid(2 + 1, 1);
 		recalculate = new Button("Recalculate");
 		enterSave = new Button("Enter & Save");
 
@@ -261,7 +264,7 @@ public class FullConfigPage implements EntryPoint {
 	/**
 	 * image grid is what plots locations and holds images.
 	 */
-	private Grid imageGrid;
+	private static Grid imageGrid;
 	/**
 	 * button grid holds the buttons in place (Enter&Save, Recalc).
 	 */

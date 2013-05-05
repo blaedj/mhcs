@@ -88,7 +88,6 @@ public class MinimumConfigPage implements EntryPoint {
 	 */
 	public static void setUpMinConfig(
 	        final MinimumConfiguration minConfig) {
-
 	    // Set up the array of minimum objects
 		ArrayList<Minimum> minArray = minConfig.
 		        getMinArray(ModuleList.get());
@@ -251,9 +250,6 @@ public class MinimumConfigPage implements EntryPoint {
 		mainListPanel.add(scrollList);
 		mainListPanel.setTitle("Modules");
 		detailList.add(details);
-
-		// Now we attach onChange handler
-		// to each item in the scroll list
 	}
 	/**
 	 * This creates the buttons and sets them in a grid panel.
@@ -335,7 +331,7 @@ public class MinimumConfigPage implements EntryPoint {
 	/**
 	 * The min config object.
 	 */
-	private static MinimumConfiguration minConfig1;
+	private MinimumConfiguration minConfig1;
 	/**
 	 * An array list of objects to put on grid and where.
 	 */
