@@ -53,12 +53,12 @@ public class MinimumConfiguration {
 		adjustX = 0;
 		adjustY = 0;
 		theList = ModuleList.get();
-		createMinArray();
+		//createMinArray();
 	}
 	/**
 	 * Creates minimum array.
 	 */
-	private void createMinArray() {
+	/*private void createMinArray() {
 	    this.minArray = new ArrayList<Minimum>();
 	    // Go through modList and copy pertinent information.
 	    for (int k = 0; k < theList.size(); k++) {
@@ -70,7 +70,7 @@ public class MinimumConfiguration {
 	        this.minArray.add(new Minimum(tType, tPoint));
 	    }
 	    // Now the array has been created.
-	}
+	}*/
 	/**
 	 * Tests to see if minimum configuration is possible.
 	 * @return boolean showing if minimum configuration is possible.
@@ -96,11 +96,11 @@ public class MinimumConfiguration {
 
 		// create array size 10 for type count.
 		// Initialize all to zero.
-		int[] codes = new int[2 + (2 * 2 * 2)]; // size = 10.
-		for (i = 0; i < (2 + (2 * 2 * 2)); i++) {
+		int[] codes = new int[10]; // size = 10.
+		for (i = 0; i < 10; i++) {
 			codes[i] = 0;
 		}
-		assert (codes[1 + (2 * 2 * 2)] == 0); // 9.
+		assert (codes[9] == 0); // 9.
 
 		// Traverse list of modules counting types
 		for (i = 0; i < theList.size(); i++) {
