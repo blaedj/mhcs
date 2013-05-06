@@ -40,7 +40,7 @@ public class MinimumConfigPage implements EntryPoint {
 	 */
 	public Widget createMinConfig() {
 		initialize();
-		setUpMinConfig(minConfig1);
+		setUpMinConfig(minConfig1.getMinArray(ModuleList.get()));
 
 		FlowPanel wrapper = new FlowPanel();
 		wrapper.add(mainPanel);
@@ -74,7 +74,7 @@ public class MinimumConfigPage implements EntryPoint {
         minArray = minConfig1.getMinArray(theModList);
 
         // Creating scroll list of modules
-        createScrollList();
+        createScrollList(theModList);
         createButtonPanel();
         setUpImageGrid();
         setUpPanelDetails();
@@ -87,12 +87,7 @@ public class MinimumConfigPage implements EntryPoint {
 	 * @param minConfig configuration to use.
 	 */
 	public static void setUpMinConfig(
-	        final MinimumConfiguration minConfig) {
-	    // Set up the array of minimum objects
-		ArrayList<Minimum> minArray = minConfig.
-		        getMinArray(ModuleList.get());
-		//assert (minConfig != null);
-        //assert (minArray.size() > 0);
+	        final ArrayList<Minimum> minArray) {
 		// Collect all their types and set up images
 		for (int i = 0; i < minArray.size(); i++) {
 			Minimum minItem = minArray.get(i);
@@ -140,9 +135,15 @@ public class MinimumConfigPage implements EntryPoint {
 			flow.setVisible(true);
 			flow.add(image);
 			// Set image on grid
-			imageGrid.setWidget((int) tmpPoint.getY(),
-					(int) tmpPoint.getX(),
+
+			int temp = (int) tmpPoint.getX();
+			temp += 2 * 2;
+			int temp2 = (int) tmpPoint.getY();
+			temp2 += 2 * 2 * 2 * 2;
+			imageGrid.setWidget(temp,
+					temp2,
 					flow);
+			createScrollList(ModuleList.get());
 		}
 	}
 
@@ -180,14 +181,14 @@ public class MinimumConfigPage implements EntryPoint {
 	 * min configuration. Also sets up action handlers for selectable
 	 * modules in the list.
 	 */
-	private void createScrollList() {
+	public static final void createScrollList(final ModuleList modList) {
 		scrollList.setAlwaysShowScrollBars(true);
 		scrollList.setTitle("Modules");
 		scroll.setPixelSize(250, 451);
 		scroll.setVisibleItemCount(109);
 
-		for (int i = 0; i < theModList.size(); i++) {
-			final Module mod = theModList.get(i);
+		for (int i = 0; i < modList.size(); i++) {
+			final Module mod = modList.get(i);
 			final String item = mod.getType().toString();
 			scroll.addItem(mod.getCode() + ": " + item);
 			scroll.addChangeHandler(new ChangeHandler() {
@@ -204,33 +205,11 @@ public class MinimumConfigPage implements EntryPoint {
 					String finalString =
 					        selString.substring(0,
 					                semicolon);
-					// TESTING STUFF
-					/*if((code == 1)) {
-						tempMod = tmpModList.get(0);
-					} else if(code == 2) {
-						tempMod = tmpModList.get(1);
-					} else if(code == 3) {
-						tempMod = tmpModList.get(2);
-					} else if(code == 61) {
-						tempMod = tmpModList.get(3);
-					} else if(code == 91) {
-						tempMod = tmpModList.get(4);
-					}else if(code == 111) {
-						tempMod = tmpModList.get(5);
-					} else if(code == 141) {
-						tempMod = tmpModList.get(6);
-					} else if(code == 151) {
-						tempMod = tmpModList.get(7);
-					} else if(code == 161) {
-						tempMod = tmpModList.get(8);
-					} else {
-						tempMod = tmpModList.get(9);
-					}*/
 					@SuppressWarnings("static-access")
-					int tmpIndex = theModList.
+					int tmpIndex = modList.
 					    getIndexByCode(finalString);
 					Module tempMod =
-					        theModList.get(tmpIndex);
+					        modList.get(tmpIndex);
 
 					details.setText("Code: "
 					        + tempMod.getCode()
@@ -246,6 +225,10 @@ public class MinimumConfigPage implements EntryPoint {
 				}
 			});
 		}
+		scrollList.clear();
+		scrollList.clear();
+		mainListPanel.clear();
+		detailList.clear();
 		scrollList.add(scroll);
 		mainListPanel.add(scrollList);
 		mainListPanel.setTitle("Modules");
@@ -287,7 +270,7 @@ public class MinimumConfigPage implements EntryPoint {
 	/**
 	 * holds list of modules.
 	 */
-	private FlowPanel mainListPanel;
+	private static FlowPanel mainListPanel;
 	/**
 	 * decorates list.
 	 */
@@ -295,19 +278,19 @@ public class MinimumConfigPage implements EntryPoint {
 	/**
 	 * scrollable list.
 	 */
-	private ScrollPanel scrollList;
+	private static ScrollPanel scrollList;
 	/**
 	 * text area holds selected module details.
 	 */
-	private FlowPanel detailList;
+	private static FlowPanel detailList;
 	/**
 	 * text area holds string details.
 	 */
-	private TextArea details;
+	private static TextArea details;
 	/**
 	 * scroll is the list of modules.
 	 */
-	private ListBox scroll;
+	private static ListBox scroll;
 	/**
 	 * image grid is what plots locations and holds images.
 	 */
@@ -343,7 +326,7 @@ public class MinimumConfigPage implements EntryPoint {
 	/**
 	 * tmp mod list is used for testing purposes.
 	 */
-	private ModuleList theModList;
+	private static ModuleList theModList;
 	/**
 	 * Empty for now.
 	 */

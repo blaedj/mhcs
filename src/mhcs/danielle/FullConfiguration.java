@@ -55,28 +55,48 @@ public class FullConfiguration {
 	/**
 	 * This is the public constructor.
 	 */
-	public FullConfiguration() {
-	    theList = ModuleList.get();
-	    maxList = new ArrayList<Maximum>();
-	    listSize = theList.size();
-	    codes = new int[2 * 2 * 2 + 2]; // size = 10.
-	    // Initialize codes to all zero elements.
-	    for (int i = 0; i < codes.length; i++) {
-	        codes[i] = 0;
+	public FullConfiguration(ModuleList modules) {
+	    // The module list must not be empty.
+	    assert (modules.size() > 0);
+	    // Again, the module list must not be empty.
+	    if (modules.size() > 0) {
+	        theList = new ModuleList();
+	        // As long as it's not empty, we will
+	        // copy each module into private theList.
+	        for (int i = 0; i < modules.size(); i++) {
+	            theList.add(modules.get(i));
+	        }
+	        maxList = new ArrayList<Maximum>();
+	        listSize = theList.size();
+	        // Make sure (again) that size isn't wonky.
+	        assert (listSize > 0);
+	        codes = new int[2 * 2 * 2 + 2]; // size = 10.
+	        // Initialize codes to all zero elements.
+	        for (int i = 0; i < codes.length; i++) {
+	            codes[i] = 0;
+	        }
+	        // Initialize all count variables.
+	        countPl = 0;
+	        countD = 0;
+	        countS = 0;
+	        countB = 0;
+	        countP = 0;
+	        countM = 0;
+	        countCa = 0;
+	        countC = 0;
+	        countA = 0;
+	        countG = 0;
+	        // Collect the array[] of codes.
+	        countTypes();
+	        // Get the centroid values set up.
+	        findCentroid();
+	        // Test the size of our list to determine
+	        // the size of configuration.
+	        testSizes();
+	    } else {
+	        // The size is wonky and so this object is null.
+	        maxList = null;
 	    }
-	    countPl = 0;
-        countD = 0;
-        countS = 0;
-        countB = 0;
-        countP = 0;
-        countM = 0;
-        countCa = 0;
-        countC = 0;
-        countA = 0;
-        countG = 0;
-	    countTypes();
-	    findCentroid();
-		testSizes();
 	}
 //********************************************
 	/**
@@ -352,7 +372,7 @@ public class FullConfiguration {
          */
         for (int i = 0; i < total; i++) {
             // Get the real module type.
-            typeReal = maxList.get(i).getCode();
+            typeReal = theList.get(i).getType();
             // Start testing and setting up minimum list.
             if (typeReal.equals(ModuleType.PLAIN)) {
                 type = ModuleType.PLAIN;
@@ -415,7 +435,7 @@ public class FullConfiguration {
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
         maxList.add(min);
-        FullConfigPage.setUpFullConfig(new FullConfiguration());
+        FullConfigPage.setUpFullConfig(maxList);
     }
 //*************************************
 	/**
@@ -514,31 +534,31 @@ public class FullConfiguration {
                     valuey = 2;
                 } else {
                     valuex = 2;
-                    valuey = 11;
+                    valuey = 2 * (2 * 2 + 1);
                 }
                 countC++;
             } else if (typeReal.equals(ModuleType.AIRLOCK)) {
                 type = ModuleType.AIRLOCK;
-                valuex = 3;
+                valuex = 2 + 1;
                 valuey = 0;
             } else if (typeReal.equals(ModuleType.CANTEEN)) {
                 type = ModuleType.CANTEEN;
                 if (countCa == 0) {
-                   valuex = 4;
-                   valuey = 6;
+                   valuex = 2 + 2;
+                   valuey = 2 * 2 + 2;
                 } else {
                     valuex = 2;
-                    valuey = 9;
+                    valuey = (2 + 1) * 2;
                 }
                 countCa++;
             } else if (typeReal.equals(ModuleType.POWER)) {
                 type = ModuleType.POWER;
                 if (countP == 0) {
-                    valuex = 4;
+                    valuex = 2 + 2;
                     valuey = 1;
                 } else {
-                    valuex = 5;
-                    valuey = 10;
+                    valuex = 2 * 2 + 1;
+                    valuey = 2 * (2 * 2 + 1);
                 }
                 countP++;
             } else if (typeReal.equals(ModuleType.FOOD_AND_WATER)) {
@@ -604,7 +624,7 @@ public class FullConfiguration {
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
         maxList.add(min);
-        FullConfigPage.setUpFullConfig(new FullConfiguration());
+        FullConfigPage.setUpFullConfig(maxList);
 
 	}
 //**************************************
@@ -621,10 +641,11 @@ public class FullConfiguration {
          * The points are set as the adjustment needed
          * for the configuration placement.
          */
-        for (int i = 0; i < total; i++) {
+        for (int i = 0; i < theList.size(); i++) {
             // Get the real module type.
-            typeReal = maxList.get(i).getCode();
+            typeReal = theList.get(i).getType();
             // Start testing and setting up minimum list.
+            // This sets grid coordinates of 24 plain modules.
             if (typeReal.equals(ModuleType.PLAIN)) {
                 type = ModuleType.PLAIN;
                 if (countPl == 0) {
@@ -636,7 +657,7 @@ public class FullConfiguration {
                 } else if (countPl == 2) {
                     valuex = 2 + 1;
                     valuey = 2 + 1;
-                } else if (countPl == (2 + 1)){
+                } else if (countPl == (2 + 1)) {
                     valuex = 2 + 1;
                     valuey = 2 + 2;
                 } else if (countPl == 4) {
@@ -706,6 +727,7 @@ public class FullConfiguration {
                 // Done with plain setup.
             } else if (typeReal.equals(ModuleType.SANITATION)) {
                 type = ModuleType.SANITATION;
+                // Makes 6 bathrooms.
                 if (countB == 0) {
                     valuex = 2 + 2;
                     valuey = 3;
@@ -728,6 +750,7 @@ public class FullConfiguration {
                 countB++;
             } else if (typeReal.equals(ModuleType.CONTROL)) {
                 type = ModuleType.CONTROL;
+                // Make 2 control.
                 if (countC == 0) {
                     valuex = 4;
                     valuey = 1;
@@ -738,6 +761,7 @@ public class FullConfiguration {
                 countC++;
             } else if (typeReal.equals(ModuleType.AIRLOCK)) {
                 type = ModuleType.AIRLOCK;
+                // Make 2 airlocks.
                 if (countA == 0) {
                     valuex = 3;
                     valuey = 0;
@@ -748,6 +772,7 @@ public class FullConfiguration {
                 countA++;
             } else if (typeReal.equals(ModuleType.CANTEEN)) {
                 type = ModuleType.CANTEEN;
+                // Make 2 canteens.
                 if (countCa == 0) {
                    valuex = 4;
                    valuey = 8;
@@ -758,6 +783,7 @@ public class FullConfiguration {
                 countCa++;
             } else if (typeReal.equals(ModuleType.POWER)) {
                 type = ModuleType.POWER;
+                // Make 2 power.
                 if (countP == 0) {
                     valuex = 4;
                     valuey = 2;
@@ -768,6 +794,7 @@ public class FullConfiguration {
                 countP++;
             } else if (typeReal.equals(ModuleType.FOOD_AND_WATER)) {
                 type = ModuleType.FOOD_AND_WATER;
+                // Make 2 storage.
                 if (countS == 0) {
                     valuex = 4;
                     valuey = 9;
@@ -790,6 +817,7 @@ public class FullConfiguration {
                 countS++;
             } else if (typeReal.equals(ModuleType.DORMITORY)) {
                 type = ModuleType.DORMITORY;
+                // Make 11 dorms.
                 if (countD == 0) {
                     valuex = 2;
                     valuey = 3;
@@ -827,6 +855,7 @@ public class FullConfiguration {
                 countD++;
             } else if (typeReal.equals(ModuleType.MEDICAL)) {
                 type = ModuleType.MEDICAL;
+                // make 2 medical.
                 if (countM == 0) {
                     valuex = 2;
                     valuey = 1;
@@ -837,6 +866,7 @@ public class FullConfiguration {
                 countM++;
             } else {
                 type = ModuleType.GYM_AND_RELAXATION;
+                // Make 2 gyms.
                 if (countG == 0) {
                    valuex = 2;
                    valuey = 9;
@@ -853,7 +883,7 @@ public class FullConfiguration {
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
         maxList.add(min);
-        FullConfigPage.setUpFullConfig(new FullConfiguration());
+        FullConfigPage.setUpFullConfig(maxList);
 	}
 //**************************************
 	/**
@@ -1176,7 +1206,7 @@ public class FullConfiguration {
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
         maxList.add(min);
-        FullConfigPage.setUpFullConfig(new FullConfiguration());
+        FullConfigPage.setUpFullConfig(maxList);
 	}
 //************************************
 	/**
@@ -1561,7 +1591,7 @@ public class FullConfiguration {
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
         maxList.add(min);
-        FullConfigPage.setUpFullConfig(new FullConfiguration());
+        FullConfigPage.setUpFullConfig(maxList);
 	}
 //*************************************
 	/**

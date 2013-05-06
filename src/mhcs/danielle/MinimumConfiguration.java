@@ -289,7 +289,8 @@ public class MinimumConfiguration {
 			Minimum min = new Minimum(type, point);
 			minArray.add(min);
 		}
-		MinimumConfigPage.setUpMinConfig(new MinimumConfiguration());
+
+		MinimumConfigPage.setUpMinConfig(minArray);
 	}
 //*********************************************************************
 	/**
@@ -347,7 +348,7 @@ public class MinimumConfiguration {
 				valuex = 2;
 				valuey = 3;
 			}
-			point = new Point(valuex + adjustX, valuey + adjustY);
+			point = new Point(valuex, valuey);
 			Minimum min = new Minimum(type, point);
 			minArray.add(min);
 		}
@@ -368,8 +369,8 @@ public class MinimumConfiguration {
         for (int k = 0; k < mods.size(); k++) {
             Module tMod = mods.get(k);
             Point tPoint = new Point(
-                    Integer.parseInt(tMod.getXCoor()),
-                    Integer.parseInt(tMod.getYCoor()));
+                    Integer.parseInt(tMod.getXCoor()) - 1,
+                    50 - Integer.parseInt(tMod.getYCoor()));
             ModuleType tType = tMod.getType();
             minimum.add(new Minimum(tType, tPoint));
         }
@@ -398,10 +399,11 @@ public class MinimumConfiguration {
 			temp = ModuleList.get().get(i).getYCoor();
 			ySum += Integer.parseInt(temp);
 		}
+		if (ModuleList.get().size() > 0) {
 		// divide values by n
-		xSum = xSum / ModuleList.get().size();
-		ySum = ySum / ModuleList.get().size();
-
+		    xSum = xSum / ModuleList.get().size() + 1;
+		    ySum = ySum / ModuleList.get().size() + 1;
+		}
 		// Initialize centroid
 		xSum += -1;
 		ySum = 50 - ySum;

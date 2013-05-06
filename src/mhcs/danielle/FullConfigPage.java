@@ -33,7 +33,7 @@ public class FullConfigPage implements EntryPoint {
 	 */
 	public final Widget createFullConfig() {
 		initialize();
-		setUpFullConfig(new FullConfiguration());
+		setUpFullConfig(maxArray);
 		FlowPanel wrapper = new FlowPanel();
 		wrapper.add(mainPanel);
 		return wrapper;
@@ -44,9 +44,7 @@ public class FullConfigPage implements EntryPoint {
 	 * @param maxConfig is this configuration.
 	 */
 	public static void setUpFullConfig(
-	        final FullConfiguration maxConfig) {
-
-	    ArrayList<Maximum> maxArray = maxConfig.getMaxArray();
+	        final ArrayList<Maximum> maxArray) {
 	    Image image;
 		for (int i = 0; i < maxArray.size(); i++) {
 			Maximum maxItem = maxArray.get(i);
@@ -91,11 +89,15 @@ public class FullConfigPage implements EntryPoint {
 			flow.setWidth("5px");
 			flow.setVisible(true);
 			flow.add(image);
-
-			imageGrid.setWidget((int) tmpPoint.getY(),
-					(int) tmpPoint.getX(),
+			int temp = (int) tmpPoint.getX();
+			temp += 2 * 2;
+			int temp2 = (int) tmpPoint.getY();
+			temp2 += 2 * 2 * 2;
+			imageGrid.setWidget(temp,
+					temp2,
 					flow);
 		}
+		createScrollList(ModuleList.get());
 	}
 	/**
 	 * Initializes everything .
@@ -122,11 +124,11 @@ public class FullConfigPage implements EntryPoint {
 		recalculate = new Button("Recalculate");
 		enterSave = new Button("Enter & Save");
 
-		maxConfig1 = new FullConfiguration();
+		maxConfig1 = new FullConfiguration(modList);
 		maxArray = maxConfig1.getMaxArray();
 
 		// Creating scroll list of modules
-		createScrollList();
+		createScrollList(modList);
 		createButtonPanel();
 		setUpImageGrid();
 		setUpPanelDetails();
@@ -160,15 +162,16 @@ public class FullConfigPage implements EntryPoint {
 	 * This creates the scrollable list that holds modules used in
 	 * min configuration. Also sets up action handlers for selectable
 	 * modules in the list.
+	 * @param tmpModList is the list of modules.
 	 */
-	private void createScrollList() {
+	public final static void createScrollList(final ModuleList modList) {
 		scrollList.setAlwaysShowScrollBars(true);
 		scrollList.setTitle("Modules");
 		scroll.setPixelSize(250, 451);
 		scroll.setVisibleItemCount(109);
 
-		for (int i = 0; i < tmpModList.size(); i++) {
-			final Module mod = tmpModList.get(i);
+		for (int i = 0; i < modList.size(); i++) {
+			final Module mod = modList.get(i);
 			final String item = mod.getType().toString();
 
 			scroll.addItem(mod.getCode() + ": " + item);
@@ -240,7 +243,7 @@ public class FullConfigPage implements EntryPoint {
 	/**
 	 * holds list of modules.
 	 */
-	private FlowPanel mainListPanel;
+	private static FlowPanel mainListPanel;
 	/**
 	 * decorates list.
 	 */
@@ -248,19 +251,19 @@ public class FullConfigPage implements EntryPoint {
 	/**
 	 * scrollable list.
 	 */
-	private ScrollPanel scrollList;
+	private static ScrollPanel scrollList;
 	/**
 	 * text area holds selected module details.
 	 */
-	private FlowPanel detailList;
+	private static FlowPanel detailList;
 	/**
 	 * text area holds string details.
 	 */
-	private TextArea details;
+	private static TextArea details;
 	/**
 	 * scroll is the list of modules.
 	 */
-	private ListBox scroll;
+	private static ListBox scroll;
 	/**
 	 * image grid is what plots locations and holds images.
 	 */
