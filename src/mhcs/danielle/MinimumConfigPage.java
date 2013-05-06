@@ -140,8 +140,8 @@ public class MinimumConfigPage implements EntryPoint {
 			temp += 2 * 2;
 			int temp2 = (int) tmpPoint.getY();
 			temp2 += 2 * 2 * 2 * 2;
-			imageGrid.setWidget(temp2,
-					temp,
+			imageGrid.setWidget(temp,
+					temp2,
 					flow);
 			createScrollList(ModuleList.get());
 		}
