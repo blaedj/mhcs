@@ -322,7 +322,7 @@ public class MinimumConfiguration {
 				}
 			} else if (i == (1 + 2)) {
 				type = ModuleType.SANITATION;
-				valuex = 1 + 2;
+				valuex = 2;
 				valuey = 2;
 			} else if (i == (2 + 2)) {
 				type = ModuleType.CONTROL;
@@ -353,8 +353,7 @@ public class MinimumConfiguration {
 			Minimum min = new Minimum(type, point);
 			minArray.add(min);
 		}
-		this.minArray = minA;
-		setMinConfig(minArray);
+		setMinConfig(minA);
 	}
 //*******************************************************************
 	/**
