@@ -33,7 +33,9 @@ public class FullConfigPage implements EntryPoint {
 	 */
 	public final Widget createFullConfig() {
 		initialize();
-		setUpFullConfig(maxArray);
+		if (ModuleList.get().size() < 0) {
+		    setUpFullConfig(maxArray); 
+		}
 		FlowPanel wrapper = new FlowPanel();
 		wrapper.add(mainPanel);
 		return wrapper;

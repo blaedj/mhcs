@@ -57,7 +57,7 @@ public class FullConfiguration {
 	 */
 	public FullConfiguration(ModuleList modules) {
 	    // The module list must not be empty.
-	    assert (modules.size() > 0);
+
 	    // Again, the module list must not be empty.
 	    if (modules.size() > 0) {
 	        theList = new ModuleList();
@@ -69,7 +69,6 @@ public class FullConfiguration {
 	        maxList = new ArrayList<Maximum>();
 	        listSize = theList.size();
 	        // Make sure (again) that size isn't wonky.
-	        assert (listSize > 0);
 	        codes = new int[2 * 2 * 2 + 2]; // size = 10.
 	        // Initialize codes to all zero elements.
 	        for (int i = 0; i < codes.length; i++) {
