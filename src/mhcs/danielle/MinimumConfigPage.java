@@ -64,10 +64,10 @@ public class MinimumConfigPage implements EntryPoint {
         details.setVisibleLines(7); // 7.
         scroll = new ListBox();
         imageGrid = new Grid(50, 100);
-        
+
              // The grid is (50, 100)
         buttonGrid = new Grid(1, 2);
-        mainButtonGrid = new Grid((1 + 2), 1);
+        mainButtonGrid = new Grid(3, 1);
         recalculate = new Button("Recalculate");
         enterSave = new Button("Enter & Save");
         minConfig1 = new MinimumConfiguration();
@@ -131,18 +131,13 @@ public class MinimumConfigPage implements EntryPoint {
 			image.setVisible(true);
 			image.setSize("5px", "5px");
 			// Try to use flowPanel
-			FlowPanel flow = new FlowPanel();
-			flow.setHeight("5px");
-			flow.setWidth("5px");
-			flow.setVisible(true);
-			flow.add(image);
 			// Set image on grid
 
 			int temp = (int) tmpPoint.getX();
 			int temp2 = (int) tmpPoint.getY();
-			imageGrid.setWidget(temp,
-					temp2,
-					flow);
+			imageGrid.setWidget(temp2,
+					temp,
+					image);
 			createScrollList(ModuleList.get());
 		}
 	}
