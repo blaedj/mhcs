@@ -89,7 +89,7 @@ public class MinimumConfigPage implements EntryPoint {
 	public static void setUpMinConfig(
 	        final ArrayList<Minimum> minArray) {
 	    imageGrid.clear();
-
+	    imageGrid.setCellPadding(0);
 		// Collect all their types and set up images
 		for (int i = 0; i < minArray.size(); i++) {
 			Minimum minItem = minArray.get(i);
@@ -129,7 +129,7 @@ public class MinimumConfigPage implements EntryPoint {
 			}
 			// Set image properties
 			image.setVisible(true);
-			image.setSize("5px", "5px");
+			image.setSize("8.5px", "8.5px");
 			// Try to use flowPanel
 			// Set image on grid
 
