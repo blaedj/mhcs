@@ -158,7 +158,7 @@ public class ModuleLocations {
 			infoPanel.add(new Image("images/control.jpg"));
 			break;
 		    case AIRLOCK:
-			infoPanel.add(new Image("images/airlock.jpg"));
+			infoPanel.add(new Image("images/Airlock.jpg"));
 			break;
 		    case MEDICAL:
 			infoPanel.add(new Image("images/medical.png"));
