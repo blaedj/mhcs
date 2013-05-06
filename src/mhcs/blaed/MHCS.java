@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import mhcs.dalton.WeatherFeed;
 import mhcs.dan.Logging;
+import mhcs.danielle.FullConfigPage;
 import mhcs.danielle.MinimumConfigPage;
 
 
@@ -115,20 +116,25 @@ public class MHCS implements EntryPoint {
 		FlowPanel loggingPageWrap = new FlowPanel();
 		FlowPanel modLocationsWrap = new FlowPanel();
 		FlowPanel minConfigWrap = new FlowPanel();
+		FlowPanel fullConfigWrap = new FlowPanel();
 
 		// the functionality widgets
 		Logging logPage = new Logging();
 		ModuleLocations locations = new ModuleLocations();
 		MinimumConfigPage minConfig = new MinimumConfigPage();
 		WeatherFeed weather = new WeatherFeed();
+		FullConfigPage fullConfig = new FullConfigPage();
+		
 		minConfigWrap.add(minConfig.createMinConfig());
 		loggingPageWrap.add(logPage.getLoggingPage());
 		modLocationsWrap.add(locations.createMainPanel());
-				
+		fullConfigWrap.add(fullConfig.createFullConfig());
+		
 		// add the tabs 
 		baseTabPanel.add(loggingPageWrap, "Module Logging Page");
 		baseTabPanel.add(modLocationsWrap, "View Module locations");
 		baseTabPanel.add(minConfigWrap, "Minimum Configuration");
+		baseTabPanel.add(fullConfigWrap, "Full Configurations");
 		baseTabPanel.add( weather.getweatherfeed(), "View the Weather forecast");
 		
 		baseTabPanel.selectTab(0);
