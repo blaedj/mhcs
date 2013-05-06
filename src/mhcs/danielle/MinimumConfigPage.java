@@ -53,7 +53,7 @@ public class MinimumConfigPage implements EntryPoint {
     private void initialize() {
         theModList = ModuleList.get();
         mainPanel = new HorizontalPanel();
-        imagePanel = new ScrollPanel();
+        imagePanel = new FlowPanel();
         mainListPanelDecorator = new DecoratorPanel();
         mainListPanel = new FlowPanel();
         scrollList = new ScrollPanel();
@@ -137,9 +137,7 @@ public class MinimumConfigPage implements EntryPoint {
 			// Set image on grid
 
 			int temp = (int) tmpPoint.getX();
-			temp += 2 * 2;
 			int temp2 = (int) tmpPoint.getY();
-			temp2 += 2 * 2 * 2 * 2;
 			imageGrid.setWidget(temp,
 					temp2,
 					flow);
@@ -154,8 +152,8 @@ public class MinimumConfigPage implements EntryPoint {
 	 * as well as the sandy spot marked in x's.
 	 */
 	private void setUpImageGrid() {
-		imagePanel.setSize("551px", "777px");
-		imagePanel.getElement().getStyle().setOverflow(Overflow.AUTO);
+		//imagePanel.setSize("551px", "777px");
+		//imagePanel.getElement().getStyle().setOverflow(Overflow.AUTO);
 		imageGrid.setVisible(true);
 		// Set sandy part of map
 		for (int i = 0; i < 10; i++) {
@@ -266,7 +264,7 @@ public class MinimumConfigPage implements EntryPoint {
 	/**
 	 * image held here.
 	 */
-	private ScrollPanel imagePanel;
+	private FlowPanel imagePanel;
 	/**
 	 * holds list of modules.
 	 */
