@@ -82,7 +82,7 @@ public class MinimumConfiguration {
 
 	    MinimumConfiguration minCon = new MinimumConfiguration();
 	    ArrayList<Minimum> minArray = minCon.getMinArray(ModuleList.get());
-	    if (minArray.size() == 0) {
+	    if (ModuleList.get().size() == 0) {
 	        return false;
 	    }
 	    ModuleList theList = ModuleList.get();
@@ -235,7 +235,7 @@ public class MinimumConfiguration {
 					valuex = 1;
 					valuey = 1;
 				} else if (countPlain == 1) {
-					valuex = 1 + 2;
+					valuex = 2;
 					valuey = 1;
 				} else if (countPlain == 2) {
 					valuex = 2;
@@ -258,7 +258,7 @@ public class MinimumConfiguration {
 				valuey = 0;
 			} else if (typeReal.equals(ModuleType.CANTEEN)) {
 				type = ModuleType.CANTEEN;
-				valuex = 2;
+				valuex = 3;
 				valuey = 1;
 			} else if (typeReal.equals(ModuleType.POWER)) {
 				type = ModuleType.POWER;
