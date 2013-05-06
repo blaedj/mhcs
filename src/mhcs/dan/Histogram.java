@@ -68,7 +68,7 @@ public class Histogram extends Widget {
         icons = new Grid(1, 10);
         icons.setCellPadding(0);
         
-        final Image airlockIcon = new Image("images/airlock.jpg");
+        final Image airlockIcon = new Image("images/Airlock.jpg");
         final Image canteenIcon = new Image("images/canteen.png");
         final Image controlIcon = new Image("images/control.jpg");
         final Image dormIcon = new Image("images/dorm.jpg");
