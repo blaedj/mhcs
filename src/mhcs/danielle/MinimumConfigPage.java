@@ -60,11 +60,11 @@ public class MinimumConfigPage implements EntryPoint {
         detailList = new FlowPanel();
         details = new TextArea();
         details.setText("Select a module to see details");
-        details.setCharacterWidth(2 * 2 * 2 * 2 * 2); // 32.
-        details.setVisibleLines((2 * 2 * 2) - 1); // 7.
+        details.setCharacterWidth(32); // 32.
+        details.setVisibleLines(7); // 7.
         scroll = new ListBox();
-        imageGrid = new Grid((2 * 2 + 1) * (2 * 2 * 2 + 2),
-                2 * ((2 * 2 + 1) * (2 * 2 * 2 + 2)));
+        imageGrid = new Grid(50, 100);
+        
              // The grid is (50, 100)
         buttonGrid = new Grid(1, 2);
         mainButtonGrid = new Grid((1 + 2), 1);
@@ -88,6 +88,8 @@ public class MinimumConfigPage implements EntryPoint {
 	 */
 	public static void setUpMinConfig(
 	        final ArrayList<Minimum> minArray) {
+	    imageGrid.clear();
+
 		// Collect all their types and set up images
 		for (int i = 0; i < minArray.size(); i++) {
 			Minimum minItem = minArray.get(i);
@@ -126,7 +128,6 @@ public class MinimumConfigPage implements EntryPoint {
 				image = new Image("images/storage.jpg");
 			}
 			// Set image properties
-			image.setSize("5px", "5px");
 			image.setVisible(true);
 			// Try to use flowPanel
 			FlowPanel flow = new FlowPanel();
