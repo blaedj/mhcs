@@ -129,6 +129,7 @@ public class MinimumConfigPage implements EntryPoint {
 			}
 			// Set image properties
 			image.setVisible(true);
+			image.setSize("5px", "5px");
 			// Try to use flowPanel
 			FlowPanel flow = new FlowPanel();
 			flow.setHeight("5px");
@@ -181,7 +182,8 @@ public class MinimumConfigPage implements EntryPoint {
 	 * modules in the list.
 	 */
 	public static final void createScrollList(final ModuleList modList) {
-		scrollList.setAlwaysShowScrollBars(true);
+		scroll.clear();
+	    scrollList.setAlwaysShowScrollBars(true);
 		scrollList.setTitle("Modules");
 		scroll.setPixelSize(250, 451);
 		scroll.setVisibleItemCount(109);
@@ -224,7 +226,6 @@ public class MinimumConfigPage implements EntryPoint {
 				}
 			});
 		}
-		scrollList.clear();
 		scrollList.clear();
 		mainListPanel.clear();
 		detailList.clear();

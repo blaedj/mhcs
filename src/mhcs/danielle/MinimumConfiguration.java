@@ -86,7 +86,7 @@ public class MinimumConfiguration {
 	        return false;
 	    }
 	    ModuleList theList = ModuleList.get();
-	    if (theList.size() < 2 + (2 * 2 * 2)) {
+	    if (theList.size() < 10) {
 	        return false;
 	    }
 		// We have a list to test.
