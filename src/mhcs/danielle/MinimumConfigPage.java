@@ -99,7 +99,7 @@ public class MinimumConfigPage implements EntryPoint {
 			// images for each module on the map.
 			if (minItem.getCode().
 			        equals(ModuleType.AIRLOCK)) {
-				image = new Image("images/airlock.jpg");
+				image = new Image("images/Airlock.jpg");
 			} else if (minItem.getCode().
 			        equals(ModuleType.MEDICAL)) {
 				image = new Image("images/medical.png");
