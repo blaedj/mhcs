@@ -183,6 +183,7 @@ public class MinimumConfiguration {
 		int adjustX = 0;
 		int adjustY = 0;
 		Point point;
+		ArrayList<Minimum> minArray2 = new ArrayList<Minimum>();
 
 		// if x is between 40 and 50, we might be in sandy- check y
 		if ((centroid.getX() >= 40)
@@ -287,10 +288,10 @@ public class MinimumConfiguration {
 			}
 			point = new Point(valuex, valuey);
 			Minimum min = new Minimum(type, point);
-			minArray.add(min);
+			minArray2.add(min);
 		}
 
-		MinimumConfigPage.setUpMinConfig(minArray);
+		MinimumConfigPage.setUpMinConfig(minArray2);
 	}
 //*********************************************************************
 	/**
