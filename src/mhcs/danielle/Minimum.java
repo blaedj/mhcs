@@ -46,7 +46,12 @@ public class Minimum {
 		return point;
 	}
 
-	    @Override
+
+    /**
+     * Checks for state and identity equality
+     * @param aThat the object to compare to this for state equality
+     */
+    @Override
     public final boolean equals(final Object aThat) {
         // if same object
         if (this == aThat) { return true; }

@@ -46,4 +46,20 @@ public class Maximum {
 		return point;
 	}
 
+    /**
+     * Checks for state and identity equality
+     * @param aThat the object to compare to this for state equality
+     */
+    @Override
+    public final boolean equals(final Object aThat) {
+        // if same object
+        if (this == aThat) { return true; }
+        // if not a module object
+        if (!(aThat instanceof Maximum)) { return false; }
+        Maximum that = (Maximum) aThat;
+        // checks for equality in every variable
+        return  this.getCode() == that.getCode() &&
+                this.getPoint().equals(that.getPoint());
+    }
+
 }

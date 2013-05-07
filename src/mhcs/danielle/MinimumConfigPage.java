@@ -2,6 +2,7 @@ package mhcs.danielle;
 
 import java.util.ArrayList;
 
+import mhcs.blaed.ConfigSaver;
 import mhcs.dan.Module;
 import mhcs.dan.Module.ModuleType;
 import mhcs.dan.ModuleList;
@@ -66,10 +67,10 @@ public class MinimumConfigPage implements EntryPoint {
         imageGrid = new Grid(50, 100);
 
              // The grid is (50, 100)
-        buttonGrid = new Grid(1, 2);
+        buttonGrid = new Grid(1, 3);
         mainButtonGrid = new Grid(3, 1);
         recalculate = new Button("Recalculate");
-        enterSave = new Button("Enter & Save");
+        enterSave = new Button("Select and Save");
         minConfig1 = new MinimumConfiguration();
         minArray = minConfig1.getMinArray(theModList);
 
@@ -86,8 +87,7 @@ public class MinimumConfigPage implements EntryPoint {
 	 * to create minConfig 2, user must push "recalculate".
 	 * @param minConfig configuration to use.
 	 */
-	public static void setUpMinConfig(
-	        final ArrayList<Minimum> minArray) {
+	public static void setUpMinConfig( final ArrayList<Minimum> minArray) {
 	    imageGrid.clear();
 	    imageGrid.setCellPadding(0);
 		// Collect all their types and set up images
@@ -140,6 +140,7 @@ public class MinimumConfigPage implements EntryPoint {
 					image);
 			createScrollList(ModuleList.get());
 		}
+
 	}
 
 	//*********************************************
@@ -178,7 +179,7 @@ public class MinimumConfigPage implements EntryPoint {
 	 */
 	public static final void createScrollList(final ModuleList modList) {
 		scroll.clear();
-	    scrollList.setAlwaysShowScrollBars(true);
+		scrollList.setAlwaysShowScrollBars(true);
 		scrollList.setTitle("Modules");
 		scroll.setPixelSize(250, 451);
 		scroll.setVisibleItemCount(109);
@@ -242,12 +243,26 @@ public class MinimumConfigPage implements EntryPoint {
 	        });
 	    enterSave.addClickHandler(new ClickHandler() {
             public void onClick(final ClickEvent event) {
-                // handle the enterSave event
+		ConfigSaver saver = new ConfigSaver();
+		// save the current minArray as the selected configuration
+		saver.saveConfig("minimumConfiguration", minArray);
               }
             });
-		buttonGrid.setWidth("225px");
+	    Button loadConfig = new Button("Load past configuration");
+	    loadConfig.addClickHandler(new ClickHandler() {
+		    public void onClick(final ClickEvent event){
+			// load the last saved minimum habitat configuration
+			ConfigSaver saver = new ConfigSaver();
+			minArray = saver.loadConfig("minimumConfiguration");
+		    // need a refresh method... setUpConfig?
+		    setUpMinConfig(minArray);
+		    }
+		});
+
+		//buttonGrid.setWidth("225px");
 		buttonGrid.setWidget(0, 0, recalculate);
 		buttonGrid.setWidget(0, 1, enterSave);
+		buttonGrid.setWidget(0, 2, loadConfig);
 		mainButtonGrid.setVisible(true);
 		mainButtonGrid.setWidget(0, 0, mainListPanel);
 		mainButtonGrid.setWidget(1, 0, detailList);
