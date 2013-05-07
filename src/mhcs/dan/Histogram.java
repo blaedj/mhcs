@@ -91,7 +91,7 @@ public class Histogram extends Widget {
         storageIcon.setPixelSize(thumbDim, thumbDim);
         
         airlockIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("airlock modules: " + airlock);
                 numberPanel.show();
@@ -99,7 +99,7 @@ public class Histogram extends Widget {
         });
         
         canteenIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("canteen modules: " + canteen);
                 numberPanel.show();
@@ -107,7 +107,7 @@ public class Histogram extends Widget {
         });
         
         controlIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("control modules: " + control);
                 numberPanel.show();
@@ -115,7 +115,7 @@ public class Histogram extends Widget {
         });
         
         dormIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("dormitory modules: " + dormitory);
                 numberPanel.show();
@@ -123,7 +123,7 @@ public class Histogram extends Widget {
         });
         
         gymIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("gym and relaxation modules: " + gymAndRelaxation);
                 numberPanel.show();
@@ -131,7 +131,7 @@ public class Histogram extends Widget {
         });
         
         medIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("medical modules: " + medical);
                 numberPanel.show();
@@ -139,7 +139,7 @@ public class Histogram extends Widget {
         });
         
         plainIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("plain modules: " + plain);
                 numberPanel.show();
@@ -147,7 +147,7 @@ public class Histogram extends Widget {
         });
         
         powerIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("power modules: " + power);
                 numberPanel.show();
@@ -155,7 +155,7 @@ public class Histogram extends Widget {
         });
         
         sanitationIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("sanitation modules: " + sanitation);
                 numberPanel.show();
@@ -163,7 +163,7 @@ public class Histogram extends Widget {
         });
         
         storageIcon.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
+            public void onClick(final ClickEvent event) {
                 numberPanel.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
                 popupLabel.setText("food and water modules: " + foodAndWater);
                 numberPanel.show();
