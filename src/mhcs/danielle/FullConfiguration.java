@@ -360,72 +360,160 @@ public class FullConfiguration {
 	 * 1 med, 1 storage
 	 */
 	private void makeSmall() {
-	    int total = 2 * 2 * 2 + 2; // 10.
+	    int total = 10; // 10.
         ModuleType type = ModuleType.PLAIN;
         ModuleType typeReal;
+        ArrayList<Maximum> maxL = new ArrayList<Maximum>();
         int valuex = 0;
         int valuey = 0;
+        // If there are 11 plain, we are in test 5
+        if (codes [0] == 11) {
+            for (int i = 0; i < total; i++) {
+                // Get the real module type.
+                typeReal = theList.get(i).getType();
+                // Start testing and setting up minimum list.
+                if (typeReal.equals(ModuleType.PLAIN)) {
+                    type = ModuleType.PLAIN;
+                    if (countPl == 0) {
+                        valuex = 2;
+                        valuey = 1;
+                    } else if (countPl == 1) {
+                        valuex = 2;
+                        valuey = 2;
+                    } else if (countPl == 2) {
+                        valuex = 2;
+                        valuey = 3;
+                    } else if (countPl == 3) {
+                        valuex = 2;
+                        valuey = 4;
+                    } else if (countPl == 4) {
+                        valuex = 2;
+                        valuey = 5;
+                    } else if (countPl == 5) {
+                        valuex = 2;
+                        valuey = 6;
+                    } else if (countPl == 6) {
+                        valuex = 2;
+                        valuey = 7;
+                    } else if (countPl == 7) {
+                        valuex = 2;
+                        valuey = 8;
+                    } else if (countPl == 8) {
+                        valuex = 2;
+                        valuey = 9;
+                    } else if (countPl == 9) {
+                        valuex = 2;
+                        valuey = 10;
+                    } else {
+                        valuex = 2;
+                        valuey = 11;
+                    }
+                    // Increment plain so we know how many
+                    // we have collected.
+                    countPl++;
+                    // Done with plain setup.
+                } else if (typeReal.equals(ModuleType.SANITATION)) {
+                    type = ModuleType.SANITATION;
+                    valuex = 3;
+                    valuey = 3;
+                } else if (typeReal.equals(ModuleType.CONTROL)) {
+                    type = ModuleType.CONTROL;
+                    valuex = 3;
+                    valuey = 1;
+                } else if (typeReal.equals(ModuleType.AIRLOCK)) {
+                    type = ModuleType.AIRLOCK;
+                    valuex = 2;
+                    valuey = 0;
+                } else if (typeReal.equals(ModuleType.CANTEEN)) {
+                    type = ModuleType.CANTEEN;
+                    valuex = 1;
+                    valuey = 5;
+                } else if (typeReal.equals(ModuleType.POWER)) {
+                    type = ModuleType.POWER;
+                    valuex = 3;
+                    valuey = 2;
+                } else if (typeReal.equals(ModuleType.FOOD_AND_WATER)) {
+                    type = ModuleType.FOOD_AND_WATER;
+                    valuex = 1;
+                    valuey = 6;
+                } else if (typeReal.equals(ModuleType.DORMITORY)) {
+                    type = ModuleType.DORMITORY;
+                    valuex = 3;
+                    valuey = 4;
+                } else if (typeReal.equals(ModuleType.MEDICAL)) {
+                    type = ModuleType.MEDICAL;
+                    valuex = 1;
+                    valuey = 1;
+                } else {
+                    type = ModuleType.GYM_AND_RELAXATION;
+                    valuex = 1;
+                    valuey = 3;
+                }
+            } 
+        } else {
+            // We are not in test 5.
         /** Traverse modules and set up list of Minimum objects.
          * The points are set as the adjustment needed
          * for the configuration placement.
          */
-        for (int i = 0; i < total; i++) {
-            // Get the real module type.
-            typeReal = theList.get(i).getType();
-            // Start testing and setting up minimum list.
-            if (typeReal.equals(ModuleType.PLAIN)) {
-                type = ModuleType.PLAIN;
-                if (countPl == 0) {
-                    valuex = 2 + 1;
-                    valuey = 1;
-                } else if (countPl == 1) {
-                    valuex = 1 + 2;
-                    valuey = 2;
-                } else if (countPl == 2) {
+            for (int i = 0; i < total; i++) {
+                // Get the real module type.
+                typeReal = theList.get(i).getType();
+                // Start testing and setting up minimum list.
+                if (typeReal.equals(ModuleType.PLAIN)) {
+                    type = ModuleType.PLAIN;
+                    if (countPl == 0) {
+                        valuex = 3;
+                        valuey = 1;
+                    } else if (countPl == 1) {
+                        valuex = 3;
+                        valuey = 2;
+                    } else if (countPl == 2) {
+                        valuex = 2;
+                        valuey = 2;
+                    } else {
+                        valuex = 1;
+                        valuey = 2;
+                    }
+                    // Increment plain so we know how many
+                    // we have collected.
+                    countPl++;
+                    // Done with plain setup.
+                } else if (typeReal.equals(ModuleType.SANITATION)) {
+                    type = ModuleType.SANITATION;
                     valuex = 2;
+                    valuey = 1;
+                } else if (typeReal.equals(ModuleType.CONTROL)) {
+                    type = ModuleType.CONTROL;
+                    valuex = 2;
+                    valuey = 3;
+                } else if (typeReal.equals(ModuleType.AIRLOCK)) {
+                    type = ModuleType.AIRLOCK;
+                    valuex = 0;
                     valuey = 2;
-                } else {
+                } else if (typeReal.equals(ModuleType.CANTEEN)) {
+                    type = ModuleType.CANTEEN;
+                    valuex = 4;
+                    valuey = 1;
+                } else if (typeReal.equals(ModuleType.POWER)) {
+                    type = ModuleType.POWER;
+                    valuex = 3;
+                    valuey = 3;
+                } else if (typeReal.equals(ModuleType.FOOD_AND_WATER)) {
+                    type = ModuleType.FOOD_AND_WATER;
                     valuex = 1;
-                    valuey = 2;
+                    valuey = 1;
+                } else if (typeReal.equals(ModuleType.DORMITORY)) {
+                    type = ModuleType.DORMITORY;
+                    valuex = 3;
+                    valuey = 0;
+                } else if (typeReal.equals(ModuleType.MEDICAL)) {
+                    type = ModuleType.MEDICAL;
+                    valuex = 1;
+                    valuey = 3;
+                } else {
+                    type = ModuleType.GYM_AND_RELAXATION;
                 }
-                // Increment plain so we know how many
-                // we have collected.
-                countPl++;
-                // Done with plain setup.
-            } else if (typeReal.equals(ModuleType.SANITATION)) {
-                type = ModuleType.SANITATION;
-                valuex = 2;
-                valuey = 1;
-            } else if (typeReal.equals(ModuleType.CONTROL)) {
-                type = ModuleType.CONTROL;
-                valuex = 2;
-                valuey = 1 + 2;
-            } else if (typeReal.equals(ModuleType.AIRLOCK)) {
-                type = ModuleType.AIRLOCK;
-                valuex = 0;
-                valuey = 2;
-            } else if (typeReal.equals(ModuleType.CANTEEN)) {
-                type = ModuleType.CANTEEN;
-                valuex = 2 * 2;
-                valuey = 1;
-            } else if (typeReal.equals(ModuleType.POWER)) {
-                type = ModuleType.POWER;
-                valuex = 2 + 1;
-                valuey = 2 + 1;
-            } else if (typeReal.equals(ModuleType.FOOD_AND_WATER)) {
-                type = ModuleType.FOOD_AND_WATER;
-                valuex = 1;
-                valuey = 1;
-            } else if (typeReal.equals(ModuleType.DORMITORY)) {
-                type = ModuleType.DORMITORY;
-                valuex = 1 + 2;
-                valuey = 0;
-            } else if (typeReal.equals(ModuleType.MEDICAL)) {
-                type = ModuleType.MEDICAL;
-                valuex = 1;
-                valuey = 1 + 2;
-            } else {
-                type = ModuleType.GYM_AND_RELAXATION;
             }
         } // End for loop.
      // Create type and point for minimum object.
@@ -433,8 +521,8 @@ public class FullConfiguration {
         valuey += centroidY;
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
-        maxList.add(min);
-        FullConfigPage.setUpFullConfig(maxList);
+        maxL.add(min);
+        FullConfigPage.setUpFullConfig(maxL);
     }
 //*************************************
 	/**
@@ -445,6 +533,7 @@ public class FullConfiguration {
 	    int total = 2 * 2 * 2 + 2; // 10.
         ModuleType type = ModuleType.PLAIN;
         ModuleType typeReal;
+        ArrayList<Maximum> maxL = new ArrayList<Maximum>();
         int valuex = 0;
         int valuey = 0;
         /** Traverse modules and set up list of Minimum objects.
@@ -622,8 +711,8 @@ public class FullConfiguration {
         valuey += centroidY;
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
-        maxList.add(min);
-        FullConfigPage.setUpFullConfig(maxList);
+        maxL.add(min);
+        FullConfigPage.setUpFullConfig(maxL);
 
 	}
 //**************************************
@@ -634,6 +723,7 @@ public class FullConfiguration {
 	    int total = 2 * 2 * 2 + 2; // 10.
         ModuleType type = ModuleType.PLAIN;
         ModuleType typeReal;
+        ArrayList<Maximum> maxL = new ArrayList<Maximum>();
         int valuex = 0;
         int valuey = 0;
         /** Traverse modules and set up list of Minimum objects.
@@ -881,8 +971,8 @@ public class FullConfiguration {
         valuey += centroidY;
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
-        maxList.add(min);
-        FullConfigPage.setUpFullConfig(maxList);
+        maxL.add(min);
+        FullConfigPage.setUpFullConfig(maxL);
 	}
 //**************************************
 	/**
@@ -892,6 +982,7 @@ public class FullConfiguration {
 	    int total = 2 * 2 * 2 + 2; // 10.
         ModuleType type = ModuleType.PLAIN;
         ModuleType typeReal;
+        ArrayList<Maximum> maxL = new ArrayList<Maximum>();
         int valuex = 0;
         int valuey = 0;
         /** Traverse modules and set up list of Minimum objects.
@@ -1204,8 +1295,8 @@ public class FullConfiguration {
         valuey += centroidY;
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
-        maxList.add(min);
-        FullConfigPage.setUpFullConfig(maxList);
+        maxL.add(min);
+        FullConfigPage.setUpFullConfig(maxL);
 	}
 //************************************
 	/**
@@ -1215,6 +1306,7 @@ public class FullConfiguration {
 	    int total = 2 * 2 * 2 + 2; // 10.
         ModuleType type = ModuleType.PLAIN;
         ModuleType typeReal;
+        ArrayList<Maximum> maxL = new ArrayList<Maximum>();
         int valuex = 0;
         int valuey = 0;
         /** Traverse modules and set up list of Minimum objects.
@@ -1539,7 +1631,7 @@ public class FullConfiguration {
                 } else if (countD == 16) {
                     valuex = 10;
                     valuey = 18;
-                }else if (countD == 17) {
+                } else if (countD == 17) {
                     valuex = 10;
                     valuey = 19;
                 } else if (countD == 18) {
@@ -1589,8 +1681,8 @@ public class FullConfiguration {
         valuey += centroidY;
         Point point = new Point(valuex, valuey);
         Maximum min = new Maximum(type, point);
-        maxList.add(min);
-        FullConfigPage.setUpFullConfig(maxList);
+        maxL.add(min);
+        FullConfigPage.setUpFullConfig(maxL);
 	}
 //*************************************
 	/**

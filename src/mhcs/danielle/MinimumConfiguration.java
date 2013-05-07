@@ -351,7 +351,7 @@ public class MinimumConfiguration {
 			}
 			point = new Point(valuex, valuey);
 			Minimum min = new Minimum(type, point);
-			minArray.add(min);
+			minA.add(min);
 		}
 		setMinConfig(minA);
 	}
