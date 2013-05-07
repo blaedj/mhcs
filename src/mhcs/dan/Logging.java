@@ -1,6 +1,7 @@
 package mhcs.dan;
 
 import mhcs.blaed.ModuleSerializer;
+import mhcs.danielle.FullConfiguration;
 import mhcs.danielle.MinimumConfiguration;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -84,6 +85,7 @@ public class Logging {
                 }
                 // update histrogram to new state of list
                 histogram.update();
+
                 // check if minimum already alerted
                 if (!minConfig) {
                     // if not alerted, check for possible minimum configuration
@@ -94,6 +96,9 @@ public class Logging {
                         minConfig = true;
                     }
                 }
+                FullConfiguration full = new FullConfiguration(ModuleList.get());
+                
+                histogram.update();
                 // reset input boxes to empty and first choice
                 codeTextBox.setText("");
                 damageListBox.setSelectedIndex(0);

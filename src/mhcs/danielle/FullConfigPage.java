@@ -7,6 +7,8 @@ import mhcs.dan.ModuleList;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.touch.client.Point;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
@@ -121,7 +123,7 @@ public class FullConfigPage implements EntryPoint {
 		scroll = new ListBox();
 
 		imageGrid = new Grid(50, 100);
-		buttonGrid = new Grid(1, 2);
+		buttonGrid = new Grid(1, 3);
 		mainButtonGrid = new Grid(2 + 1, 1);
 		recalculate = new Button("Recalculate");
 		enterSave = new Button("Enter & Save");
@@ -220,6 +222,15 @@ public class FullConfigPage implements EntryPoint {
 	 * This creates the buttons and sets them in a grid panel.
 	 */
 	private void createButtonPanel() {
+		
+		recalculate.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+			}
+		});
+		
 		buttonGrid.setWidth("225px");
 		buttonGrid.setWidget(0, 0, recalculate);
 		buttonGrid.setWidget(0, 1, enterSave);

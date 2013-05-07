@@ -249,9 +249,9 @@ public class FullConfiguration {
 		    }
 		}
 		// If valid is false, we cannot make a full.
-		if (!valid) {
-		    Window.alert("Sorry! Unable to make full confligration.");
-		} else {
+//		if (!valid) {
+//		    //Window.alert("Sorry! Unable to make full confligration.");
+//		} else {
 		    if (flag == 1) {
 		        makeSmall();
 		    } else if (flag == 2) {
@@ -263,7 +263,7 @@ public class FullConfiguration {
 		    } else {
 		        makeMax();
 		    }
-		}
+		//}
 	}
 //*********************************************
 	/**

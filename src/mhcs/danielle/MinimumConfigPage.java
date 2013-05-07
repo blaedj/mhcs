@@ -225,8 +225,9 @@ public class MinimumConfigPage implements EntryPoint {
 		scrollList.clear();
 		mainListPanel.clear();
 		detailList.clear();
-		scrollList.add(scroll);
-		mainListPanel.add(scrollList);
+		//scrollList.add(scroll);
+		//mainListPanel.add(scrollList);
+		mainListPanel.add(scroll);
 		mainListPanel.setTitle("Modules");
 		detailList.add(details);
 	}
@@ -255,7 +256,8 @@ public class MinimumConfigPage implements EntryPoint {
 			ConfigSaver saver = new ConfigSaver();
 			minArray = saver.loadConfig("minimumConfiguration");
 		    // need a refresh method... setUpConfig?
-		    setUpMinConfig(minArray);
+		    MinimumConfiguration.testMinConfig();
+			//setUpMinConfig(minArray);
 		    }
 		});
 
